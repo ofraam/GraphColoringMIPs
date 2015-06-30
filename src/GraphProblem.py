@@ -11,6 +11,8 @@ class GraphProblem:
     def __init__(self, graphObj, colors):
         self.graph = graphObj
         self.colors = colors
+        for node in self.graph.nodes(data=True): #initialize all colors to -1 (color not set yet)
+            node['color'] = -1
         
     def getColor(self, node):
         return self.graph.node[node]['color']
@@ -18,10 +20,10 @@ class GraphProblem:
     def changeColor(self, node, newColor):
         self.graph.node[node]['color'] = newColor
         
-    def getAllConflicts(self):
+    def getAllConflicts(self): 
         conflicts = []
         for u,v in self.graph.edges_iter():
-            if self.graph.node[u]['color']==self.graph.node[v]['color']:
+            if self.graph.node[u]['color']==self.graph.node[v]['color']: #TODO: consider case of undetermined colors!
                 conflicts.append((u,v)) #TODO: check if this is the right thing or need the edge obj itself
         return conflicts
     
