@@ -14,6 +14,10 @@ class GraphProblem:
         for node in self.graph.nodes(data=True): #initialize all colors to -1 (color not set yet)
             node['color'] = -1
         
+    def updateGraph(self, changes):
+        for node,col in changes:
+            self.changeColor(node, col)
+    
     def getColor(self, node):
         return self.graph.node[node]['color']
     
@@ -27,7 +31,7 @@ class GraphProblem:
                 conflicts.append((u,v)) #TODO: check if this is the right thing or need the edge obj itself
         return conflicts
     
-    def getConflictsForNodes(self,nodesList):
+    def getConflictsForNodes(self,nodesList):#TODO: consider case where colors are not set yet
         conflicts = []
         for edge in nx.edges(self.graph, nodesList):
             if self.graph.node[edge[0]]['color']==self.graph.node[edge[0]]['color']:

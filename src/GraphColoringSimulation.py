@@ -11,9 +11,17 @@ from GraphProblem import GraphProblem
 from Agent import Agent
 import copy
 from MIP import Mip
+from Utils import Action
+from Utils import Session
 
+
+'''
+Class that runs the simulation
+@overlap defines how many agents control each node (lamda for poisson distribution so not all nodes are the same)
+@systems is a list of system objects (i.e., algorithms to compare)
+'''
 class Simulation:
-    def __init__(self, numAgents, numColors, numNodes, numEdges, overlap = 1):
+    def __init__(self, numAgents, numColors, numNodes, numEdges, systems, overlap = 1, maxIterations = 1000, actionLimit = 3, queryLimit = 5, weightInc = 1.0):
         #generate graph structure
         self.graph = nx.dense_gnm_random_graph(numNodes, numEdges)
         #assign random colors
@@ -21,22 +29,27 @@ class Simulation:
             data['color'] = random.randint(0,numColors-1)
             
         #create graphProblem object
-        colors = [i for i in xrange(10)]
+        self.colors = [i for i in xrange(numColors)]
         problemGraph = copy.deepcopy(self.graph)
 
-        self.instance = GraphProblem(problemGraph, colors)
+        self.instance = GraphProblem(problemGraph, self.colors)
         self.numAgents = numAgents
         self.overlap = overlap
+        self.systems = systems
+        self.solved = False #is the CSP problem solved (to terminate simulation)
+        self.numIterations = 0 
+        self.maxIterations = maxIterations
+        self.actionLimit = actionLimit
+        self.queryLimit = queryLimit
+        self.weightIncOfAction = weightInc
         #assign nodes to agents
         agentAssignments = self.assignAgents()
         #create agents objects
         self.agents = []
         for agent,nodes in agentAssignments.iteritems():
-            newAgent = Agent(agent,nodes,copy.deepcopy(self.graph))
+            newAgent = Agent(agent,nodes,copy.deepcopy(self.graph), self.colors,self.actionLimit)
             self.agents.append(newAgent)
             
-        #initialize MIP
-        self.mip =  Mip()
         return
         
     def assignAgents(self):
@@ -45,15 +58,37 @@ class Simulation:
             agentAssignments[agent] = []
         
         for i in self.graph.nodes():
-            assignedAgents = np.random.choice(self.numAgents, self.overlap)
+            numAgentsControllingNode = np.random.poisson(self.overlap)
+            assignedAgents = np.random.choice(self.numAgents, numAgentsControllingNode)
             for a in assignedAgents:
                 agentAssignments[a].append(i)
         
         return agentAssignments
     
-    def runSimulation(self,maxIterations = 1000):
-        #TODO: actually implement     
-        pass  
+    def runSimulation(self):
+        #run each system       
+        for system in self.systems:
+            while ((self.solved == False) & (self.numIterations<self.maxIterations)): 
+                for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
+                    info = system.query(agent, self.queryLimit) #get nodes info to share with agent. info is dict with node ids and colors
+                    agent.updateBelief(info) #update agents knowledge
+                    actions = agent.chooseActions() #query agent for actions
+                    
+                    #send update to system
+                    actionObjs = []
+                    for node,col in actions:
+                        actionObj = Action(agent, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
+                        actionObjs.append(actionObj)
+                    session = Session(agent, actionObjs, self.numIterations)
+                    system.update(session) #send info back to system
+                    
+                    #send update to GraphProblem
+                    self.instance.updateGraph(actions)
+                    
+                    #increment num of iterations
+                    self.numIterations = self.numIterations + 1
+                 
+          
             
                 
     

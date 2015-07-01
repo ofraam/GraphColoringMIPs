@@ -18,7 +18,7 @@ class Agent:
         self.colors = colors #possible colors 
         #the graph sent by simulation has the colors, need to remove them for each agent
         for node, data in self.knownGraph.nodes(data = True):
-#            data['color']= -1 #TODO: bring back to initialize!
+            data['color']= -1 #for testing, might need to change (start with knowing some colors)
             data['uptoDate']= False
         
         self.graphState = {}; #will hold current known numbers for 'conflicts' 'notConflicts' and 'unknown'
@@ -129,7 +129,7 @@ class Agent:
         return bestSolution;
                     
                     
-    def computeNumConflicts(self,actionSet): #TODO: test
+    def computeNumConflicts(self,actionSet): 
 
         newGraphState = {} #dictionary with 'conflicts' 'notConflicts' and 'unknown'
         prevColors = {} #store previous colors to check changed conflicts
@@ -279,7 +279,10 @@ if __name__ == '__main__':
     
     print 'numEdges = ' + str(len(G.edges()))
     
-    agt.chooseActions()
+    acts = agt.chooseActions()
+    for i,j in acts:
+        print i
+        print j
     #test update belief
 #    newKnownNodes = {}
 #    for i in range(0,3):
