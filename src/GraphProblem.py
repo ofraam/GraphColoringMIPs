@@ -39,7 +39,38 @@ class GraphProblem:
                 
     def getNodesSubgraph(self,nodesList):
         return nx.edges(self.graph, nodesList)
-        
+    
+    def getPercentColored(self):
+        coloredCounter = 0.0
+        for node in self.graph.nodes(data = True):
+            if node['color']!=-1:
+                coloredCounter = coloredCounter + 1
+        percentColored = coloredCounter/len(self.graph.nodes())
+        return percentColored
+    
+    def getGraphState(self):
+        graphState = {}
+        #counters of updates to conflicts
+        unknown = 0
+        conf = 0
+        nonConf = 0 
+        for u,v in self.graph.edges_iter():
+#            print 'u = '+str(u) + ", v = "+str(v)
+            colU = self.graph.node[u]['color']
+            colV = self.graph.node[v]['color']
+#            print 'colU = '+ str(colU)+", colV = "+str(colV)
+            if ((colU == -1) | (colV == -1)):
+                unknown = unknown + 1
+            elif colU == colV:
+                conf = conf+1
+            else:
+                nonConf = nonConf + 1
+                
+        graphState['conflicts'] = conf
+        graphState['notConflicts'] = nonConf
+        graphState['unknown'] = unknown
+        return graphState
+    
 if __name__ == '__main__':
     G=nx.Graph()
     G.add_edge(1,2)  # default edge data=1

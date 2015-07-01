@@ -12,6 +12,7 @@ from Agent import Agent
 import copy
 from MIP import Mip
 from Utils import Action
+from Utils import Result
 from Utils import Session
 
 
@@ -59,18 +60,25 @@ class Simulation:
         
         for i in self.graph.nodes():
             numAgentsControllingNode = np.random.poisson(self.overlap)
-            assignedAgents = np.random.choice(self.numAgents, numAgentsControllingNode)
+            assignedAgents = np.random.choice(self.agents, numAgentsControllingNode)
             for a in assignedAgents:
                 agentAssignments[a].append(i)
         
         return agentAssignments
     
     def runSimulation(self):
+        #store results
+        results = {}
+        #save initial state to revert for each system
+        initialProblem = copy.deepcopy(self.instance)
         #run each system       
         for system in self.systems:
             while ((self.solved == False) & (self.numIterations<self.maxIterations)): 
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
-                    info = system.query(agent, self.queryLimit) #get nodes info to share with agent. info is dict with node ids and colors
+                    nodesToShare = system.query(agent, self.queryLimit) #get nodes info to share with agent. nodesToShare is list of nodes
+                    info = {} #dict holding nodes and their colors (to share with agent)
+                    for node in nodesToShare:
+                        info[node] = self.instance.getColor(node)
                     agent.updateBelief(info) #update agents knowledge
                     actions = agent.chooseActions() #query agent for actions
                     
@@ -87,7 +95,14 @@ class Simulation:
                     
                     #increment num of iterations
                     self.numIterations = self.numIterations + 1
-                 
+                    
+            
+            #save result
+            res = Result(system, self.numIterations, self.instance.getGraphState(), self.instance.getPercentColored())
+            results[system] = res
+            #revert graph and restart iterations counter
+            self.instance = initialProblem
+            self.numIterations = 0     
           
             
                 
@@ -95,4 +110,4 @@ class Simulation:
 if __name__ == '__main__':
     sim = Simulation(3,3,20,40,1)
     
-    pass
+    

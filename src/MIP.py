@@ -7,7 +7,7 @@ import networkx as nx
 import math
 
 class Mip:
-    def __init__(self):
+    def __init__(self, alpha = 0.3, beta = 0.5, gamma = 0.2, similarityMetric = "adamic"):
         self.mip = nx.Graph()
         self.aos = {}
         self.users = {}
@@ -18,8 +18,20 @@ class Mip:
         self.minIncrement = 0.1
         self.current_flow_betweeness = None #centrality values of all nodes
         self.log = [] #log holds all the session data 
+        self.alpha = alpha
+        self.beta = beta
+        self.gamma = gamma
+        self.similarityMetric = similarityMetric
               
-                
+    
+    def update(self, session): #to fit System API
+        self.updateMIP(session)
+        
+    def query(self, user, infoLimit):
+        rankedObjects = self.rankObjectsForUser(user)
+        nodesToShare = rankedObjects[:infoLimit]
+        return nodesToShare
+                    
     def updateMIP(self, session):
         #initialize 'updated' attribute of all edges to false
         for edge in self.mip.edges_iter(data=True):
@@ -179,7 +191,41 @@ class Mip:
             prob = prob*(float(self.mip[path[i]][path[i+1]]['weight'])/self.mip.degree(path[i]))
 #        print 'prob' + str(prob)
         return prob
-    
+
+    '''
+    rank all live objects based on DOI to predict what edits a user will make.
+    NOTE: need to call this function with the mip prior to the users' edits!!!
+    '''
+    def rankObjectsForUser(self, user):
+        aoList = self.getLiveAos()
+#        print 'number of aos = '+str(len(aoList))
+        notificationsList = []
+        for ao in aoList:
+            doi = self.DegreeOfInterestMIPs(user, ao,self.current_flow_betweeness, self.alpha, self.beta, self.similarityMetric)  
+            
+            if len(notificationsList)==0:
+                toAdd = []
+                toAdd.append(ao)
+                toAdd.append(doi)
+                notificationsList.append(toAdd)
+            else:
+                j = 0
+                while ((doi<notificationsList[j][1])):
+                    if j<len(notificationsList)-1:
+                        j = j+1
+                    else:
+                        j=j+1
+                        break
+                toAdd = []
+                toAdd.append(ao)
+                toAdd.append(doi)                  
+                if (j<len(notificationsList)):
+                    notificationsList.insert(j, toAdd)
+                else:
+                    notificationsList.append(toAdd)  
+#        print 'notification list size = '+str(len(notificationsList))        
+        return notificationsList
+        
     '''
     rank all live objects based on DOI to predict what edits a user will make.
     NOTE: need to call this function with the mip prior to the users' edits!!!
