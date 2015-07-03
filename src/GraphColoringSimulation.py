@@ -60,14 +60,15 @@ class Simulation:
         
     def assignAgents(self):
         agentAssignments = {}
+        agentIds = []
         for agent in range(self.numAgents):
             agentAssignments[agent] = []
-        
+            agentIds.append(agent)
         for i in self.graph.nodes():
             numAgentsControllingNode = np.random.poisson(self.overlap) #draw from distribution
             numAgentsControllingNode = max(1,numAgentsControllingNode) #can't have a node that is not controlled by any agent
             numAgentsControllingNode = min(self.numAgents,numAgentsControllingNode) #can't have more than the number of agents controlling a node 
-            assignedAgents = np.random.choice(self.numAgents, numAgentsControllingNode)
+            assignedAgents = random.sample(agentIds, numAgentsControllingNode)
             for a in assignedAgents:
                 agentAssignments[a].append(i)
         
@@ -143,17 +144,19 @@ if __name__ == '__main__':
     mostChanged = MostChangedSystem()
     mostChangeInt = MostChangedInIntervalSystem(5)
     latestSys = LatestChangedSystem()
-#    systems.append(randSys)
-#    systems.append(mostChanged)
+    systems.append(randSys)
+    systems.append(mostChanged)
     mip = Mip()
     systems.append(mip)
-#    systems.append(mostChangeInt)
-#    systems.append(latestSys)
+    systems.append(mostChangeInt)
+    systems.append(latestSys)
     
-    graph = nx.fast_gnp_random_graph(15, 0.3)
-    graph = nx.watts_strogatz_graph(20, 5, 0.7)
-        
-    sim = Simulation(graph, 3, 3, systems, 2, 100, 3, 5, 1.0)
-    sim.runSimulation("watts3.csv")
+#    graph = nx.fast_gnp_random_graph(15, 0.3)
+    filenameBase = '../results/watts_20_5_07'
+    for i in range(10):
+        graph = nx.watts_strogatz_graph(20, 5, 0.7)
+        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 100, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
+        filename = filenameBase+"_run"+str(i)+".csv"
+        sim.runSimulation(filename)
     
     
