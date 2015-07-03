@@ -14,6 +14,10 @@ from MIP import Mip
 from Utils import Action
 from Utils import Result
 from Utils import Session
+import csv
+import Baselines
+from Baselines import RandomSystem, MostChangedSystem,\
+    MostChangedInIntervalSystem, LatestChangedSystem
 
 
 '''
@@ -22,9 +26,9 @@ Class that runs the simulation
 @systems is a list of system objects (i.e., algorithms to compare)
 '''
 class Simulation:
-    def __init__(self, numAgents, numColors, numNodes, numEdges, systems, overlap = 1, maxIterations = 1000, actionLimit = 3, queryLimit = 5, weightInc = 1.0):
+    def __init__(self, graph, numAgents, numColors, systems, overlap = 1, maxIterations = 1000, actionLimit = 3, queryLimit = 5, weightInc = 1.0):
         #generate graph structure
-        self.graph = nx.dense_gnm_random_graph(numNodes, numEdges)
+        self.graph = graph
         #assign random colors
         for node,data in self.graph.nodes(data = True):
             data['color'] = random.randint(0,numColors-1)
@@ -43,10 +47,11 @@ class Simulation:
         self.actionLimit = actionLimit
         self.queryLimit = queryLimit
         self.weightIncOfAction = weightInc
+        #create agents objects
+        self.agents = []        
         #assign nodes to agents
         agentAssignments = self.assignAgents()
-        #create agents objects
-        self.agents = []
+
         for agent,nodes in agentAssignments.iteritems():
             newAgent = Agent(agent,nodes,copy.deepcopy(self.graph), self.colors,self.actionLimit)
             self.agents.append(newAgent)
@@ -59,20 +64,24 @@ class Simulation:
             agentAssignments[agent] = []
         
         for i in self.graph.nodes():
-            numAgentsControllingNode = np.random.poisson(self.overlap)
-            assignedAgents = np.random.choice(self.agents, numAgentsControllingNode)
+            numAgentsControllingNode = np.random.poisson(self.overlap) #draw from distribution
+            numAgentsControllingNode = max(1,numAgentsControllingNode) #can't have a node that is not controlled by any agent
+            numAgentsControllingNode = min(self.numAgents,numAgentsControllingNode) #can't have more than the number of agents controlling a node 
+            assignedAgents = np.random.choice(self.numAgents, numAgentsControllingNode)
             for a in assignedAgents:
                 agentAssignments[a].append(i)
         
         return agentAssignments
     
-    def runSimulation(self):
+    def runSimulation(self, outputFilename):
         #store results
-        results = {}
+        results = []
         #save initial state to revert for each system
-        initialProblem = copy.deepcopy(self.instance)
+        
         #run each system       
         for system in self.systems:
+            initialProblem = copy.deepcopy(self.instance)
+            print 'starting to run algorithm: '+str(system)
             while ((self.solved == False) & (self.numIterations<self.maxIterations)): 
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
                     nodesToShare = system.query(agent, self.queryLimit) #get nodes info to share with agent. nodesToShare is list of nodes
@@ -90,6 +99,16 @@ class Simulation:
                     session = Session(agent, actionObjs, self.numIterations)
                     system.update(session) #send info back to system
                     
+                    #save status
+                    res = {}
+                    res['algorithm'] = system
+                    res['iteration'] = self.numIterations
+                    state = self.instance.getGraphState()
+                    res['conflicts'] = state['conflicts']
+                    res['unknown'] = state['unknown']
+                    res['notConflicts'] = state['notConflicts']
+                    res['percentColored'] = self.instance.getPercentColored()
+                    results.append(res)
                     #send update to GraphProblem
                     self.instance.updateGraph(actions)
                     
@@ -97,17 +116,44 @@ class Simulation:
                     self.numIterations = self.numIterations + 1
                     
             
-            #save result
-            res = Result(system, self.numIterations, self.instance.getGraphState(), self.instance.getPercentColored())
-            results[system] = res
+            #save results
+#            res = Result(system, self.numIterations, self.instance.getGraphState(), self.instance.getPercentColored())
+#            results[system] = res
             #revert graph and restart iterations counter
             self.instance = initialProblem
             self.numIterations = 0     
+            print 'finished running algorithm: '+str(system)
+            
+        #save results to file
+        with open(outputFilename, 'wb') as csvfile:
+            fieldnames = ['algorithm', 'iteration', 'conflicts','unknown','notConflicts','percentColored']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        
+            writer.writeheader()
+            for res in results:
+                writer.writerow(res)
+        
           
             
                 
     
 if __name__ == '__main__':
-    sim = Simulation(3,3,20,40,1)
+    systems = []
+    randSys = RandomSystem()
+    mostChanged = MostChangedSystem()
+    mostChangeInt = MostChangedInIntervalSystem(5)
+    latestSys = LatestChangedSystem()
+#    systems.append(randSys)
+#    systems.append(mostChanged)
+    mip = Mip()
+    systems.append(mip)
+#    systems.append(mostChangeInt)
+#    systems.append(latestSys)
+    
+    graph = nx.fast_gnp_random_graph(15, 0.3)
+    graph = nx.watts_strogatz_graph(20, 5, 0.7)
+        
+    sim = Simulation(graph, 3, 3, systems, 2, 100, 3, 5, 1.0)
+    sim.runSimulation("watts3.csv")
     
     

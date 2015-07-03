@@ -11,8 +11,8 @@ class GraphProblem:
     def __init__(self, graphObj, colors):
         self.graph = graphObj
         self.colors = colors
-        for node in self.graph.nodes(data=True): #initialize all colors to -1 (color not set yet)
-            node['color'] = -1
+        for node,data in self.graph.nodes(data=True): #initialize all colors to -1 (color not set yet)
+            data['color'] = -1
         
     def updateGraph(self, changes):
         for node,col in changes:
@@ -42,8 +42,8 @@ class GraphProblem:
     
     def getPercentColored(self):
         coloredCounter = 0.0
-        for node in self.graph.nodes(data = True):
-            if node['color']!=-1:
+        for node,data in self.graph.nodes(data = True):
+            if data['color']!=-1:
                 coloredCounter = coloredCounter + 1
         percentColored = coloredCounter/len(self.graph.nodes())
         return percentColored

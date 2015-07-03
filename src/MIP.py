@@ -11,17 +11,20 @@ class Mip:
         self.mip = nx.Graph()
         self.aos = {}
         self.users = {}
+        self.objects  = {}
         self.iteration = 0
         self.lastID = 0
         self.decay = 0.01
-        self.sigIncrement = 1
+        self.sigIncrement = 1.0
         self.minIncrement = 0.1
+        self.objectsInc = 1.0
         self.current_flow_betweeness = None #centrality values of all nodes
         self.log = [] #log holds all the session data 
         self.alpha = alpha
         self.beta = beta
         self.gamma = gamma
         self.similarityMetric = similarityMetric
+        self.nodeIDsToObjects = {}
               
     
     def update(self, session): #to fit System API
@@ -30,7 +33,8 @@ class Mip:
     def query(self, user, infoLimit):
         rankedObjects = self.rankObjectsForUser(user)
         nodesToShare = rankedObjects[:infoLimit]
-        return nodesToShare
+        nodes = [i[0] for i in nodesToShare]
+        return nodes
                     
     def updateMIP(self, session):
         #initialize 'updated' attribute of all edges to false
@@ -54,7 +58,7 @@ class Mip:
             if act.actType == 'delete':
                 self.mip.node[self.objects[act.ao]]['deleted'] = 1
         
-        for i in range(len(session.actions)):
+        for i in range(len(session.actions)-1):
             ao_node1 = self.objects[session.actions[i].ao]
             for j in range(i+1, len(session.actions)):
                 ao_node2 = self.objects[session.actions[j].ao]
@@ -80,7 +84,7 @@ class Mip:
             attr = {}
             attr['type']='user'
             self.mip.add_node(self.lastID, attr)
-            self.nodeIdsToUsers[self.lastID]=user_name
+#            self.nodeIdsToUsers[self.lastID]=user_name
         return self.users[user_name]
             
     
@@ -92,8 +96,9 @@ class Mip:
             self.objects[object_id] = self.lastID
             attr = {}
             attr['type']='object'
+            attr['deleted'] = 0
             self.mip.add_node(self.lastID, attr)
-            self.nodeIdsToObjects[self.lastID]=object_id
+            self.nodeIDsToObjects[self.lastID]=object_id
         return self.objects[object_id]
         
            
@@ -117,8 +122,8 @@ class Mip:
     
     def getLiveAos(self):
         liveObjects = []
-        for node in self.mip.nodes(True):
-            if node[1]['type']=='par':
+        for node in self.mip.nodes(data = True):
+            if node[1]['type']=='object':
                 if node[1]['deleted']==0:
                     liveObjects.append(node[0])
         return liveObjects
@@ -205,7 +210,7 @@ class Mip:
             
             if len(notificationsList)==0:
                 toAdd = []
-                toAdd.append(ao)
+                toAdd.append(self.nodeIDsToObjects[ao])
                 toAdd.append(doi)
                 notificationsList.append(toAdd)
             else:
@@ -217,7 +222,7 @@ class Mip:
                         j=j+1
                         break
                 toAdd = []
-                toAdd.append(ao)
+                toAdd.append(self.nodeIDsToObjects[ao])
                 toAdd.append(doi)                  
                 if (j<len(notificationsList)):
                     notificationsList.insert(j, toAdd)
@@ -239,7 +244,7 @@ class Mip:
             
             if len(notificationsList)==0:
                 toAdd = []
-                toAdd.append(ao)
+                toAdd.append(self.nodeIDsToObjects[ao])
                 toAdd.append(doi)
                 notificationsList.append(toAdd)
             else:
@@ -251,7 +256,7 @@ class Mip:
                         j=j+1
                         break
                 toAdd = []
-                toAdd.append(ao)
+                toAdd.append(self.nodeIDsToObjects[ao])
                 toAdd.append(doi)                  
                 if (j<len(notificationsList)):
                     notificationsList.insert(j, toAdd)
@@ -323,7 +328,9 @@ class Mip:
                         
         return notificationsList
 
-             
+    def __str__(self):
+        return "MIP" 
+                 
                 
     '''
     -----------------------------------------------------------------------------

@@ -90,10 +90,10 @@ class Agent:
         #stop condition - when we reached the limit of actions permitted, or when reached the last node we can change
         if ((len(currSolution['actionSet']) == self.actionLimit) | (nodeCounter == len(self.controlledNodes))):
             if currSolution['conflicts'] < bestSolution['conflicts']: 
-                print 'oldBest: '+str(bestSolution)
+#                print 'oldBest: '+str(bestSolution)
                 
                 bestSolution=currSolution
-                print 'newBest: '+str(bestSolution)
+#                print 'newBest: '+str(bestSolution)
                 
             #break ties in favor of more known non-conflicts (otherwise might bias towards doing nothing)   
             elif currSolution['conflicts'] == bestSolution['conflicts']:
@@ -102,8 +102,6 @@ class Agent:
             return bestSolution
         else:
             #call function with all possible options for next node (not change, change to each of the colors that differ from the current color)
-            
-            
             for color in self.colors: #change current node and recall function with each option
                 if color != self.knownGraph.node[self.controlledNodes[nodeCounter]]['color']: #don't try the same color, that is equivalent to no action so should not "waste" real action on that
                     newActionSet = copy.deepcopy(currSolution['actionSet'])
@@ -111,9 +109,9 @@ class Agent:
                     newGraphState = self.computeNumConflicts(newActionSet)
 
                     if newGraphState['conflicts']>bestSolution['conflicts']:
-                        print 'pruned: '+str(newActionSet)
-                        print 'best solution = '+str(bestSolution)
-                        print 'newGraphState = '+str(newGraphState)
+#                        print 'pruned: '+str(newActionSet)
+#                        print 'best solution = '+str(bestSolution)
+#                        print 'newGraphState = '+str(newGraphState)
                         continue;
 
                     else:
@@ -130,14 +128,13 @@ class Agent:
                     
                     
     def computeNumConflicts(self,actionSet): 
-
         newGraphState = {} #dictionary with 'conflicts' 'notConflicts' and 'unknown'
         prevColors = {} #store previous colors to check changed conflicts
         #counters of updates to conflicts
         unknown = 0
         conf = 0
         nonConf = 0 
-        print actionSet
+#        print actionSet
 #        print len(actionSet)
         if len(actionSet) == 0:
             newGraphState['conflicts'] = self.graphState['conflicts']+conf
@@ -228,7 +225,7 @@ if __name__ == '__main__':
     for n in range(0,12):
         col = random.choice(possibleColorValues)
         G.add_node(n, color = col)
-        print 'node: '+str(G.node[n])
+#        print 'node: '+str(G.node[n])
         if col == -1:
             unknownNodes.append(n)
         elif col == 0:
