@@ -1,0 +1,511 @@
+graphName,algorithm,iteration,conflicts,unknown,notConflicts,percentColored
+watts_20_5_07,Random,0,0,40,0,0.0
+watts_20_5_07,Random,1,1,39,0,0.15
+watts_20_5_07,Random,2,2,38,0,0.3
+watts_20_5_07,Random,3,3,35,2,0.35
+watts_20_5_07,Random,4,4,33,3,0.4
+watts_20_5_07,Random,5,4,30,6,0.5
+watts_20_5_07,Random,6,4,24,12,0.6
+watts_20_5_07,Random,7,4,24,12,0.6
+watts_20_5_07,Random,8,2,24,14,0.6
+watts_20_5_07,Random,9,2,24,14,0.6
+watts_20_5_07,Random,10,0,23,17,0.65
+watts_20_5_07,Random,11,4,21,15,0.7
+watts_20_5_07,Random,12,12,21,7,0.7
+watts_20_5_07,Random,13,8,19,13,0.75
+watts_20_5_07,Random,14,5,19,16,0.75
+watts_20_5_07,Random,15,2,19,19,0.75
+watts_20_5_07,Random,16,3,19,18,0.75
+watts_20_5_07,Random,17,3,19,18,0.75
+watts_20_5_07,Random,18,1,15,24,0.8
+watts_20_5_07,Random,19,1,15,24,0.8
+watts_20_5_07,Random,20,1,15,24,0.8
+watts_20_5_07,Random,21,0,15,25,0.8
+watts_20_5_07,Random,22,0,15,25,0.8
+watts_20_5_07,Random,23,3,15,22,0.8
+watts_20_5_07,Random,24,3,12,25,0.85
+watts_20_5_07,Random,25,3,12,25,0.85
+watts_20_5_07,Random,26,5,7,28,0.9
+watts_20_5_07,Random,27,5,7,28,0.9
+watts_20_5_07,Random,28,5,7,28,0.9
+watts_20_5_07,Random,29,3,7,30,0.9
+watts_20_5_07,Random,30,3,7,30,0.9
+watts_20_5_07,Random,31,4,7,29,0.9
+watts_20_5_07,Random,32,5,7,28,0.9
+watts_20_5_07,Random,33,5,7,28,0.9
+watts_20_5_07,Random,34,5,7,28,0.9
+watts_20_5_07,Random,35,5,7,28,0.9
+watts_20_5_07,Random,36,5,5,30,0.95
+watts_20_5_07,Random,37,5,5,30,0.95
+watts_20_5_07,Random,38,4,5,31,0.95
+watts_20_5_07,Random,39,6,0,34,1.0
+watts_20_5_07,Random,40,7,0,33,1.0
+watts_20_5_07,Random,41,6,0,34,1.0
+watts_20_5_07,Random,42,5,0,35,1.0
+watts_20_5_07,Random,43,5,0,35,1.0
+watts_20_5_07,Random,44,4,0,36,1.0
+watts_20_5_07,Random,45,5,0,35,1.0
+watts_20_5_07,Random,46,5,0,35,1.0
+watts_20_5_07,Random,47,5,0,35,1.0
+watts_20_5_07,Random,48,5,0,35,1.0
+watts_20_5_07,Random,49,8,0,32,1.0
+watts_20_5_07,Random,50,4,0,36,1.0
+watts_20_5_07,Random,51,4,0,36,1.0
+watts_20_5_07,Random,52,5,0,35,1.0
+watts_20_5_07,Random,53,9,0,31,1.0
+watts_20_5_07,Random,54,11,0,29,1.0
+watts_20_5_07,Random,55,11,0,29,1.0
+watts_20_5_07,Random,56,11,0,29,1.0
+watts_20_5_07,Random,57,10,0,30,1.0
+watts_20_5_07,Random,58,10,0,30,1.0
+watts_20_5_07,Random,59,10,0,30,1.0
+watts_20_5_07,Random,60,8,0,32,1.0
+watts_20_5_07,Random,61,8,0,32,1.0
+watts_20_5_07,Random,62,6,0,34,1.0
+watts_20_5_07,Random,63,6,0,34,1.0
+watts_20_5_07,Random,64,9,0,31,1.0
+watts_20_5_07,Random,65,8,0,32,1.0
+watts_20_5_07,Random,66,6,0,34,1.0
+watts_20_5_07,Random,67,10,0,30,1.0
+watts_20_5_07,Random,68,10,0,30,1.0
+watts_20_5_07,Random,69,10,0,30,1.0
+watts_20_5_07,Random,70,10,0,30,1.0
+watts_20_5_07,Random,71,11,0,29,1.0
+watts_20_5_07,Random,72,7,0,33,1.0
+watts_20_5_07,Random,73,7,0,33,1.0
+watts_20_5_07,Random,74,5,0,35,1.0
+watts_20_5_07,Random,75,6,0,34,1.0
+watts_20_5_07,Random,76,4,0,36,1.0
+watts_20_5_07,Random,77,6,0,34,1.0
+watts_20_5_07,Random,78,6,0,34,1.0
+watts_20_5_07,Random,79,4,0,36,1.0
+watts_20_5_07,Random,80,3,0,37,1.0
+watts_20_5_07,Random,81,3,0,37,1.0
+watts_20_5_07,Random,82,3,0,37,1.0
+watts_20_5_07,Random,83,3,0,37,1.0
+watts_20_5_07,Random,84,7,0,33,1.0
+watts_20_5_07,Random,85,7,0,33,1.0
+watts_20_5_07,Random,86,5,0,35,1.0
+watts_20_5_07,Random,87,5,0,35,1.0
+watts_20_5_07,Random,88,7,0,33,1.0
+watts_20_5_07,Random,89,7,0,33,1.0
+watts_20_5_07,Random,90,7,0,33,1.0
+watts_20_5_07,Random,91,7,0,33,1.0
+watts_20_5_07,Random,92,8,0,32,1.0
+watts_20_5_07,Random,93,8,0,32,1.0
+watts_20_5_07,Random,94,5,0,35,1.0
+watts_20_5_07,Random,95,5,0,35,1.0
+watts_20_5_07,Random,96,8,0,32,1.0
+watts_20_5_07,Random,97,11,0,29,1.0
+watts_20_5_07,Random,98,11,0,29,1.0
+watts_20_5_07,Random,99,9,0,31,1.0
+watts_20_5_07,Random,100,13,0,27,1.0
+watts_20_5_07,Random,101,12,0,28,1.0
+watts_20_5_07,MostChanged,0,0,40,0,0.0
+watts_20_5_07,MostChanged,1,1,39,0,0.15
+watts_20_5_07,MostChanged,2,0,38,2,0.25
+watts_20_5_07,MostChanged,3,1,32,7,0.4
+watts_20_5_07,MostChanged,4,2,27,11,0.5
+watts_20_5_07,MostChanged,5,2,25,13,0.55
+watts_20_5_07,MostChanged,6,2,22,16,0.6
+watts_20_5_07,MostChanged,7,2,22,16,0.6
+watts_20_5_07,MostChanged,8,2,20,18,0.7
+watts_20_5_07,MostChanged,9,3,16,21,0.75
+watts_20_5_07,MostChanged,10,3,16,21,0.75
+watts_20_5_07,MostChanged,11,3,16,21,0.75
+watts_20_5_07,MostChanged,12,3,16,21,0.75
+watts_20_5_07,MostChanged,13,3,14,23,0.8
+watts_20_5_07,MostChanged,14,3,14,23,0.8
+watts_20_5_07,MostChanged,15,3,14,23,0.8
+watts_20_5_07,MostChanged,16,3,14,23,0.8
+watts_20_5_07,MostChanged,17,3,14,23,0.8
+watts_20_5_07,MostChanged,18,3,14,23,0.8
+watts_20_5_07,MostChanged,19,3,14,23,0.8
+watts_20_5_07,MostChanged,20,4,10,26,0.85
+watts_20_5_07,MostChanged,21,4,10,26,0.85
+watts_20_5_07,MostChanged,22,4,10,26,0.85
+watts_20_5_07,MostChanged,23,5,10,25,0.85
+watts_20_5_07,MostChanged,24,5,10,25,0.85
+watts_20_5_07,MostChanged,25,6,10,24,0.85
+watts_20_5_07,MostChanged,26,6,10,24,0.85
+watts_20_5_07,MostChanged,27,5,10,25,0.85
+watts_20_5_07,MostChanged,28,5,10,25,0.85
+watts_20_5_07,MostChanged,29,5,10,25,0.85
+watts_20_5_07,MostChanged,30,5,10,25,0.85
+watts_20_5_07,MostChanged,31,4,10,26,0.85
+watts_20_5_07,MostChanged,32,5,10,25,0.85
+watts_20_5_07,MostChanged,33,5,10,25,0.85
+watts_20_5_07,MostChanged,34,5,10,25,0.85
+watts_20_5_07,MostChanged,35,5,10,25,0.85
+watts_20_5_07,MostChanged,36,5,10,25,0.85
+watts_20_5_07,MostChanged,37,5,10,25,0.85
+watts_20_5_07,MostChanged,38,5,10,25,0.85
+watts_20_5_07,MostChanged,39,5,10,25,0.85
+watts_20_5_07,MostChanged,40,5,7,28,0.9
+watts_20_5_07,MostChanged,41,4,7,29,0.9
+watts_20_5_07,MostChanged,42,4,7,29,0.9
+watts_20_5_07,MostChanged,43,5,7,28,0.9
+watts_20_5_07,MostChanged,44,5,7,28,0.9
+watts_20_5_07,MostChanged,45,6,2,32,0.95
+watts_20_5_07,MostChanged,46,6,2,32,0.95
+watts_20_5_07,MostChanged,47,4,2,34,0.95
+watts_20_5_07,MostChanged,48,4,2,34,0.95
+watts_20_5_07,MostChanged,49,4,2,34,0.95
+watts_20_5_07,MostChanged,50,4,2,34,0.95
+watts_20_5_07,MostChanged,51,4,2,34,0.95
+watts_20_5_07,MostChanged,52,4,2,34,0.95
+watts_20_5_07,MostChanged,53,4,2,34,0.95
+watts_20_5_07,MostChanged,54,4,2,34,0.95
+watts_20_5_07,MostChanged,55,4,2,34,0.95
+watts_20_5_07,MostChanged,56,4,2,34,0.95
+watts_20_5_07,MostChanged,57,4,2,34,0.95
+watts_20_5_07,MostChanged,58,4,2,34,0.95
+watts_20_5_07,MostChanged,59,4,2,34,0.95
+watts_20_5_07,MostChanged,60,4,2,34,0.95
+watts_20_5_07,MostChanged,61,4,2,34,0.95
+watts_20_5_07,MostChanged,62,4,2,34,0.95
+watts_20_5_07,MostChanged,63,8,2,30,0.95
+watts_20_5_07,MostChanged,64,8,2,30,0.95
+watts_20_5_07,MostChanged,65,8,2,30,0.95
+watts_20_5_07,MostChanged,66,8,2,30,0.95
+watts_20_5_07,MostChanged,67,8,2,30,0.95
+watts_20_5_07,MostChanged,68,8,2,30,0.95
+watts_20_5_07,MostChanged,69,6,2,32,0.95
+watts_20_5_07,MostChanged,70,6,2,32,0.95
+watts_20_5_07,MostChanged,71,6,2,32,0.95
+watts_20_5_07,MostChanged,72,6,2,32,0.95
+watts_20_5_07,MostChanged,73,6,2,32,0.95
+watts_20_5_07,MostChanged,74,6,2,32,0.95
+watts_20_5_07,MostChanged,75,6,2,32,0.95
+watts_20_5_07,MostChanged,76,6,2,32,0.95
+watts_20_5_07,MostChanged,77,6,2,32,0.95
+watts_20_5_07,MostChanged,78,6,2,32,0.95
+watts_20_5_07,MostChanged,79,4,2,34,0.95
+watts_20_5_07,MostChanged,80,4,2,34,0.95
+watts_20_5_07,MostChanged,81,3,2,35,0.95
+watts_20_5_07,MostChanged,82,3,2,35,0.95
+watts_20_5_07,MostChanged,83,3,2,35,0.95
+watts_20_5_07,MostChanged,84,4,2,34,0.95
+watts_20_5_07,MostChanged,85,4,2,34,0.95
+watts_20_5_07,MostChanged,86,4,2,34,0.95
+watts_20_5_07,MostChanged,87,8,2,30,0.95
+watts_20_5_07,MostChanged,88,8,2,30,0.95
+watts_20_5_07,MostChanged,89,8,2,30,0.95
+watts_20_5_07,MostChanged,90,8,2,30,0.95
+watts_20_5_07,MostChanged,91,8,2,30,0.95
+watts_20_5_07,MostChanged,92,8,2,30,0.95
+watts_20_5_07,MostChanged,93,4,2,34,0.95
+watts_20_5_07,MostChanged,94,4,2,34,0.95
+watts_20_5_07,MostChanged,95,4,2,34,0.95
+watts_20_5_07,MostChanged,96,4,2,34,0.95
+watts_20_5_07,MostChanged,97,4,2,34,0.95
+watts_20_5_07,MostChanged,98,4,2,34,0.95
+watts_20_5_07,MostChanged,99,4,2,34,0.95
+watts_20_5_07,MostChanged,100,4,2,34,0.95
+watts_20_5_07,MostChanged,101,4,2,34,0.95
+watts_20_5_07,MIP,0,0,40,0,0.0
+watts_20_5_07,MIP,1,0,39,1,0.15
+watts_20_5_07,MIP,2,1,36,3,0.25
+watts_20_5_07,MIP,3,3,30,7,0.4
+watts_20_5_07,MIP,4,4,27,9,0.5
+watts_20_5_07,MIP,5,4,25,11,0.6
+watts_20_5_07,MIP,6,4,25,11,0.6
+watts_20_5_07,MIP,7,4,25,11,0.6
+watts_20_5_07,MIP,8,4,25,11,0.6
+watts_20_5_07,MIP,9,4,25,11,0.6
+watts_20_5_07,MIP,10,4,25,11,0.6
+watts_20_5_07,MIP,11,7,21,12,0.65
+watts_20_5_07,MIP,12,7,21,12,0.65
+watts_20_5_07,MIP,13,7,21,12,0.65
+watts_20_5_07,MIP,14,5,21,14,0.65
+watts_20_5_07,MIP,15,5,18,17,0.7
+watts_20_5_07,MIP,16,5,18,17,0.7
+watts_20_5_07,MIP,17,5,17,18,0.75
+watts_20_5_07,MIP,18,4,17,19,0.75
+watts_20_5_07,MIP,19,4,17,19,0.75
+watts_20_5_07,MIP,20,3,17,20,0.75
+watts_20_5_07,MIP,21,3,17,20,0.75
+watts_20_5_07,MIP,22,3,17,20,0.75
+watts_20_5_07,MIP,23,3,17,20,0.75
+watts_20_5_07,MIP,24,3,17,20,0.75
+watts_20_5_07,MIP,25,3,17,20,0.75
+watts_20_5_07,MIP,26,3,17,20,0.75
+watts_20_5_07,MIP,27,3,17,20,0.75
+watts_20_5_07,MIP,28,3,17,20,0.75
+watts_20_5_07,MIP,29,3,17,20,0.75
+watts_20_5_07,MIP,30,3,17,20,0.75
+watts_20_5_07,MIP,31,3,17,20,0.75
+watts_20_5_07,MIP,32,3,17,20,0.75
+watts_20_5_07,MIP,33,3,17,20,0.75
+watts_20_5_07,MIP,34,3,17,20,0.75
+watts_20_5_07,MIP,35,3,17,20,0.75
+watts_20_5_07,MIP,36,3,17,20,0.75
+watts_20_5_07,MIP,37,3,17,20,0.75
+watts_20_5_07,MIP,38,3,17,20,0.75
+watts_20_5_07,MIP,39,4,17,19,0.75
+watts_20_5_07,MIP,40,4,17,19,0.75
+watts_20_5_07,MIP,41,3,17,20,0.75
+watts_20_5_07,MIP,42,3,17,20,0.75
+watts_20_5_07,MIP,43,3,17,20,0.75
+watts_20_5_07,MIP,44,3,17,20,0.75
+watts_20_5_07,MIP,45,3,17,20,0.75
+watts_20_5_07,MIP,46,3,17,20,0.75
+watts_20_5_07,MIP,47,3,17,20,0.75
+watts_20_5_07,MIP,48,3,17,20,0.75
+watts_20_5_07,MIP,49,3,17,20,0.75
+watts_20_5_07,MIP,50,3,17,20,0.75
+watts_20_5_07,MIP,51,3,17,20,0.75
+watts_20_5_07,MIP,52,3,17,20,0.75
+watts_20_5_07,MIP,53,3,17,20,0.75
+watts_20_5_07,MIP,54,3,17,20,0.75
+watts_20_5_07,MIP,55,3,17,20,0.75
+watts_20_5_07,MIP,56,3,17,20,0.75
+watts_20_5_07,MIP,57,3,17,20,0.75
+watts_20_5_07,MIP,58,3,17,20,0.75
+watts_20_5_07,MIP,59,3,17,20,0.75
+watts_20_5_07,MIP,60,3,17,20,0.75
+watts_20_5_07,MIP,61,3,17,20,0.75
+watts_20_5_07,MIP,62,3,17,20,0.75
+watts_20_5_07,MIP,63,3,17,20,0.75
+watts_20_5_07,MIP,64,3,17,20,0.75
+watts_20_5_07,MIP,65,3,17,20,0.75
+watts_20_5_07,MIP,66,3,17,20,0.75
+watts_20_5_07,MIP,67,4,17,19,0.75
+watts_20_5_07,MIP,68,3,17,20,0.75
+watts_20_5_07,MIP,69,3,17,20,0.75
+watts_20_5_07,MIP,70,2,17,21,0.75
+watts_20_5_07,MIP,71,1,17,22,0.75
+watts_20_5_07,MIP,72,1,17,22,0.75
+watts_20_5_07,MIP,73,1,15,24,0.8
+watts_20_5_07,MIP,74,1,15,24,0.8
+watts_20_5_07,MIP,75,1,15,24,0.8
+watts_20_5_07,MIP,76,1,15,24,0.8
+watts_20_5_07,MIP,77,1,15,24,0.8
+watts_20_5_07,MIP,78,1,15,24,0.8
+watts_20_5_07,MIP,79,1,15,24,0.8
+watts_20_5_07,MIP,80,1,15,24,0.8
+watts_20_5_07,MIP,81,1,15,24,0.8
+watts_20_5_07,MIP,82,1,15,24,0.8
+watts_20_5_07,MIP,83,1,15,24,0.8
+watts_20_5_07,MIP,84,1,15,24,0.8
+watts_20_5_07,MIP,85,1,15,24,0.8
+watts_20_5_07,MIP,86,1,15,24,0.8
+watts_20_5_07,MIP,87,1,15,24,0.8
+watts_20_5_07,MIP,88,1,15,24,0.8
+watts_20_5_07,MIP,89,1,15,24,0.8
+watts_20_5_07,MIP,90,1,15,24,0.8
+watts_20_5_07,MIP,91,1,15,24,0.8
+watts_20_5_07,MIP,92,1,15,24,0.8
+watts_20_5_07,MIP,93,1,15,24,0.8
+watts_20_5_07,MIP,94,1,15,24,0.8
+watts_20_5_07,MIP,95,1,15,24,0.8
+watts_20_5_07,MIP,96,1,15,24,0.8
+watts_20_5_07,MIP,97,1,15,24,0.8
+watts_20_5_07,MIP,98,1,15,24,0.8
+watts_20_5_07,MIP,99,1,15,24,0.8
+watts_20_5_07,MIP,100,1,15,24,0.8
+watts_20_5_07,MIP,101,1,15,24,0.8
+watts_20_5_07,MostChangedInterval (5),0,0,40,0,0.0
+watts_20_5_07,MostChangedInterval (5),1,0,40,0,0.15
+watts_20_5_07,MostChangedInterval (5),2,0,36,4,0.3
+watts_20_5_07,MostChangedInterval (5),3,1,31,8,0.45
+watts_20_5_07,MostChangedInterval (5),4,2,28,10,0.5
+watts_20_5_07,MostChangedInterval (5),5,2,24,14,0.55
+watts_20_5_07,MostChangedInterval (5),6,2,24,14,0.55
+watts_20_5_07,MostChangedInterval (5),7,3,22,15,0.6
+watts_20_5_07,MostChangedInterval (5),8,3,22,15,0.6
+watts_20_5_07,MostChangedInterval (5),9,3,22,15,0.6
+watts_20_5_07,MostChangedInterval (5),10,3,22,15,0.6
+watts_20_5_07,MostChangedInterval (5),11,3,20,17,0.7
+watts_20_5_07,MostChangedInterval (5),12,3,20,17,0.7
+watts_20_5_07,MostChangedInterval (5),13,3,20,17,0.7
+watts_20_5_07,MostChangedInterval (5),14,3,20,17,0.7
+watts_20_5_07,MostChangedInterval (5),15,3,18,19,0.75
+watts_20_5_07,MostChangedInterval (5),16,3,18,19,0.75
+watts_20_5_07,MostChangedInterval (5),17,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),18,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),19,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),20,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),21,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),22,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),23,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),24,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),25,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),26,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),27,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),28,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),29,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),30,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),31,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),32,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),33,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),34,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),35,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),36,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),37,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),38,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),39,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),40,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),41,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),42,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),43,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),44,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),45,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),46,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),47,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),48,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),49,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),50,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),51,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),52,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),53,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),54,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),55,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),56,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),57,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),58,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),59,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),60,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),61,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),62,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),63,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),64,4,18,18,0.75
+watts_20_5_07,MostChangedInterval (5),65,4,14,22,0.8
+watts_20_5_07,MostChangedInterval (5),66,4,14,22,0.8
+watts_20_5_07,MostChangedInterval (5),67,4,14,22,0.8
+watts_20_5_07,MostChangedInterval (5),68,4,14,22,0.8
+watts_20_5_07,MostChangedInterval (5),69,5,14,21,0.8
+watts_20_5_07,MostChangedInterval (5),70,3,14,23,0.8
+watts_20_5_07,MostChangedInterval (5),71,3,14,23,0.8
+watts_20_5_07,MostChangedInterval (5),72,3,14,23,0.8
+watts_20_5_07,MostChangedInterval (5),73,1,14,25,0.8
+watts_20_5_07,MostChangedInterval (5),74,1,14,25,0.8
+watts_20_5_07,MostChangedInterval (5),75,1,14,25,0.8
+watts_20_5_07,MostChangedInterval (5),76,4,14,22,0.8
+watts_20_5_07,MostChangedInterval (5),77,4,14,22,0.8
+watts_20_5_07,MostChangedInterval (5),78,2,14,24,0.8
+watts_20_5_07,MostChangedInterval (5),79,3,14,23,0.8
+watts_20_5_07,MostChangedInterval (5),80,1,14,25,0.8
+watts_20_5_07,MostChangedInterval (5),81,1,14,25,0.8
+watts_20_5_07,MostChangedInterval (5),82,2,9,29,0.9
+watts_20_5_07,MostChangedInterval (5),83,2,9,29,0.9
+watts_20_5_07,MostChangedInterval (5),84,6,9,25,0.9
+watts_20_5_07,MostChangedInterval (5),85,6,9,25,0.9
+watts_20_5_07,MostChangedInterval (5),86,9,9,22,0.9
+watts_20_5_07,MostChangedInterval (5),87,7,9,24,0.9
+watts_20_5_07,MostChangedInterval (5),88,8,9,23,0.9
+watts_20_5_07,MostChangedInterval (5),89,8,9,23,0.9
+watts_20_5_07,MostChangedInterval (5),90,9,9,22,0.9
+watts_20_5_07,MostChangedInterval (5),91,5,9,26,0.9
+watts_20_5_07,MostChangedInterval (5),92,4,9,27,0.9
+watts_20_5_07,MostChangedInterval (5),93,7,9,24,0.9
+watts_20_5_07,MostChangedInterval (5),94,7,9,24,0.9
+watts_20_5_07,MostChangedInterval (5),95,4,9,27,0.9
+watts_20_5_07,MostChangedInterval (5),96,6,9,25,0.9
+watts_20_5_07,MostChangedInterval (5),97,7,9,24,0.9
+watts_20_5_07,MostChangedInterval (5),98,7,9,24,0.9
+watts_20_5_07,MostChangedInterval (5),99,7,9,24,0.9
+watts_20_5_07,MostChangedInterval (5),100,6,9,25,0.9
+watts_20_5_07,MostChangedInterval (5),101,6,9,25,0.9
+watts_20_5_07,RecentChanges,0,0,40,0,0.0
+watts_20_5_07,RecentChanges,1,1,39,0,0.15
+watts_20_5_07,RecentChanges,2,2,38,0,0.25
+watts_20_5_07,RecentChanges,3,1,35,4,0.35
+watts_20_5_07,RecentChanges,4,1,35,4,0.35
+watts_20_5_07,RecentChanges,5,2,35,3,0.4
+watts_20_5_07,RecentChanges,6,5,31,4,0.45
+watts_20_5_07,RecentChanges,7,5,31,4,0.45
+watts_20_5_07,RecentChanges,8,5,31,4,0.45
+watts_20_5_07,RecentChanges,9,5,31,4,0.45
+watts_20_5_07,RecentChanges,10,5,31,4,0.45
+watts_20_5_07,RecentChanges,11,5,31,4,0.45
+watts_20_5_07,RecentChanges,12,5,31,4,0.45
+watts_20_5_07,RecentChanges,13,5,31,4,0.45
+watts_20_5_07,RecentChanges,14,5,31,4,0.45
+watts_20_5_07,RecentChanges,15,5,31,4,0.45
+watts_20_5_07,RecentChanges,16,5,31,4,0.45
+watts_20_5_07,RecentChanges,17,5,31,4,0.45
+watts_20_5_07,RecentChanges,18,5,31,4,0.45
+watts_20_5_07,RecentChanges,19,5,31,4,0.45
+watts_20_5_07,RecentChanges,20,5,31,4,0.45
+watts_20_5_07,RecentChanges,21,5,31,4,0.45
+watts_20_5_07,RecentChanges,22,5,31,4,0.45
+watts_20_5_07,RecentChanges,23,5,31,4,0.45
+watts_20_5_07,RecentChanges,24,5,31,4,0.45
+watts_20_5_07,RecentChanges,25,5,31,4,0.45
+watts_20_5_07,RecentChanges,26,5,31,4,0.45
+watts_20_5_07,RecentChanges,27,5,31,4,0.45
+watts_20_5_07,RecentChanges,28,5,31,4,0.45
+watts_20_5_07,RecentChanges,29,5,31,4,0.45
+watts_20_5_07,RecentChanges,30,5,31,4,0.45
+watts_20_5_07,RecentChanges,31,5,31,4,0.45
+watts_20_5_07,RecentChanges,32,5,31,4,0.45
+watts_20_5_07,RecentChanges,33,5,31,4,0.45
+watts_20_5_07,RecentChanges,34,5,31,4,0.45
+watts_20_5_07,RecentChanges,35,5,31,4,0.45
+watts_20_5_07,RecentChanges,36,5,31,4,0.45
+watts_20_5_07,RecentChanges,37,5,31,4,0.45
+watts_20_5_07,RecentChanges,38,5,31,4,0.45
+watts_20_5_07,RecentChanges,39,5,31,4,0.45
+watts_20_5_07,RecentChanges,40,5,31,4,0.45
+watts_20_5_07,RecentChanges,41,5,31,4,0.45
+watts_20_5_07,RecentChanges,42,5,31,4,0.45
+watts_20_5_07,RecentChanges,43,5,31,4,0.45
+watts_20_5_07,RecentChanges,44,5,31,4,0.45
+watts_20_5_07,RecentChanges,45,5,31,4,0.45
+watts_20_5_07,RecentChanges,46,5,31,4,0.45
+watts_20_5_07,RecentChanges,47,5,31,4,0.45
+watts_20_5_07,RecentChanges,48,5,31,4,0.45
+watts_20_5_07,RecentChanges,49,5,31,4,0.45
+watts_20_5_07,RecentChanges,50,5,31,4,0.45
+watts_20_5_07,RecentChanges,51,5,31,4,0.45
+watts_20_5_07,RecentChanges,52,5,31,4,0.45
+watts_20_5_07,RecentChanges,53,5,31,4,0.45
+watts_20_5_07,RecentChanges,54,5,31,4,0.45
+watts_20_5_07,RecentChanges,55,5,31,4,0.45
+watts_20_5_07,RecentChanges,56,5,31,4,0.45
+watts_20_5_07,RecentChanges,57,5,31,4,0.45
+watts_20_5_07,RecentChanges,58,5,31,4,0.45
+watts_20_5_07,RecentChanges,59,5,31,4,0.45
+watts_20_5_07,RecentChanges,60,5,31,4,0.45
+watts_20_5_07,RecentChanges,61,5,31,4,0.45
+watts_20_5_07,RecentChanges,62,5,31,4,0.45
+watts_20_5_07,RecentChanges,63,5,31,4,0.45
+watts_20_5_07,RecentChanges,64,5,31,4,0.45
+watts_20_5_07,RecentChanges,65,5,31,4,0.45
+watts_20_5_07,RecentChanges,66,5,31,4,0.45
+watts_20_5_07,RecentChanges,67,5,31,4,0.45
+watts_20_5_07,RecentChanges,68,5,31,4,0.45
+watts_20_5_07,RecentChanges,69,5,31,4,0.45
+watts_20_5_07,RecentChanges,70,5,31,4,0.45
+watts_20_5_07,RecentChanges,71,5,31,4,0.45
+watts_20_5_07,RecentChanges,72,5,31,4,0.45
+watts_20_5_07,RecentChanges,73,5,31,4,0.45
+watts_20_5_07,RecentChanges,74,5,31,4,0.45
+watts_20_5_07,RecentChanges,75,5,31,4,0.45
+watts_20_5_07,RecentChanges,76,5,31,4,0.45
+watts_20_5_07,RecentChanges,77,5,31,4,0.45
+watts_20_5_07,RecentChanges,78,5,31,4,0.45
+watts_20_5_07,RecentChanges,79,5,31,4,0.45
+watts_20_5_07,RecentChanges,80,5,31,4,0.45
+watts_20_5_07,RecentChanges,81,5,31,4,0.45
+watts_20_5_07,RecentChanges,82,5,31,4,0.45
+watts_20_5_07,RecentChanges,83,5,31,4,0.45
+watts_20_5_07,RecentChanges,84,5,31,4,0.45
+watts_20_5_07,RecentChanges,85,5,31,4,0.45
+watts_20_5_07,RecentChanges,86,5,31,4,0.45
+watts_20_5_07,RecentChanges,87,5,31,4,0.45
+watts_20_5_07,RecentChanges,88,5,31,4,0.45
+watts_20_5_07,RecentChanges,89,5,31,4,0.45
+watts_20_5_07,RecentChanges,90,5,31,4,0.45
+watts_20_5_07,RecentChanges,91,5,31,4,0.45
+watts_20_5_07,RecentChanges,92,5,31,4,0.45
+watts_20_5_07,RecentChanges,93,5,31,4,0.45
+watts_20_5_07,RecentChanges,94,5,31,4,0.45
+watts_20_5_07,RecentChanges,95,5,31,4,0.45
+watts_20_5_07,RecentChanges,96,5,31,4,0.45
+watts_20_5_07,RecentChanges,97,5,31,4,0.45
+watts_20_5_07,RecentChanges,98,5,31,4,0.45
+watts_20_5_07,RecentChanges,99,5,31,4,0.45
+watts_20_5_07,RecentChanges,100,5,31,4,0.45
+watts_20_5_07,RecentChanges,101,5,31,4,0.45
