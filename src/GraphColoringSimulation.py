@@ -85,19 +85,19 @@ class Simulation:
             print 'starting to run algorithm: '+str(system)
             while ((self.solved == False) & (self.numIterations<self.maxIterations)): 
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
-                    nodesToShare = system.query(agent, self.queryLimit) #get nodes info to share with agent. nodesToShare is list of nodes
+                    nodesToShare = system.query(agent.id, self.queryLimit) #get nodes info to share with agent. nodesToShare is list of nodes
                     info = {} #dict holding nodes and their colors (to share with agent)
                     for node in nodesToShare:
                         info[node] = self.instance.getColor(node)
                     agent.updateBelief(info) #update agents knowledge
-                    actions = agent.chooseActions() #query agent for actions
+                    actions = agent.chooseActions(self.numIterations) #query agent for actions
                     
                     #send update to system
                     actionObjs = []
                     for node,col in actions:
-                        actionObj = Action(agent, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
+                        actionObj = Action(agent.id, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
                         actionObjs.append(actionObj)
-                    session = Session(agent, actionObjs, self.numIterations)
+                    session = Session(agent.id, actionObjs, self.numIterations)
                     system.update(session) #send info back to system
                     
                     #save status
@@ -162,22 +162,22 @@ if __name__ == '__main__':
 #        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
 #        sim.runSimulation(filename,graphName)
 
-    systems = []
-    randSys = RandomSystem()
-    mostChanged = MostChangedSystem()
-    mostChangeInt = MostChangedInIntervalSystem(5)
-    latestSys = LatestChangedSystem()
-    systems.append(randSys)
-    systems.append(mostChanged)
-    mip = Mip()
-    systems.append(mip)
-    systems.append(mostChangeInt)
-    systems.append(latestSys)
-            
+#    systems = []
+#    randSys = RandomSystem()
+#    mostChanged = MostChangedSystem()
+#    mostChangeInt = MostChangedInIntervalSystem(5)
+#    latestSys = LatestChangedSystem()
+#    systems.append(randSys)
+#    systems.append(mostChanged)
+#    mip = Mip()
+#    systems.append(mip)
+#    systems.append(mostChangeInt)
+#    systems.append(latestSys)
+#            
     graph = nx.fast_gnp_random_graph(30, 0.7)
 #    graph = nx.watts_strogatz_graph(20, 5, 0.7)
     graphName = 'random_30_07'
-    filename= '../results/'+graphName+"__queryLimit3_agents3_overlap2.csv"
+    filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
     for i in range(10):     
         systems = []
         randSys = RandomSystem()
@@ -188,17 +188,17 @@ if __name__ == '__main__':
         systems.append(mostChanged)
         mip = Mip()
         systems.append(mip)
-        systems.append(mostChangeInt)
-        systems.append(latestSys)        
+#        systems.append(mostChangeInt)
+#        systems.append(latestSys)        
         graphName = graphName+"_"+str(i)
-        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
+        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
         sim.runSimulation(filename,graphName)    
 
 #    graph = nx.fast_gnp_random_graph(20, 0.6)
 
 
     graphName = 'watts_strogatz_graph_20_5_07'
-    filename= '../results/'+graphName+"__queryLimit3_agents3_overlap2.csv"
+    filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
     for i in range(10):  
         systems = []
         randSys = RandomSystem()
@@ -213,7 +213,7 @@ if __name__ == '__main__':
         systems.append(latestSys)
         graph = nx.watts_strogatz_graph(20, 5, 0.7)   
         graphName = graphName+"_"+str(i)
-        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
+        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
         sim.runSimulation(filename,graphName)       
 
     systems = []
@@ -230,7 +230,7 @@ if __name__ == '__main__':
             
     graph = nx.watts_strogatz_graph(30, 7, 0.5)
     graphName = 'watts_strogatz_graph_30_7_05'
-    filename= '../results/'+graphName+"__queryLimit3_agents3_overlap2.csv"
+    filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
     for i in range(10):     
         systems = []
         randSys = RandomSystem()
@@ -244,7 +244,7 @@ if __name__ == '__main__':
         systems.append(mostChangeInt)
         systems.append(latestSys)        
         graphName = graphName+"_"+str(i)
-        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
+        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
         sim.runSimulation(filename,graphName)    
 
     systems = []
@@ -261,7 +261,7 @@ if __name__ == '__main__':
             
     graph = nx.watts_strogatz_graph(40, 7, 0.5)
     graphName = 'watts_strogatz_graph_40_7_05'
-    filename= '../results/'+graphName+"__queryLimit3_agents3_overlap2.csv"
+    filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
     for i in range(10): 
         systems = []
         randSys = RandomSystem()
@@ -275,7 +275,7 @@ if __name__ == '__main__':
         systems.append(mostChangeInt)
         systems.append(latestSys)            
         graphName = graphName+"_"+str(i)
-        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
+        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
         sim.runSimulation(filename,graphName)  
 
     systems = []
@@ -292,7 +292,7 @@ if __name__ == '__main__':
             
     graph = nx.binomial_graph(20, 0.5)
     graphName = 'binomial_20_05'
-    filename= '../results/'+graphName+"__queryLimit3_agents3_overlap2.csv"
+    filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
     for i in range(10):   
         systems = []
         randSys = RandomSystem()
@@ -306,7 +306,7 @@ if __name__ == '__main__':
         systems.append(mostChangeInt)
         systems.append(latestSys)          
         graphName = graphName+"_"+str(i)
-        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
+        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
         sim.runSimulation(filename,graphName)                           
 
     systems = []
@@ -323,7 +323,7 @@ if __name__ == '__main__':
         
     graph = nx.binomial_graph(30, 0.5)
     graphName = 'binomial_30_05'
-    filename= '../results/'+graphName+"__queryLimit3_agents3_overlap2.csv"
+    filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
     for i in range(10):  
         systems = []
         randSys = RandomSystem()
@@ -337,6 +337,6 @@ if __name__ == '__main__':
         systems.append(mostChangeInt)
         systems.append(latestSys)           
         graphName = graphName+"_"+str(i)
-        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
+        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
         sim.runSimulation(filename,graphName)     
     

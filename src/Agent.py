@@ -15,7 +15,8 @@ class Agent:
         self.controlledNodes = subgraph
         self.knownGraph = knownGraph
         self.actionLimit = actionLimit #number of change color actions allowed per round
-        self.colors = colors #possible colors 
+        self.colors = colors #possible colors
+        self.lastRevision = -1 
         #the graph sent by simulation has the colors, need to remove them for each agent
         for node, data in self.knownGraph.nodes(data = True):
             data['color']= -1 #for testing, might need to change (start with knowing some colors)
@@ -23,6 +24,7 @@ class Agent:
         
         self.graphState = {}; #will hold current known numbers for 'conflicts' 'notConflicts' and 'unknown'
         self.countNumConflicts()
+        
         
     #count initial number of conflicts
     def countNumConflicts(self):
@@ -50,13 +52,14 @@ class Agent:
     
     #the function updates the agents' knowledge about the graph
     #nodesColorsList is a dict of node_id and current color
-    def updateBelief(self, nodesColorsList):
+    def updateBelief(self, nodesColorsList, reset = True):
         #reset old stuff
-        for node, data in self.knownGraph.nodes(data = True):
-            if data['uptoDate']== True: # if node was uptoDate in the last turn, treat the color unchanged but reset uptoDate so next turn it gets reset
-                data['uptoDate']= False
-            else: #the node is not uptodate, reset the color to unknown
-                data['color'] = -1
+        if reset == True:
+            for node, data in self.knownGraph.nodes(data = True):
+                if data['uptoDate']== True: # if node was uptoDate in the last turn, treat the color unchanged but reset uptoDate so next turn it gets reset
+                    data['uptoDate']= False
+                else: #the node is not uptodate, reset the color to unknown
+                    data['color'] = -1
         
         #update new stuff
         for node,color in nodesColorsList.iteritems():
@@ -68,7 +71,9 @@ class Agent:
     
     #chooses the color changes made by the agent.
     #limit is the maximum number of nodes that the agent is allowed to change in one round
-    def chooseActions(self):
+    def chooseActions(self, revision):
+        self.lastRevision = revision
+        
         initialSolution = {}
         initialSolution['actionSet'] = []
         initialSolution['conflicts'] = 1000000
