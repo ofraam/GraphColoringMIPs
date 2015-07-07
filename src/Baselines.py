@@ -126,7 +126,7 @@ class LatestChangedSystem:
         for act in session.actions:
             self.nodeChangetimes[act.ao] = session.time
                 
-    def query(self, agent, infoLimit):
+    def query(self, agent, infoLimit, startRev = 0):
         sorted_dict = sorted(self.nodeChangetimes.items(), key=operator.itemgetter(1), reverse = True)
         rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
         nodesToShare = rankedNodes[:infoLimit]

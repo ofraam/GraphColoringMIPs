@@ -7,14 +7,14 @@ import networkx as nx
 import math
 
 class Mip:
-    def __init__(self, alpha = 0.3, beta = 0.5, gamma = 0.2, similarityMetric = "adamic"):
+    def __init__(self, alpha = 0.3, beta = 0.7, gamma = 0.0, similarityMetric = "adamic", setting = "all"):
         self.mip = nx.Graph()
         self.aos = {}
         self.users = {}
         self.objects  = {}
         self.iteration = 0
         self.lastID = 0
-        self.decay = 0.01
+        self.decay = 0.1
         self.sigIncrement = 1.0
         self.minIncrement = 0.1
         self.objectsInc = 1.0
@@ -25,15 +25,20 @@ class Mip:
         self.gamma = gamma
         self.similarityMetric = similarityMetric
         self.nodeIDsToObjects = {}
-              
+        self.setting = setting #update only about changes or about all objects
     
     def update(self, session): #to fit System API
         self.updateMIP(session)
         
-    def query(self, user, infoLimit):
-        rankedObjects = self.rankObjectsForUser(user)
-        nodesToShare = rankedObjects[:infoLimit]
-        nodes = [i[0] for i in nodesToShare]
+    def query(self, user, infoLimit, startRev = 0):
+        if self.setting == "all":
+            rankedObjects = self.rankObjectsForUser(user)
+            nodesToShare = rankedObjects[:infoLimit]
+            nodes = [i[0] for i in nodesToShare]
+        else:
+            rankedObjects = self.rankChangesForUser(user, startRev)
+            nodesToShare = rankedObjects[:infoLimit]
+            nodes = [i[0] for i in nodesToShare]            
         return nodes
                     
     def updateMIP(self, session):
@@ -132,7 +137,7 @@ class Mip:
     MIPs reasoning functions start
     -----------------------------------------------------------------------------
     '''
-    def DegreeOfInterestMIPs(self, user, obj, current_flow_betweeness, alpha=0.3, beta=0.7, similarity = "adamic"):
+    def DegreeOfInterestMIPs(self, user, obj, current_flow_betweeness):
      
         api_obj = current_flow_betweeness[obj]  #node centrality
     #    print 'obj'
@@ -142,18 +147,18 @@ class Mip:
        
         #compute proximity between user node and object node using Cycle-Free-Edge-Conductance from Koren et al. 2007 or Adamic/Adar
         proximity = 0
-        if ((user in self.users) & (beta>0)): #no point to compute proximity if beta is 0... (no weight)
+        if ((user in self.users) & (self.beta>0)): #no point to compute proximity if beta is 0... (no weight)
             userID = self.users[user]
-            if similarity == "adamic":
+            if self.similarityMetric == "adamic":
                 proximity = self.adamicAdarProximity(userID,obj) #Adamic/Adar proximity
 #                print 'computing proximity'
             else:
                 proximity = self.CFEC(userID,obj) #cfec proximity
         else:
-            return alpha*api_obj
+            return self.alpha*api_obj
 #        print 'api_obj = '+str(api_obj)
 #        print 'proximity = '+str(proximity)
-        return alpha*api_obj+beta*proximity #TODO: check that scales work out for centrality and proximity, otherwise need some normalization
+        return self.alpha*api_obj+self.beta*proximity #TODO: check that scales work out for centrality and proximity, otherwise need some normalization
 
 
     '''
@@ -206,7 +211,7 @@ class Mip:
 #        print 'number of aos = '+str(len(aoList))
         notificationsList = []
         for ao in aoList:
-            doi = self.DegreeOfInterestMIPs(user, ao,self.current_flow_betweeness, self.alpha, self.beta, self.similarityMetric)  
+            doi = self.DegreeOfInterestMIPs(user, ao,self.current_flow_betweeness)  
             
             if len(notificationsList)==0:
                 toAdd = []
@@ -240,7 +245,7 @@ class Mip:
 #        print 'number of aos = '+str(len(aoList))
         notificationsList = []
         for ao in aoList:
-            doi = self.DegreeOfInterestMIPs(user, ao,self.current_flow_betweeness, alpha, beta, similarity)  
+            doi = self.DegreeOfInterestMIPs(user, ao,self.current_flow_betweeness)  
             
             if len(notificationsList)==0:
                 toAdd = []
@@ -265,10 +270,10 @@ class Mip:
 #        print 'notification list size = '+str(len(notificationsList))        
         return notificationsList
     
-    def rankChangesForUser(self,user,time, onlySig = True, alpha = 0.3, beta = 0.7, similarity = "adamic"):
+    def rankChangesForUser(self,user,time, onlySig = True):
         notificationsList = []
         checkedObjects = {}
-        for i in range(time, len(self.log)-1): #this includes revision at time TIME and does not include last revision in MIP, which is the one when the user is back 
+        for i in range(time, len(self.log)): #this includes revision at time TIME and does  include last revision in MIP as we are querying before we update
 #            print "time = "+str(i) + "author = "+self.log[i].user
                         
             session = self.log[i]
@@ -278,14 +283,14 @@ class Mip:
                     if (act.ao not in checkedObjects): #currently not giving more weight to the fact that an object was changed multiple times. --> removed because if there are both big and small changes etc...
                         #TODO: possibly add check whether the action is notifiable
                         
-                        doi = self.DegreeOfInterestMIPs(user, act.ao,self.current_flow_betweeness, alpha, beta, similarity)
+                        doi = self.DegreeOfInterestMIPs(user, self.objects[act.ao],self.current_flow_betweeness)
                         checkedObjects[act.ao] = doi
                     else:
                         doi = checkedObjects[act.ao] #already computed doi, don't recompute!
                     #put in appropriate place in list based on doi
                     if len(notificationsList)==0:
                         toAdd = []
-                        toAdd.append(act)
+                        toAdd.append(act.ao)
                         toAdd.append(doi)
                         notificationsList.append(toAdd)
                     else:
@@ -298,7 +303,7 @@ class Mip:
                                 j=j+1
                                 break
                         toAdd = []
-                        toAdd.append(act)
+                        toAdd.append(act.ao)
                         toAdd.append(doi)   
                      
                         if (j<len(notificationsList)):

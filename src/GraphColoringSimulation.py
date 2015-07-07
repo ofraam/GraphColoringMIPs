@@ -26,7 +26,7 @@ Class that runs the simulation
 @systems is a list of system objects (i.e., algorithms to compare)
 '''
 class Simulation:
-    def __init__(self, graph, numAgents, numColors, systems, overlap = 1, maxIterations = 1000, actionLimit = 3, queryLimit = 5, weightInc = 1.0):
+    def __init__(self, graph, numAgents, numColors, systems, overlap = 1, maxIterations = 1000, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "all"):
         #generate graph structure
         self.graph = graph
         #assign random colors
@@ -41,6 +41,7 @@ class Simulation:
         self.numAgents = numAgents
         self.overlap = overlap
         self.systems = systems
+        self.setting = setting
         self.solved = False #is the CSP problem solved (to terminate simulation)
         self.numIterations = 0 
         self.maxIterations = maxIterations
@@ -51,7 +52,7 @@ class Simulation:
         self.agents = []        
         #assign nodes to agents
         agentAssignments = self.assignAgents()
-
+        print agentAssignments
         for agent,nodes in agentAssignments.iteritems():
             newAgent = Agent(agent,nodes,copy.deepcopy(self.graph), self.colors,self.actionLimit)
             self.agents.append(newAgent)
@@ -85,11 +86,17 @@ class Simulation:
             print 'starting to run algorithm: '+str(system)
             while ((self.solved == False) & (self.numIterations<self.maxIterations)): 
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
-                    nodesToShare = system.query(agent.id, self.queryLimit) #get nodes info to share with agent. nodesToShare is list of nodes
+                    if self.setting == "all":
+                        nodesToShare = system.query(agent.id, self.queryLimit) #get nodes info to share with agent. nodesToShare is list of nodes
+                    else: #only ranking changes, need to send first rev to consider
+                        nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1)
                     info = {} #dict holding nodes and their colors (to share with agent)
                     for node in nodesToShare:
                         info[node] = self.instance.getColor(node)
-                    agent.updateBelief(info) #update agents knowledge
+                    if self.setting == "all":
+                        agent.updateBelief(info,reset = True) #update agents knowledge
+                    else: 
+                        agent.updateBelief(info,reset = False)
                     actions = agent.chooseActions(self.numIterations) #query agent for actions
                     
                     #send update to system
@@ -114,6 +121,8 @@ class Simulation:
                     results.append(res)
                     #send update to GraphProblem
                     self.instance.updateGraph(actions)
+                    filename = "../graphPlots1/"+str(system)+"_"+str(self.numIterations)
+                    self.instance.drawGraph(filename)
                     
                     #increment num of iterations
                     self.numIterations = self.numIterations + 1
@@ -138,17 +147,61 @@ class Simulation:
         
           
             
-                
-    
-if __name__ == '__main__':
+def runGraph9nodes():
     systems = []
     randSys = RandomSystem()
-    mostChanged = MostChangedSystem()
+    mostChanged = MostChangedInIntervalSystem(2)
     mostChangeInt = MostChangedInIntervalSystem(5)
     latestSys = LatestChangedSystem()
     systems.append(randSys)
     systems.append(mostChanged)
     mip = Mip()
+    systems.append(mip)
+    systems.append(mostChangeInt)
+    systems.append(latestSys)
+        
+    g = nx.Graph()
+    for i in range(10):
+        g.add_node(i)
+    g.add_edge(0, 1)
+    g.add_edge(0, 5)
+    g.add_edge(0, 6)
+    g.add_edge(0, 7)
+    g.add_edge(1, 2)               
+    g.add_edge(1, 7)
+    g.add_edge(1, 9)
+    g.add_edge(2, 3)
+    g.add_edge(2, 9)
+    g.add_edge(3, 4)
+    g.add_edge(3, 7)
+    g.add_edge(3, 9)
+    g.add_edge(4, 5)
+    g.add_edge(4, 6)
+    g.add_edge(4, 7)
+    g.add_edge(4, 8)
+    g.add_edge(5, 6)
+    g.add_edge(6, 7)
+    g.add_edge(6, 8)
+    g.add_edge(7, 8)
+    g.add_edge(7, 9)
+    
+    filename = "../results/all_9graph_resetFalse.csv"
+    graphName = "9graph"
+    sim = Simulation(g, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0, setting = "all")
+    sim.runSimulation(filename,graphName)      
+    
+    
+    
+if __name__ == '__main__':
+    runGraph9nodes()
+    systems = []
+    randSys = RandomSystem(setting = "changes")
+    mostChanged = MostChangedInIntervalSystem(200) #essentially all revisions...
+    mostChangeInt = MostChangedInIntervalSystem(5)
+    latestSys = LatestChangedSystem()
+    systems.append(randSys)
+    systems.append(mostChanged)
+    mip = Mip(setting = "changes")
     systems.append(mip)
     systems.append(mostChangeInt)
     systems.append(latestSys)
@@ -174,28 +227,29 @@ if __name__ == '__main__':
 #    systems.append(mostChangeInt)
 #    systems.append(latestSys)
 #            
-    graph = nx.fast_gnp_random_graph(30, 0.7)
+    graph = nx.fast_gnp_random_graph(30, 0.3)
 #    graph = nx.watts_strogatz_graph(20, 5, 0.7)
-    graphName = 'random_30_07'
-    filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
-    for i in range(10):     
+    graphName = 'random_30_03'
+    filename= '../results/'+graphName+"colored_changesOnly2__queryLimit3_agents3_overlap2.csv"
+    for i in range(1):     
         systems = []
-        randSys = RandomSystem()
-        mostChanged = MostChangedSystem()
+        randSys = RandomSystem(setting = "changes")
+        mostChanged = MostChangedInIntervalSystem(200) #essentially all revisions...
         mostChangeInt = MostChangedInIntervalSystem(5)
         latestSys = LatestChangedSystem()
         systems.append(randSys)
         systems.append(mostChanged)
-        mip = Mip()
+        mip = Mip(setting = "changes")
         systems.append(mip)
-#        systems.append(mostChangeInt)
-#        systems.append(latestSys)        
+        systems.append(mostChangeInt)
+        systems.append(latestSys)      
         graphName = graphName+"_"+str(i)
-        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
+        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0, setting = "changes")
         sim.runSimulation(filename,graphName)    
 
 #    graph = nx.fast_gnp_random_graph(20, 0.6)
-
+    print 'done' 
+#    return
 
     graphName = 'watts_strogatz_graph_20_5_07'
     filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
