@@ -6,13 +6,14 @@ Created on Jun 11, 2015
 
 
 class Session:
-    def __init__(self, user, revision, time): 
+    def __init__(self, user, revision, time, info): 
         self.actions = revision
         self.user = user 
-        self.time = time
+        self.time = time #revision number
+        self.info = info #what info was shared with the user before the actions were chosen
         
     def __str__(self):
-        toPrint = "session at time "+str(self.time) +" user = "+str(self.user)+"\n"
+        toPrint = "session at time "+str(self.time) +" user = "+str(self.user)+"\n" 
         for act in self.actions:
             toPrint = toPrint+str(act)+"\n"
         return toPrint

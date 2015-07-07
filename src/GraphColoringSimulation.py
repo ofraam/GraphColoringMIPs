@@ -104,7 +104,7 @@ class Simulation:
                     for node,col in actions:
                         actionObj = Action(agent.id, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
                         actionObjs.append(actionObj)
-                    session = Session(agent.id, actionObjs, self.numIterations)
+                    session = Session(agent.id, actionObjs, self.numIterations, nodesToShare)
                     system.update(session) #send info back to system
                     
                     #save status

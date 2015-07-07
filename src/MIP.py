@@ -14,8 +14,6 @@ class Mip:
         self.iteration = 0
         self.lastID = 0
         self.decay = 0.1
-        self.sigIncrement = 1.0
-        self.minIncrement = 0.1
         self.objectsInc = 1.0
         self.current_flow_betweeness = None #centrality values of all nodes
         self.log = [] #log holds all the session data 
@@ -29,12 +27,12 @@ class Mip:
     def update(self, session): #to fit System API
         self.updateMIP(session)
         
-    def query(self, user, infoLimit, startRev = 0):
-        if self.setting == "all":
+    def query(self, user, infoLimit, startRev = 0): #to fit System API
+        if self.setting == "all": #choosing of all objects
             rankedObjects = self.rankObjectsForUser(user)
             nodesToShare = rankedObjects[:infoLimit]
             nodes = [i[0] for i in nodesToShare]
-        else:
+        else: #choosing only of changed objects
             rankedObjects = self.rankChangesForUser(user, startRev)
             nodesToShare = rankedObjects[:infoLimit]
             nodes = [i[0] for i in nodesToShare]            
@@ -68,9 +66,20 @@ class Mip:
                 ao_node2 = self.objects[session.actions[j].ao]
             if (ao_node1!=ao_node2):
                 self.updateEdge(ao_node1, ao_node2, 'ao-ao', self.objectsInc)
-        
-        #TODO: think about adding decay here!!
-        
+                
+        #update weights between objects that user was informed about and objects that changed
+        for i in range(len(session.actions)-1):
+            ao_node1 = self.objects[session.actions[i].ao]
+            for j in range(j, len(session.info)):
+                ao_node2 = session.info[j]
+            if (ao_node1!=ao_node2):
+                self.updateEdge(ao_node1, ao_node2, 'ao-ao', self.objectsInc)
+                        
+        #TODO: think about adding decay here!
+#        for edge in self.mip.edges_iter(data=True):
+#            if edge[2]['updated']==0:
+#                if edge[2]['type']=='ao-ao':
+#                    edge[2]['weight'] = edge[2]['weight']-self.decay
         self.currentSession=session
 #        print'updating'
 
