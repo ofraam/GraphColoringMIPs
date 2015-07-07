@@ -9,7 +9,6 @@ import math
 class Mip:
     def __init__(self, alpha = 0.3, beta = 0.7, gamma = 0.0, similarityMetric = "adamic", setting = "all"):
         self.mip = nx.Graph()
-        self.aos = {}
         self.users = {}
         self.objects  = {}
         self.iteration = 0
@@ -24,7 +23,7 @@ class Mip:
         self.beta = beta
         self.gamma = gamma
         self.similarityMetric = similarityMetric
-        self.nodeIDsToObjects = {}
+        self.nodeIDsToObjectsIds = {}
         self.setting = setting #update only about changes or about all objects
     
     def update(self, session): #to fit System API
@@ -103,7 +102,7 @@ class Mip:
             attr['type']='object'
             attr['deleted'] = 0
             self.mip.add_node(self.lastID, attr)
-            self.nodeIDsToObjects[self.lastID]=object_id
+            self.nodeIDsToObjectsIds[self.lastID]=object_id
         return self.objects[object_id]
         
            
@@ -117,15 +116,8 @@ class Mip:
             self.mip.add_edge(i1, i2, attr)
         self.mip[i1][i2]['updated']=1
         
-    def getLiveObjects(self):
-        liveObjects = []
-        for node in self.mip.nodes(True):
-            if node[1]['type']=='par':
-                if node[1]['deleted']==0:
-                    liveObjects.append(node)
-        return liveObjects
     
-    def getLiveAos(self):
+    def getLiveAos(self): #return the mip nodes that represent live object
         liveObjects = []
         for node in self.mip.nodes(data = True):
             if node[1]['type']=='object':
@@ -137,27 +129,26 @@ class Mip:
     MIPs reasoning functions start
     -----------------------------------------------------------------------------
     '''
-    def DegreeOfInterestMIPs(self, user, obj, current_flow_betweeness):
+   
+    '''
+    Computes degree of interest between a user and an object
+    gets as input the user id (might not yet be represented in mip) and obj node from MIP (not id)
+    '''
+    def DegreeOfInterestMIPs(self, user, obj):
      
-        api_obj = current_flow_betweeness[obj]  #node centrality
-    #    print 'obj'
-    #    print obj
-    #    print 'api_obj'
-    #    print api_obj
+        api_obj = self.current_flow_betweeness[obj]  #node centrality (apriori component)
        
         #compute proximity between user node and object node using Cycle-Free-Edge-Conductance from Koren et al. 2007 or Adamic/Adar
         proximity = 0
         if ((user in self.users) & (self.beta>0)): #no point to compute proximity if beta is 0... (no weight)
-            userID = self.users[user]
+            userNodeID = self.users[user]
             if self.similarityMetric == "adamic":
-                proximity = self.adamicAdarProximity(userID,obj) #Adamic/Adar proximity
-#                print 'computing proximity'
+                proximity = self.adamicAdarProximity(userNodeID,obj) #Adamic/Adar proximity
             else:
-                proximity = self.CFEC(userID,obj) #cfec proximity
+                proximity = self.CFEC(userNodeID,obj) #cfec proximity
         else:
             return self.alpha*api_obj
-#        print 'api_obj = '+str(api_obj)
-#        print 'proximity = '+str(proximity)
+
         return self.alpha*api_obj+self.beta*proximity #TODO: check that scales work out for centrality and proximity, otherwise need some normalization
 
 
@@ -168,9 +159,7 @@ class Mip:
         return sum(1 / math.log(G.degree(w))
                    for w in nx.common_neighbors(G, u, v))
     '''
-
-
-    def adamicAdarProximity(self, s, t):
+    def adamicAdarProximity(self, s, t): #s and t are the mip node IDs, NOT user/obj ids
         proximity = 0.0
         for node in nx.common_neighbors(self.mip, s, t):
             weights = self.mip[s][node]['weight'] + self.mip[t][node]['weight'] #the weight of the path connecting s and t through the current node
@@ -207,15 +196,14 @@ class Mip:
     NOTE: need to call this function with the mip prior to the users' edits!!!
     '''
     def rankObjectsForUser(self, user):
-        aoList = self.getLiveAos()
-#        print 'number of aos = '+str(len(aoList))
-        notificationsList = []
+        aoList = self.getLiveAos() #gets the MIP NODES that represent live objects
+        notificationsList = [] #will hold list of objects, eventually sorted by interest
         for ao in aoList:
             doi = self.DegreeOfInterestMIPs(user, ao,self.current_flow_betweeness)  
             
             if len(notificationsList)==0:
                 toAdd = []
-                toAdd.append(self.nodeIDsToObjects[ao])
+                toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
                 toAdd.append(doi)
                 notificationsList.append(toAdd)
             else:
@@ -227,7 +215,7 @@ class Mip:
                         j=j+1
                         break
                 toAdd = []
-                toAdd.append(self.nodeIDsToObjects[ao])
+                toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
                 toAdd.append(doi)                  
                 if (j<len(notificationsList)):
                     notificationsList.insert(j, toAdd)
@@ -237,39 +225,9 @@ class Mip:
         return notificationsList
         
     '''
-    rank all live objects based on DOI to predict what edits a user will make.
+    rank only objects that have changed since the last time the user interacted (based on DOI to predict what edits a user will make.)
     NOTE: need to call this function with the mip prior to the users' edits!!!
-    '''
-    def rankLiveObjectsForUser(self, user, alpha = 0.3, beta = 0.7, similarity = "adamic"):
-        aoList = self.getLiveAos()
-#        print 'number of aos = '+str(len(aoList))
-        notificationsList = []
-        for ao in aoList:
-            doi = self.DegreeOfInterestMIPs(user, ao,self.current_flow_betweeness)  
-            
-            if len(notificationsList)==0:
-                toAdd = []
-                toAdd.append(self.nodeIDsToObjects[ao])
-                toAdd.append(doi)
-                notificationsList.append(toAdd)
-            else:
-                j = 0
-                while ((doi<notificationsList[j][1])):
-                    if j<len(notificationsList)-1:
-                        j = j+1
-                    else:
-                        j=j+1
-                        break
-                toAdd = []
-                toAdd.append(self.nodeIDsToObjects[ao])
-                toAdd.append(doi)                  
-                if (j<len(notificationsList)):
-                    notificationsList.insert(j, toAdd)
-                else:
-                    notificationsList.append(toAdd)  
-#        print 'notification list size = '+str(len(notificationsList))        
-        return notificationsList
-    
+    '''    
     def rankChangesForUser(self,user,time, onlySig = True):
         notificationsList = []
         checkedObjects = {}
@@ -280,6 +238,7 @@ class Mip:
             for act in session.actions: 
 
                 if ((act.actType != 'smallEdit') | (onlySig == False)):
+                    inNotificationList = False
                     if (act.ao not in checkedObjects): #currently not giving more weight to the fact that an object was changed multiple times. --> removed because if there are both big and small changes etc...
                         #TODO: possibly add check whether the action is notifiable
                         
@@ -287,13 +246,14 @@ class Mip:
                         checkedObjects[act.ao] = doi
                     else:
                         doi = checkedObjects[act.ao] #already computed doi, don't recompute!
+                        inNotificationList = True
                     #put in appropriate place in list based on doi
                     if len(notificationsList)==0:
                         toAdd = []
                         toAdd.append(act.ao)
                         toAdd.append(doi)
                         notificationsList.append(toAdd)
-                    else:
+                    elif inNotificationList==False: #only add to list if wasn't already there (doi does not change)
                         j = 0
 
                         while ((doi<notificationsList[j][1])):
@@ -313,7 +273,7 @@ class Mip:
         return notificationsList
     
     
-    def rankChangesGivenUserFocus(self,user,focus_obj, time):
+    def rankChangesGivenUserFocus(self,user,focus_obj, time): #TODO: check correctness and try at some point
         notificationsList = []
         checkedObjects = []
         for i in range(time, len(self.log)-1):
