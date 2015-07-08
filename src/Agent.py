@@ -63,7 +63,7 @@ class Agent:
                     data['color'] = -1
         
         #update new stuff
-        for node,color in nodesColorsList.iteritems():
+        for node,color in nodesColorsList:
             self.knownGraph.node[node]['color'] = color
             self.knownGraph.node[node]['uptoDate'] = True
             
@@ -133,7 +133,8 @@ class Agent:
                         newSolution['unknown'] = newGraphState['unknown']
                         bestSolution = self.chooseActionsRecur(newSolution,nodeCounter+1,bestSolution,minActions) #call function to check this action set                  
             
-            bestSolution = self.chooseActionsRecur(currSolution,nodeCounter+1,bestSolution,minActions) #don't include a change to this node in action set
+            if minActions<self.actionLimit: #no need to check this option if the agent *must* change the number of nodes it is allowed to change
+                bestSolution = self.chooseActionsRecur(currSolution,nodeCounter+1,bestSolution,minActions) #don't include a change to this node in action set
                         
         return bestSolution;
                     
@@ -141,6 +142,7 @@ class Agent:
     def computeNumConflicts(self,actionSet): 
         newGraphState = {} #dictionary with 'conflicts' 'notConflicts' and 'unknown'
         prevColors = {} #store previous colors to check changed conflicts
+        newColors = {}
         #counters of updates to conflicts
         unknown = 0
         conf = 0
@@ -157,10 +159,11 @@ class Agent:
         
         for action in actionSet:
             prevColors[action[0]] = self.knownGraph.node[action[0]]['color'] #saving old color to see if conflicts changed
+            newColors[action[0]] = action[1]
             #re-checking all neighbors of node that changed, except neighbors that include another changed node (will check them next)
             for n in self.knownGraph.neighbors(action[0]):
                 node = self.knownGraph.node[n] #get data for node (for color)
-                if node not in changedNodes:
+                if n not in changedNodes:
                     if node['color']!=-1: #if the neighbor is uncolored, we move from unknown-> unknown which is not going to make any difference. 
                         if action[1]!=node['color']: #there is currently no conflict (and that is not because the neighboring node is not colored) 
                             if ((action[1]!=prevColors[action[0]]) & (prevColors[action[0]]==-1)): #unknown --> not conflict
@@ -181,9 +184,7 @@ class Agent:
         
         #finished changing nodes; check updates to conflicts when two nodes changed
         for n1,n2 in pairsOfChanged:
-            node1 = self.knownGraph.node[n1]
-            node2 = self.knownGraph.node[n2]
-            if node1['color'] != node2['color']: #currently, no conflict; could be no->no (nothing to do), yes->no or unknown->no
+            if newColors[n1] != newColors[n2]: #currently, no conflict; could be no->no (nothing to do), yes->no or unknown->no
                 if ((prevColors[n1]==-1) | (prevColors[n2]==-1)): #unknown->no
                     unknown = unknown-1
                     nonConf = nonConf+1

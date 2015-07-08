@@ -54,7 +54,7 @@ class Simulation:
         agentAssignments = self.assignAgents()
         print agentAssignments
         for agent,nodes in agentAssignments.iteritems():
-            newAgent = Agent(agent,nodes,copy.deepcopy(self.graph), self.colors,self.actionLimit)
+            newAgent = Agent(agent,nodes,copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False)
             self.agents.append(newAgent)
             
         return
@@ -93,11 +93,9 @@ class Simulation:
                     info = {} #dict holding nodes and their colors (to share with agent)
                     for node in nodesToShare:
                         info[node] = self.instance.getColor(node)
-                    if self.setting == "all":
-                        agent.updateBelief(info,reset = True) #update agents knowledge
-                    else: 
-                        agent.updateBelief(info,reset = False)
-                    actions = agent.chooseActions(self.numIterations) #query agent for actions
+                    agent.updateBelief(info) #update agents knowledge
+
+                    actions = agent.chooseActions(self.numIterations,minActions = self.actionLimit) #query agent for actions
                     
                     #send update to system
                     actionObjs = []
@@ -153,12 +151,12 @@ def runGraph9nodes():
     mostChanged = MostChangedInIntervalSystem(2)
     mostChangeInt = MostChangedInIntervalSystem(5)
     latestSys = LatestChangedSystem()
-    systems.append(randSys)
-    systems.append(mostChanged)
+#    systems.append(randSys)
+#    systems.append(mostChanged)
     mip = Mip()
     systems.append(mip)
-    systems.append(mostChangeInt)
-    systems.append(latestSys)
+#    systems.append(mostChangeInt)
+#    systems.append(latestSys)
         
     g = nx.Graph()
     for i in range(10):
@@ -185,9 +183,9 @@ def runGraph9nodes():
     g.add_edge(7, 8)
     g.add_edge(7, 9)
     
-    filename = "../results/all_9graph_resetFalse.csv"
+    filename = "../results/testingStuff.csv"
     graphName = "9graph"
-    sim = Simulation(g, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0, setting = "all")
+    sim = Simulation(g, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0, setting = "changes")
     sim.runSimulation(filename,graphName)      
     
     

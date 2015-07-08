@@ -7,7 +7,7 @@ import networkx as nx
 import math
 
 class Mip:
-    def __init__(self, alpha = 0.3, beta = 0.7, gamma = 0.0, similarityMetric = "adamic", setting = "all"):
+    def __init__(self, alpha = 0.3, beta = 0.7, gamma = 0.0, similarityMetric = "adamic"):
         self.mip = nx.Graph()
         self.users = {}
         self.objects  = {}
@@ -22,20 +22,19 @@ class Mip:
         self.gamma = gamma
         self.similarityMetric = similarityMetric
         self.nodeIDsToObjectsIds = {}
-        self.setting = setting #update only about changes or about all objects
     
     def update(self, session): #to fit System API
         self.updateMIP(session)
         
     def query(self, user, infoLimit, startRev = 0): #to fit System API
-        if self.setting == "all": #choosing of all objects
-            rankedObjects = self.rankObjectsForUser(user)
-            nodesToShare = rankedObjects[:infoLimit]
-            nodes = [i[0] for i in nodesToShare]
-        else: #choosing only of changed objects
-            rankedObjects = self.rankChangesForUser(user, startRev)
-            nodesToShare = rankedObjects[:infoLimit]
-            nodes = [i[0] for i in nodesToShare]            
+#        if startRev == 0: #choosing of all objects
+#            rankedObjects = self.rankObjectsForUser(user)
+#            nodesToShare = rankedObjects[:infoLimit]
+#            nodes = [i[0] for i in nodesToShare]
+#        else: #choosing only of changed objects
+        rankedObjects = self.rankChangesForUser(user, startRev)
+        nodesToShare = rankedObjects[:infoLimit]
+        nodes = [i[0] for i in nodesToShare]            
         
         for node in nodes:
             self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
