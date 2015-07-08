@@ -36,6 +36,9 @@ class Mip:
             rankedObjects = self.rankChangesForUser(user, startRev)
             nodesToShare = rankedObjects[:infoLimit]
             nodes = [i[0] for i in nodesToShare]            
+        
+        for node in nodes:
+            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
         return nodes
                     
     def updateMIP(self, session):
@@ -55,6 +58,7 @@ class Mip:
                 nodeIdInMip = self.addObject(ao)
                 act.updateMipNodeID(nodeIdInMip)
             ao_node = self.objects[ao]
+            self.mip.node[ao_node]['revisions'].append(self.iteration) #add revision
             self.updateEdge(user_node, ao_node, 'u-ao', act.weightInc)
             #label deleted objects as deleted
             if act.actType == 'delete':
@@ -83,10 +87,11 @@ class Mip:
         self.currentSession=session
 #        print'updating'
 
-        try:
-            self.current_flow_betweeness = nx.current_flow_betweenness_centrality(self.mip,True, weight = 'weight')
-        except:
-            self.current_flow_betweeness = nx.degree_centrality(self.mip)
+        self.current_flow_betweeness = nx.degree_centrality(self.mip) #TODO: apriori importance for now is simply degree, consider reverting to more complex option
+#        try:
+#            self.current_flow_betweeness = nx.current_flow_betweenness_centrality(self.mip,True, weight = 'weight')
+#        except:
+#            self.current_flow_betweeness = nx.degree_centrality(self.mip)
         
     def addUser(self,user_name):
         if (user_name in self.users):
@@ -110,6 +115,8 @@ class Mip:
             attr = {}
             attr['type']='object'
             attr['deleted'] = 0
+            attr['revisions'] = []
+            attr['revisions'].append(self.iteration)
             self.mip.add_node(self.lastID, attr)
             self.nodeIDsToObjectsIds[self.lastID]=object_id
         return self.objects[object_id]
@@ -118,10 +125,12 @@ class Mip:
     def updateEdge(self,i1,i2,edge_type,increment = 1):
         if self.mip.has_edge(i1, i2):
             self.mip[i1][i2]['weight']=self.mip[i1][i2]['weight']+increment
+            self.mip[i1][i2]['lastKnown']=self.iteration #update last time user knew about object
         else:
             attr = {}
             attr['type']=type
             attr['weight']=increment
+            attr['lastKnown']=self.iteration #update last time user knew about object
             self.mip.add_edge(i1, i2, attr)
         self.mip[i1][i2]['updated']=1
         
@@ -148,17 +157,20 @@ class Mip:
         api_obj = self.current_flow_betweeness[obj]  #node centrality (apriori component)
        
         #compute proximity between user node and object node using Cycle-Free-Edge-Conductance from Koren et al. 2007 or Adamic/Adar
-        proximity = 0
+        proximity = 0.0
         if ((user in self.users) & (self.beta>0)): #no point to compute proximity if beta is 0... (no weight)
             userNodeID = self.users[user]
             if self.similarityMetric == "adamic":
                 proximity = self.adamicAdarProximity(userNodeID,obj) #Adamic/Adar proximity
             else:
                 proximity = self.CFEC(userNodeID,obj) #cfec proximity
-        else:
-            return self.alpha*api_obj
+        
+        changeExtent = 0.0
+        if self.gamma > 0:#need to consider how frequently the object has been changed since user last known about it
+            changeExtent = self.changeExtent(self.users[user], obj)
 
-        return self.alpha*api_obj+self.beta*proximity #TODO: check that scales work out for centrality and proximity, otherwise need some normalization
+
+        return self.alpha*api_obj+self.beta*proximity+self.gamma*changeExtent  #TODO: check that scales work out, otherwise need some normalization
 
 
     '''
@@ -200,6 +212,23 @@ class Mip:
 #        print 'prob' + str(prob)
         return prob
 
+    
+    '''
+    computes the extent/frequency to which an object was changed since the last time the user was notified about it
+    will be a component taken into account in degree of interest 
+    '''
+    def changeExtent(self, userNode, aoNode):
+        fromRevision = 0 #in case user does not exist yet or has never known about this object, start from revision 0
+        if self.mip.has_edge(userNode, aoNode):
+            fromRevision = self.mip[userNode][aoNode]['lastKnown'] #get the last time the user knew what the value of the object was
+        revs = self.mip[aoNode]['revisions']
+        i = 0.0
+        while revs[i]<fromRevision:
+            i = i+1
+        if i<len(revs):
+            return (len(revs)-i)/(self.iteration-fromRevision)
+        else:
+            return 0
     '''
     rank all live objects based on DOI to predict what edits a user will make.
     NOTE: need to call this function with the mip prior to the users' edits!!!

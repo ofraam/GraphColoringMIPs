@@ -10,7 +10,7 @@ import random
 import matplotlib.pyplot as plt
 
 class Agent:
-    def __init__(self, id, subgraph, knownGraph, colors, actionLimit):
+    def __init__(self, id, subgraph, knownGraph, colors, actionLimit, reset):
         self.id = id
         self.controlledNodes = subgraph
         self.knownGraph = knownGraph
@@ -22,6 +22,7 @@ class Agent:
             data['color']= -1 #for testing, might need to change (start with knowing some colors)
             data['uptoDate']= False
         
+        self.reset = reset #controls agents' "memory" 
         self.graphState = {}; #will hold current known numbers for 'conflicts' 'notConflicts' and 'unknown'
         self.countNumConflicts()
         
@@ -52,9 +53,9 @@ class Agent:
     
     #the function updates the agents' knowledge about the graph
     #nodesColorsList is a dict of node_id and current color
-    def updateBelief(self, nodesColorsList, reset = True):
+    def updateBelief(self, nodesColorsList):
         #reset old stuff
-        if reset == True:
+        if self.reset == True:
             for node, data in self.knownGraph.nodes(data = True):
                 if data['uptoDate']== True: # if node was uptoDate in the last turn, treat the color unchanged but reset uptoDate so next turn it gets reset
                     data['uptoDate']= False
@@ -71,7 +72,7 @@ class Agent:
     
     #chooses the color changes made by the agent.
     #limit is the maximum number of nodes that the agent is allowed to change in one round
-    def chooseActions(self, revision):
+    def chooseActions(self, revision, minActions = 0):
         self.lastRevision = revision
         
         initialSolution = {}
@@ -86,24 +87,29 @@ class Agent:
         initialBestSolution['unknown'] = 0
         initialBestSolution['notConflicts'] = 0
         
-        bestSolution = self.chooseActionsRecur(initialSolution,0,initialBestSolution)
+        bestSolution = self.chooseActionsRecur(initialSolution,0,initialBestSolution, minActions)
         
+        #update belief (agent just changed the node so it knows its color
+        self.updateBelief(bestSolution['actionSet'])
+        
+        #return chosen solution
         return bestSolution['actionSet'];
     
-    def chooseActionsRecur(self, currSolution, nodeCounter, bestSolution):
-        #TODO: add caching of partial action sets as to not recompute stuff?
+    def chooseActionsRecur(self, currSolution, nodeCounter, bestSolution, minActions):
+        #TODO: add caching of partial action sets as to not recompute stuff? prune solutions that won't have enough actions? (minActions)
         #stop condition - when we reached the limit of actions permitted, or when reached the last node we can change
         if ((len(currSolution['actionSet']) == self.actionLimit) | (nodeCounter == len(self.controlledNodes))):
-            if currSolution['conflicts'] < bestSolution['conflicts']: 
-#                print 'oldBest: '+str(bestSolution)
-                
-                bestSolution=currSolution
-#                print 'newBest: '+str(bestSolution)
-                
-            #break ties in favor of more known non-conflicts (otherwise might bias towards doing nothing)   
-            elif currSolution['conflicts'] == bestSolution['conflicts']:
-                if currSolution['notConflicts'] > bestSolution['notConflicts']:
+            if len(currSolution['actionSet'])>=minActions:
+                if currSolution['conflicts'] < bestSolution['conflicts']: 
+    #                print 'oldBest: '+str(bestSolution)
+                    
                     bestSolution=currSolution
+    #                print 'newBest: '+str(bestSolution)
+                    
+                #break ties in favor of more known non-conflicts (otherwise might bias towards doing nothing)   
+                elif currSolution['conflicts'] == bestSolution['conflicts']:
+                    if currSolution['notConflicts'] > bestSolution['notConflicts']:
+                        bestSolution=currSolution
             return bestSolution
         else:
             #call function with all possible options for next node (not change, change to each of the colors that differ from the current color)
@@ -125,9 +131,9 @@ class Agent:
                         newSolution['conflicts'] = newGraphState['conflicts']
                         newSolution['notConflicts'] = newGraphState['notConflicts']
                         newSolution['unknown'] = newGraphState['unknown']
-                        bestSolution = self.chooseActionsRecur(newSolution,nodeCounter+1,bestSolution) #call function to check this action set                  
+                        bestSolution = self.chooseActionsRecur(newSolution,nodeCounter+1,bestSolution,minActions) #call function to check this action set                  
             
-            bestSolution = self.chooseActionsRecur(currSolution,nodeCounter+1,bestSolution) #don't include a change to this node in action set
+            bestSolution = self.chooseActionsRecur(currSolution,nodeCounter+1,bestSolution,minActions) #don't include a change to this node in action set
                         
         return bestSolution;
                     
