@@ -63,9 +63,14 @@ class Agent:
                     data['color'] = -1
         
         #update new stuff
-        for node,color in nodesColorsList:
-            self.knownGraph.node[node]['color'] = color
-            self.knownGraph.node[node]['uptoDate'] = True
+        if isinstance(nodesColorsList, list):
+            for node,color in nodesColorsList:
+                self.knownGraph.node[node]['color'] = color
+                self.knownGraph.node[node]['uptoDate'] = True
+        else:
+            for node,color in nodesColorsList.iteritems():
+                self.knownGraph.node[node]['color'] = color
+                self.knownGraph.node[node]['uptoDate'] = True            
             
         self.countNumConflicts() #update conflict counts
         return 
@@ -133,8 +138,8 @@ class Agent:
                         newSolution['unknown'] = newGraphState['unknown']
                         bestSolution = self.chooseActionsRecur(newSolution,nodeCounter+1,bestSolution,minActions) #call function to check this action set                  
             
-            if minActions<self.actionLimit: #no need to check this option if the agent *must* change the number of nodes it is allowed to change
-                bestSolution = self.chooseActionsRecur(currSolution,nodeCounter+1,bestSolution,minActions) #don't include a change to this node in action set
+           
+            bestSolution = self.chooseActionsRecur(currSolution,nodeCounter+1,bestSolution,minActions) #don't include a change to this node in action set
                         
         return bestSolution;
                     
@@ -216,6 +221,9 @@ def createKnownGraph(graph, knownNodes):
     return knownGraph
 '-----------------test util functions end--------------------'
 if __name__ == '__main__':
+    l = {}
+    if isinstance(l, dict):
+        print 'yay'
     G=nx.Graph()
     colors = [0,1,2] # 0 = blue, 1 = red, 2 = green (unknown = black)
     possibleColorValues = [-1,0,1,2]

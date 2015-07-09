@@ -7,12 +7,12 @@ import networkx as nx
 import math
 
 class Mip:
-    def __init__(self, alpha = 0.3, beta = 0.7, gamma = 0.0, similarityMetric = "adamic"):
+    def __init__(self, alpha = 0.3, beta = 0.5, gamma = 0.2, similarityMetric = "adamic"):
         self.mip = nx.Graph()
         self.users = {}
         self.objects  = {}
         self.iteration = 0
-        self.lastID = 0
+        self.lastID = -1
         self.decay = 0.1
         self.objectsInc = 1.0
         self.current_flow_betweeness = None #centrality values of all nodes
@@ -37,6 +37,8 @@ class Mip:
         nodes = [i[0] for i in nodesToShare]            
         
         for node in nodes:
+            if user not in self.users.keys():
+                self.addUser(user)
             self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
         return nodes
                     
@@ -67,16 +69,16 @@ class Mip:
             ao_node1 = self.objects[session.actions[i].ao]
             for j in range(i+1, len(session.actions)):
                 ao_node2 = self.objects[session.actions[j].ao]
-            if (ao_node1!=ao_node2):
-                self.updateEdge(ao_node1, ao_node2, 'ao-ao', self.objectsInc)
+                if (ao_node1!=ao_node2):
+                    self.updateEdge(ao_node1, ao_node2, 'ao-ao', self.objectsInc)
                 
         #update weights between objects that user was informed about and objects that changed
         for i in range(len(session.actions)-1):
             ao_node1 = self.objects[session.actions[i].ao]
-            for j in range(j, len(session.info)):
-                ao_node2 = session.info[j]
-            if (ao_node1!=ao_node2):
-                self.updateEdge(ao_node1, ao_node2, 'ao-ao', self.objectsInc)
+            for j in range(0, len(session.info)):
+                ao_node2 = self.objects[session.info[j]]
+                if (ao_node1!=ao_node2):
+                    self.updateEdge(ao_node1, ao_node2, 'ao-ao', self.objectsInc)
                         
         #TODO: think about adding decay here!
 #        for edge in self.mip.edges_iter(data=True):
@@ -87,6 +89,7 @@ class Mip:
 #        print'updating'
 
         self.current_flow_betweeness = nx.degree_centrality(self.mip) #TODO: apriori importance for now is simply degree, consider reverting to more complex option
+        self.iteration = self.iteration+1
 #        try:
 #            self.current_flow_betweeness = nx.current_flow_betweenness_centrality(self.mip,True, weight = 'weight')
 #        except:
@@ -115,7 +118,6 @@ class Mip:
             attr['type']='object'
             attr['deleted'] = 0
             attr['revisions'] = []
-            attr['revisions'].append(self.iteration)
             self.mip.add_node(self.lastID, attr)
             self.nodeIDsToObjectsIds[self.lastID]=object_id
         return self.objects[object_id]
@@ -165,8 +167,8 @@ class Mip:
                 proximity = self.CFEC(userNodeID,obj) #cfec proximity
         
         changeExtent = 0.0
-        if self.gamma > 0:#need to consider how frequently the object has been changed since user last known about it
-            changeExtent = self.changeExtent(self.users[user], obj)
+        if self.gamma > 0:#need to consider how frequently the object has been changed since user last known about it: user is userId (might not be in MIP), obj is object Node id
+            changeExtent = self.changeExtent(user, obj)
 
 
         return self.alpha*api_obj+self.beta*proximity+self.gamma*changeExtent  #TODO: check that scales work out, otherwise need some normalization
@@ -216,16 +218,18 @@ class Mip:
     computes the extent/frequency to which an object was changed since the last time the user was notified about it
     will be a component taken into account in degree of interest 
     '''
-    def changeExtent(self, userNode, aoNode):
+    def changeExtent(self, userId, aoNode):
         fromRevision = 0 #in case user does not exist yet or has never known about this object, start from revision 0
-        if self.mip.has_edge(userNode, aoNode):
-            fromRevision = self.mip[userNode][aoNode]['lastKnown'] #get the last time the user knew what the value of the object was
-        revs = self.mip[aoNode]['revisions']
-        i = 0.0
-        while revs[i]<fromRevision:
+        if userId in self.users.keys():
+            userNode = self.users[userId]
+            if self.mip.has_edge(userNode, aoNode):
+                fromRevision = self.mip[userNode][aoNode]['lastKnown'] #get the last time the user knew what the value of the object was
+        revs = self.mip.node[aoNode]['revisions']
+        i = 0
+        while ((revs[i]<fromRevision) & (i<len(revs)-1)):
             i = i+1
         if i<len(revs):
-            return (len(revs)-i)/(self.iteration-fromRevision)
+            return (len(revs)-i)/float((self.iteration-fromRevision))
         else:
             return 0
     '''
@@ -279,7 +283,7 @@ class Mip:
                     if (act.ao not in checkedObjects): #currently not giving more weight to the fact that an object was changed multiple times. --> removed because if there are both big and small changes etc...
                         #TODO: possibly add check whether the action is notifiable
                         
-                        doi = self.DegreeOfInterestMIPs(user, self.objects[act.ao],self.current_flow_betweeness)
+                        doi = self.DegreeOfInterestMIPs(user, self.objects[act.ao])
                         checkedObjects[act.ao] = doi
                     else:
                         doi = checkedObjects[act.ao] #already computed doi, don't recompute!
