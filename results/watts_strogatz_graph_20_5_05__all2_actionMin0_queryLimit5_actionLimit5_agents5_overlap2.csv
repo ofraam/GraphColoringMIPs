@@ -1,0 +1,1001 @@
+graphName,algorithm,iteration,conflicts,unknown,notConflicts,percentColored
+watts_strogatz_graph_20_5_05_0,Random,0,0,40,0,0.0
+watts_strogatz_graph_20_5_05_0,Random,1,0,37,3,0.25
+watts_strogatz_graph_20_5_05_0,Random,2,0,31,9,0.5
+watts_strogatz_graph_20_5_05_0,Random,3,1,20,19,0.7
+watts_strogatz_graph_20_5_05_0,Random,4,2,16,22,0.75
+watts_strogatz_graph_20_5_05_0,Random,5,2,10,28,0.85
+watts_strogatz_graph_20_5_05_0,Random,6,3,10,27,0.85
+watts_strogatz_graph_20_5_05_0,Random,7,10,10,20,0.85
+watts_strogatz_graph_20_5_05_0,Random,8,8,2,30,0.95
+watts_strogatz_graph_20_5_05_0,Random,9,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,Random,10,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,Random,11,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,Random,12,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,Random,13,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,Random,14,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,Random,15,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,Random,16,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,Random,17,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,Random,18,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,Random,19,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,Random,20,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,Random,21,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,Random,22,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,Random,23,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,Random,24,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,Random,25,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,Random,26,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,Random,27,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,28,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,29,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,Random,30,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,Random,31,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,Random,32,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,Random,33,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,Random,34,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,Random,35,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,Random,36,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,Random,37,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,Random,38,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,39,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,40,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,Random,41,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,Random,42,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,Random,43,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,Random,44,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,45,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,46,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,47,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,48,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,49,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,50,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,Random,51,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,52,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,53,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,54,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,55,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,56,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,57,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,58,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,59,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,60,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,61,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,62,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,63,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,64,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,65,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,66,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,67,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,68,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,69,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,70,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,71,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,72,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,73,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,74,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,75,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,76,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,77,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,78,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,79,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,80,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,81,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,82,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,83,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,84,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,85,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,86,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,87,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,88,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,89,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,90,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,Random,91,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,92,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,93,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,94,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,95,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,96,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,97,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,98,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,99,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,100,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,101,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,102,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,103,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,104,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,105,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,106,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,107,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,108,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,109,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,110,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,111,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,112,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,113,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,114,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,115,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,116,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,117,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,118,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,119,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,120,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,121,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,122,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,123,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,124,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,125,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,126,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,127,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,128,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,129,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,130,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,131,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,132,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,133,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,134,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,135,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,136,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,137,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,138,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,139,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,140,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,Random,141,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,Random,142,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,143,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,144,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,145,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,146,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,147,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,148,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,149,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,150,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,151,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,152,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,153,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,154,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,155,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,156,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,157,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,158,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,159,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,160,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,161,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,162,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,163,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,164,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,165,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,166,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,167,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,168,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,169,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,170,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,171,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,172,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,173,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,174,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,175,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,176,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,177,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,178,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,179,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,180,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,181,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,182,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,183,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,184,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,185,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,186,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,187,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,188,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,189,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,190,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,191,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,Random,192,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,Random,193,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,194,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,195,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,196,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,Random,197,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,198,0,0,40,1.0
+watts_strogatz_graph_20_5_05_0,Random,199,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),0,0,40,0,0.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),1,0,37,3,0.25
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),2,0,31,9,0.5
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),3,1,20,19,0.7
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),4,2,12,26,0.8
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),5,2,10,28,0.85
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),6,4,10,26,0.85
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),7,4,10,26,0.85
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),8,6,2,32,0.95
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),9,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),10,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),11,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),12,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),13,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),14,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),15,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),16,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),17,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),18,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),19,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),20,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),21,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),22,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),23,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),24,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),25,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),26,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),27,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),28,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),29,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),30,16,0,24,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),31,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),32,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),33,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),34,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),35,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),36,19,0,21,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),37,17,0,23,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),38,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),39,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),40,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),41,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),42,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),43,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),44,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),45,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),46,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),47,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),48,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),49,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),50,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),51,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),52,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),53,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),54,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),55,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),56,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),57,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),58,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),59,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),60,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),61,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),62,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),63,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),64,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),65,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),66,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),67,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),68,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),69,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),70,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),71,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),72,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),73,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),74,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),75,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),76,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),77,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),78,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),79,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),80,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),81,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),82,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),83,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),84,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),85,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),86,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),87,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),88,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),89,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),90,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),91,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),92,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),93,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),94,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),95,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),96,15,0,25,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),97,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),98,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),99,15,0,25,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),100,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),101,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),102,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),103,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),104,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),105,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),106,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),107,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),108,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),109,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),110,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),111,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),112,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),113,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),114,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),115,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),116,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),117,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),118,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),119,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),120,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),121,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),122,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),123,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),124,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),125,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),126,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),127,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),128,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),129,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),130,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),131,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),132,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),133,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),134,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),135,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),136,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),137,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),138,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),139,17,0,23,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),140,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),141,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),142,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),143,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),144,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),145,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),146,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),147,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),148,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),149,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),150,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),151,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),152,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),153,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),154,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),155,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),156,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),157,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),158,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),159,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),160,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),161,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),162,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),163,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),164,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),165,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),166,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),167,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),168,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),169,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),170,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),171,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),172,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),173,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),174,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),175,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),176,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),177,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),178,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),179,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),180,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),181,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),182,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),183,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),184,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),185,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),186,15,0,25,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),187,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),188,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),189,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),190,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),191,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),192,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),193,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),194,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),195,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),196,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),197,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),198,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (200),199,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MIP,0,0,40,0,0.0
+watts_strogatz_graph_20_5_05_0,MIP,1,0,37,3,0.25
+watts_strogatz_graph_20_5_05_0,MIP,2,0,31,9,0.5
+watts_strogatz_graph_20_5_05_0,MIP,3,0,25,15,0.65
+watts_strogatz_graph_20_5_05_0,MIP,4,2,18,20,0.75
+watts_strogatz_graph_20_5_05_0,MIP,5,2,14,24,0.8
+watts_strogatz_graph_20_5_05_0,MIP,6,5,14,21,0.8
+watts_strogatz_graph_20_5_05_0,MIP,7,3,14,23,0.8
+watts_strogatz_graph_20_5_05_0,MIP,8,1,12,27,0.85
+watts_strogatz_graph_20_5_05_0,MIP,9,2,7,31,0.9
+watts_strogatz_graph_20_5_05_0,MIP,10,2,7,31,0.9
+watts_strogatz_graph_20_5_05_0,MIP,11,7,7,26,0.9
+watts_strogatz_graph_20_5_05_0,MIP,12,2,7,31,0.9
+watts_strogatz_graph_20_5_05_0,MIP,13,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,MIP,14,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,15,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,16,15,0,25,1.0
+watts_strogatz_graph_20_5_05_0,MIP,17,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,18,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,19,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,20,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,21,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MIP,22,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,23,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,24,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,25,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MIP,26,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,27,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,28,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,29,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,30,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,31,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MIP,32,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,33,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,34,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,35,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,36,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,37,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MIP,38,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MIP,39,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,40,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,41,15,0,25,1.0
+watts_strogatz_graph_20_5_05_0,MIP,42,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MIP,43,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,44,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,45,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,46,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,47,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,48,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MIP,49,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MIP,50,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,51,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,52,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,53,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,54,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,55,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,56,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,57,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,58,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,59,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,60,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,61,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MIP,62,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,63,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,64,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MIP,65,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,66,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,67,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,68,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MIP,69,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,70,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,71,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,72,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,73,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,74,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,75,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,76,15,0,25,1.0
+watts_strogatz_graph_20_5_05_0,MIP,77,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,78,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MIP,79,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,80,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,81,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MIP,82,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MIP,83,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,84,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,85,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,86,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,87,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,88,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,89,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,90,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,91,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,92,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,93,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MIP,94,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,95,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MIP,96,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MIP,97,15,0,25,1.0
+watts_strogatz_graph_20_5_05_0,MIP,98,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MIP,99,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,100,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,101,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,102,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,103,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,104,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,105,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,106,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,107,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,108,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,109,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,110,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,111,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,112,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,113,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,114,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,115,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,116,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,117,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,118,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,119,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,120,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,121,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,122,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,123,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,124,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,125,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,126,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,127,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,128,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,129,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,130,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,131,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,132,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,133,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,134,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,135,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,136,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,137,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,138,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,139,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,140,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,141,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,142,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,143,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,144,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,145,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,146,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,147,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,148,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,149,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,150,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,151,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,152,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,153,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,154,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,155,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,156,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,157,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,158,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,159,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,160,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,161,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,162,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,163,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,164,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,165,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,166,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,167,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,168,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,169,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,170,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,171,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,172,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,173,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,174,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,175,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,176,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,177,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,178,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,179,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,180,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,181,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,182,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,183,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,184,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,185,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,186,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,187,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,188,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,189,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MIP,190,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MIP,191,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,192,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,193,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,194,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,195,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,196,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MIP,197,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MIP,198,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MIP,199,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),0,0,40,0,0.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),1,0,37,3,0.25
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),2,0,31,9,0.5
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),3,1,20,19,0.7
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),4,2,12,26,0.8
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),5,2,10,28,0.85
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),6,4,10,26,0.85
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),7,4,10,26,0.85
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),8,6,2,32,0.95
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),9,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),10,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),11,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),12,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),13,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),14,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),15,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),16,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),17,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),18,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),19,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),20,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),21,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),22,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),23,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),24,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),25,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),26,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),27,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),28,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),29,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),30,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),31,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),32,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),33,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),34,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),35,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),36,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),37,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),38,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),39,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),40,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),41,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),42,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),43,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),44,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),45,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),46,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),47,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),48,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),49,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),50,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),51,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),52,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),53,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),54,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),55,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),56,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),57,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),58,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),59,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),60,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),61,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),62,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),63,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),64,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),65,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),66,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),67,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),68,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),69,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),70,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),71,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),72,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),73,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),74,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),75,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),76,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),77,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),78,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),79,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),80,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),81,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),82,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),83,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),84,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),85,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),86,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),87,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),88,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),89,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),90,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),91,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),92,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),93,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),94,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),95,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),96,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),97,15,0,25,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),98,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),99,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),100,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),101,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),102,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),103,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),104,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),105,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),106,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),107,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),108,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),109,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),110,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),111,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),112,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),113,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),114,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),115,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),116,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),117,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),118,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),119,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),120,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),121,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),122,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),123,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),124,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),125,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),126,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),127,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),128,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),129,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),130,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),131,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),132,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),133,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),134,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),135,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),136,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),137,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),138,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),139,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),140,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),141,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),142,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),143,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),144,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),145,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),146,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),147,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),148,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),149,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),150,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),151,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),152,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),153,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),154,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),155,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),156,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),157,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),158,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),159,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),160,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),161,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),162,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),163,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),164,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),165,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),166,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),167,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),168,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),169,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),170,14,0,26,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),171,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),172,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),173,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),174,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),175,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),176,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),177,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),178,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),179,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),180,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),181,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),182,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),183,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),184,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),185,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),186,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),187,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),188,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),189,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),190,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),191,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),192,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),193,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),194,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),195,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),196,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),197,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),198,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,MostChangedInterval (5),199,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,0,0,40,0,0.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,1,0,37,3,0.25
+watts_strogatz_graph_20_5_05_0,RecentChanges,2,0,31,9,0.5
+watts_strogatz_graph_20_5_05_0,RecentChanges,3,2,20,18,0.7
+watts_strogatz_graph_20_5_05_0,RecentChanges,4,3,9,28,0.85
+watts_strogatz_graph_20_5_05_0,RecentChanges,5,3,7,30,0.9
+watts_strogatz_graph_20_5_05_0,RecentChanges,6,7,7,26,0.9
+watts_strogatz_graph_20_5_05_0,RecentChanges,7,10,7,23,0.9
+watts_strogatz_graph_20_5_05_0,RecentChanges,8,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,9,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,10,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,11,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,12,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,13,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,14,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,15,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,16,13,0,27,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,17,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,18,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,19,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,20,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,21,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,22,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,23,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,24,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,25,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,26,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,27,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,28,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,29,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,30,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,31,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,32,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,33,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,34,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,35,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,36,9,0,31,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,37,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,38,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,39,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,40,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,41,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,42,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,43,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,44,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,45,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,46,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,47,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,48,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,49,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,50,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,51,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,52,12,0,28,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,53,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,54,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,55,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,56,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,57,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,58,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,59,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,60,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,61,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,62,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,63,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,64,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,65,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,66,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,67,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,68,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,69,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,70,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,71,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,72,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,73,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,74,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,75,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,76,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,77,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,78,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,79,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,80,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,81,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,82,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,83,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,84,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,85,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,86,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,87,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,88,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,89,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,90,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,91,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,92,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,93,11,0,29,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,94,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,95,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,96,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,97,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,98,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,99,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,100,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,101,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,102,7,0,33,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,103,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,104,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,105,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,106,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,107,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,108,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,109,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,110,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,111,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,112,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,113,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,114,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,115,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,116,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,117,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,118,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,119,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,120,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,121,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,122,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,123,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,124,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,125,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,126,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,127,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,128,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,129,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,130,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,131,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,132,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,133,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,134,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,135,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,136,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,137,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,138,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,139,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,140,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,141,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,142,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,143,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,144,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,145,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,146,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,147,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,148,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,149,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,150,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,151,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,152,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,153,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,154,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,155,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,156,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,157,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,158,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,159,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,160,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,161,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,162,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,163,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,164,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,165,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,166,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,167,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,168,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,169,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,170,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,171,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,172,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,173,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,174,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,175,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,176,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,177,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,178,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,179,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,180,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,181,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,182,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,183,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,184,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,185,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,186,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,187,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,188,1,0,39,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,189,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,190,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,191,4,0,36,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,192,10,0,30,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,193,8,0,32,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,194,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,195,6,0,34,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,196,5,0,35,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,197,3,0,37,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,198,2,0,38,1.0
+watts_strogatz_graph_20_5_05_0,RecentChanges,199,3,0,37,1.0

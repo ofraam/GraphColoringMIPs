@@ -1,1006 +1,202 @@
 graphName,algorithm,iteration,conflicts,unknown,notConflicts,percentColored
-9graph,Random,0,13,0,8,1.0
-9graph,Random,1,8,0,13,1.0
-9graph,Random,2,5,0,16,1.0
-9graph,Random,3,1,0,20,1.0
-9graph,Random,4,1,0,20,1.0
-9graph,Random,5,1,0,20,1.0
-9graph,Random,6,3,0,18,1.0
-9graph,Random,7,2,0,19,1.0
-9graph,Random,8,3,0,18,1.0
-9graph,Random,9,1,0,20,1.0
-9graph,Random,10,1,0,20,1.0
-9graph,Random,11,2,0,19,1.0
-9graph,Random,12,3,0,18,1.0
-9graph,Random,13,2,0,19,1.0
-9graph,Random,14,2,0,19,1.0
-9graph,Random,15,1,0,20,1.0
-9graph,Random,16,2,0,19,1.0
-9graph,Random,17,1,0,20,1.0
-9graph,Random,18,2,0,19,1.0
-9graph,Random,19,2,0,19,1.0
-9graph,Random,20,2,0,19,1.0
-9graph,Random,21,1,0,20,1.0
-9graph,Random,22,2,0,19,1.0
-9graph,Random,23,1,0,20,1.0
-9graph,Random,24,2,0,19,1.0
-9graph,Random,25,2,0,19,1.0
-9graph,Random,26,2,0,19,1.0
-9graph,Random,27,1,0,20,1.0
-9graph,Random,28,2,0,19,1.0
-9graph,Random,29,1,0,20,1.0
-9graph,Random,30,2,0,19,1.0
-9graph,Random,31,2,0,19,1.0
-9graph,Random,32,2,0,19,1.0
-9graph,Random,33,1,0,20,1.0
-9graph,Random,34,2,0,19,1.0
-9graph,Random,35,1,0,20,1.0
-9graph,Random,36,2,0,19,1.0
-9graph,Random,37,2,0,19,1.0
-9graph,Random,38,2,0,19,1.0
-9graph,Random,39,1,0,20,1.0
-9graph,Random,40,2,0,19,1.0
-9graph,Random,41,1,0,20,1.0
-9graph,Random,42,2,0,19,1.0
-9graph,Random,43,2,0,19,1.0
-9graph,Random,44,2,0,19,1.0
-9graph,Random,45,1,0,20,1.0
-9graph,Random,46,2,0,19,1.0
-9graph,Random,47,1,0,20,1.0
-9graph,Random,48,2,0,19,1.0
-9graph,Random,49,2,0,19,1.0
-9graph,Random,50,2,0,19,1.0
-9graph,Random,51,1,0,20,1.0
-9graph,Random,52,2,0,19,1.0
-9graph,Random,53,1,0,20,1.0
-9graph,Random,54,2,0,19,1.0
-9graph,Random,55,2,0,19,1.0
-9graph,Random,56,2,0,19,1.0
-9graph,Random,57,1,0,20,1.0
-9graph,Random,58,2,0,19,1.0
-9graph,Random,59,1,0,20,1.0
-9graph,Random,60,2,0,19,1.0
-9graph,Random,61,2,0,19,1.0
-9graph,Random,62,2,0,19,1.0
-9graph,Random,63,1,0,20,1.0
-9graph,Random,64,2,0,19,1.0
-9graph,Random,65,1,0,20,1.0
-9graph,Random,66,2,0,19,1.0
-9graph,Random,67,2,0,19,1.0
-9graph,Random,68,2,0,19,1.0
-9graph,Random,69,1,0,20,1.0
-9graph,Random,70,2,0,19,1.0
-9graph,Random,71,1,0,20,1.0
-9graph,Random,72,2,0,19,1.0
-9graph,Random,73,2,0,19,1.0
-9graph,Random,74,2,0,19,1.0
-9graph,Random,75,1,0,20,1.0
-9graph,Random,76,2,0,19,1.0
-9graph,Random,77,1,0,20,1.0
-9graph,Random,78,2,0,19,1.0
-9graph,Random,79,2,0,19,1.0
-9graph,Random,80,2,0,19,1.0
-9graph,Random,81,1,0,20,1.0
-9graph,Random,82,2,0,19,1.0
-9graph,Random,83,1,0,20,1.0
-9graph,Random,84,2,0,19,1.0
-9graph,Random,85,2,0,19,1.0
-9graph,Random,86,2,0,19,1.0
-9graph,Random,87,1,0,20,1.0
-9graph,Random,88,2,0,19,1.0
-9graph,Random,89,1,0,20,1.0
-9graph,Random,90,2,0,19,1.0
-9graph,Random,91,2,0,19,1.0
-9graph,Random,92,2,0,19,1.0
-9graph,Random,93,1,0,20,1.0
-9graph,Random,94,2,0,19,1.0
-9graph,Random,95,1,0,20,1.0
-9graph,Random,96,2,0,19,1.0
-9graph,Random,97,2,0,19,1.0
-9graph,Random,98,2,0,19,1.0
-9graph,Random,99,1,0,20,1.0
-9graph,Random,100,2,0,19,1.0
-9graph,Random,101,1,0,20,1.0
-9graph,Random,102,2,0,19,1.0
-9graph,Random,103,2,0,19,1.0
-9graph,Random,104,2,0,19,1.0
-9graph,Random,105,1,0,20,1.0
-9graph,Random,106,2,0,19,1.0
-9graph,Random,107,1,0,20,1.0
-9graph,Random,108,2,0,19,1.0
-9graph,Random,109,2,0,19,1.0
-9graph,Random,110,2,0,19,1.0
-9graph,Random,111,1,0,20,1.0
-9graph,Random,112,2,0,19,1.0
-9graph,Random,113,1,0,20,1.0
-9graph,Random,114,2,0,19,1.0
-9graph,Random,115,2,0,19,1.0
-9graph,Random,116,2,0,19,1.0
-9graph,Random,117,1,0,20,1.0
-9graph,Random,118,2,0,19,1.0
-9graph,Random,119,1,0,20,1.0
-9graph,Random,120,2,0,19,1.0
-9graph,Random,121,2,0,19,1.0
-9graph,Random,122,2,0,19,1.0
-9graph,Random,123,1,0,20,1.0
-9graph,Random,124,2,0,19,1.0
-9graph,Random,125,1,0,20,1.0
-9graph,Random,126,2,0,19,1.0
-9graph,Random,127,2,0,19,1.0
-9graph,Random,128,2,0,19,1.0
-9graph,Random,129,1,0,20,1.0
-9graph,Random,130,2,0,19,1.0
-9graph,Random,131,1,0,20,1.0
-9graph,Random,132,2,0,19,1.0
-9graph,Random,133,2,0,19,1.0
-9graph,Random,134,2,0,19,1.0
-9graph,Random,135,1,0,20,1.0
-9graph,Random,136,2,0,19,1.0
-9graph,Random,137,1,0,20,1.0
-9graph,Random,138,2,0,19,1.0
-9graph,Random,139,2,0,19,1.0
-9graph,Random,140,2,0,19,1.0
-9graph,Random,141,1,0,20,1.0
-9graph,Random,142,2,0,19,1.0
-9graph,Random,143,1,0,20,1.0
-9graph,Random,144,2,0,19,1.0
-9graph,Random,145,2,0,19,1.0
-9graph,Random,146,2,0,19,1.0
-9graph,Random,147,1,0,20,1.0
-9graph,Random,148,2,0,19,1.0
-9graph,Random,149,1,0,20,1.0
-9graph,Random,150,2,0,19,1.0
-9graph,Random,151,2,0,19,1.0
-9graph,Random,152,2,0,19,1.0
-9graph,Random,153,1,0,20,1.0
-9graph,Random,154,2,0,19,1.0
-9graph,Random,155,1,0,20,1.0
-9graph,Random,156,2,0,19,1.0
-9graph,Random,157,2,0,19,1.0
-9graph,Random,158,2,0,19,1.0
-9graph,Random,159,1,0,20,1.0
-9graph,Random,160,2,0,19,1.0
-9graph,Random,161,1,0,20,1.0
-9graph,Random,162,2,0,19,1.0
-9graph,Random,163,2,0,19,1.0
-9graph,Random,164,2,0,19,1.0
-9graph,Random,165,1,0,20,1.0
-9graph,Random,166,2,0,19,1.0
-9graph,Random,167,1,0,20,1.0
-9graph,Random,168,2,0,19,1.0
-9graph,Random,169,2,0,19,1.0
-9graph,Random,170,2,0,19,1.0
-9graph,Random,171,1,0,20,1.0
-9graph,Random,172,2,0,19,1.0
-9graph,Random,173,1,0,20,1.0
-9graph,Random,174,2,0,19,1.0
-9graph,Random,175,2,0,19,1.0
-9graph,Random,176,2,0,19,1.0
-9graph,Random,177,1,0,20,1.0
-9graph,Random,178,2,0,19,1.0
-9graph,Random,179,1,0,20,1.0
-9graph,Random,180,2,0,19,1.0
-9graph,Random,181,2,0,19,1.0
-9graph,Random,182,2,0,19,1.0
-9graph,Random,183,1,0,20,1.0
-9graph,Random,184,2,0,19,1.0
-9graph,Random,185,1,0,20,1.0
-9graph,Random,186,2,0,19,1.0
-9graph,Random,187,2,0,19,1.0
-9graph,Random,188,2,0,19,1.0
-9graph,Random,189,1,0,20,1.0
-9graph,Random,190,2,0,19,1.0
-9graph,Random,191,1,0,20,1.0
-9graph,Random,192,2,0,19,1.0
-9graph,Random,193,2,0,19,1.0
-9graph,Random,194,2,0,19,1.0
-9graph,Random,195,1,0,20,1.0
-9graph,Random,196,2,0,19,1.0
-9graph,Random,197,1,0,20,1.0
-9graph,Random,198,2,0,19,1.0
-9graph,Random,199,2,0,19,1.0
-9graph,Random,200,2,0,19,1.0
-9graph,MostChangedInterval (200),0,13,0,8,1.0
-9graph,MostChangedInterval (200),1,11,0,10,1.0
-9graph,MostChangedInterval (200),2,10,0,11,1.0
-9graph,MostChangedInterval (200),3,8,0,13,1.0
-9graph,MostChangedInterval (200),4,11,0,10,1.0
-9graph,MostChangedInterval (200),5,8,0,13,1.0
-9graph,MostChangedInterval (200),6,8,0,13,1.0
-9graph,MostChangedInterval (200),7,9,0,12,1.0
-9graph,MostChangedInterval (200),8,7,0,14,1.0
-9graph,MostChangedInterval (200),9,7,0,14,1.0
-9graph,MostChangedInterval (200),10,8,0,13,1.0
-9graph,MostChangedInterval (200),11,11,0,10,1.0
-9graph,MostChangedInterval (200),12,11,0,10,1.0
-9graph,MostChangedInterval (200),13,7,0,14,1.0
-9graph,MostChangedInterval (200),14,9,0,12,1.0
-9graph,MostChangedInterval (200),15,9,0,12,1.0
-9graph,MostChangedInterval (200),16,8,0,13,1.0
-9graph,MostChangedInterval (200),17,11,0,10,1.0
-9graph,MostChangedInterval (200),18,11,0,10,1.0
-9graph,MostChangedInterval (200),19,7,0,14,1.0
-9graph,MostChangedInterval (200),20,9,0,12,1.0
-9graph,MostChangedInterval (200),21,9,0,12,1.0
-9graph,MostChangedInterval (200),22,8,0,13,1.0
-9graph,MostChangedInterval (200),23,11,0,10,1.0
-9graph,MostChangedInterval (200),24,11,0,10,1.0
-9graph,MostChangedInterval (200),25,7,0,14,1.0
-9graph,MostChangedInterval (200),26,9,0,12,1.0
-9graph,MostChangedInterval (200),27,9,0,12,1.0
-9graph,MostChangedInterval (200),28,8,0,13,1.0
-9graph,MostChangedInterval (200),29,11,0,10,1.0
-9graph,MostChangedInterval (200),30,11,0,10,1.0
-9graph,MostChangedInterval (200),31,7,0,14,1.0
-9graph,MostChangedInterval (200),32,9,0,12,1.0
-9graph,MostChangedInterval (200),33,9,0,12,1.0
-9graph,MostChangedInterval (200),34,8,0,13,1.0
-9graph,MostChangedInterval (200),35,11,0,10,1.0
-9graph,MostChangedInterval (200),36,11,0,10,1.0
-9graph,MostChangedInterval (200),37,7,0,14,1.0
-9graph,MostChangedInterval (200),38,9,0,12,1.0
-9graph,MostChangedInterval (200),39,9,0,12,1.0
-9graph,MostChangedInterval (200),40,8,0,13,1.0
-9graph,MostChangedInterval (200),41,11,0,10,1.0
-9graph,MostChangedInterval (200),42,11,0,10,1.0
-9graph,MostChangedInterval (200),43,7,0,14,1.0
-9graph,MostChangedInterval (200),44,9,0,12,1.0
-9graph,MostChangedInterval (200),45,9,0,12,1.0
-9graph,MostChangedInterval (200),46,8,0,13,1.0
-9graph,MostChangedInterval (200),47,11,0,10,1.0
-9graph,MostChangedInterval (200),48,11,0,10,1.0
-9graph,MostChangedInterval (200),49,7,0,14,1.0
-9graph,MostChangedInterval (200),50,9,0,12,1.0
-9graph,MostChangedInterval (200),51,9,0,12,1.0
-9graph,MostChangedInterval (200),52,8,0,13,1.0
-9graph,MostChangedInterval (200),53,11,0,10,1.0
-9graph,MostChangedInterval (200),54,11,0,10,1.0
-9graph,MostChangedInterval (200),55,7,0,14,1.0
-9graph,MostChangedInterval (200),56,9,0,12,1.0
-9graph,MostChangedInterval (200),57,9,0,12,1.0
-9graph,MostChangedInterval (200),58,8,0,13,1.0
-9graph,MostChangedInterval (200),59,11,0,10,1.0
-9graph,MostChangedInterval (200),60,11,0,10,1.0
-9graph,MostChangedInterval (200),61,7,0,14,1.0
-9graph,MostChangedInterval (200),62,9,0,12,1.0
-9graph,MostChangedInterval (200),63,9,0,12,1.0
-9graph,MostChangedInterval (200),64,8,0,13,1.0
-9graph,MostChangedInterval (200),65,11,0,10,1.0
-9graph,MostChangedInterval (200),66,11,0,10,1.0
-9graph,MostChangedInterval (200),67,7,0,14,1.0
-9graph,MostChangedInterval (200),68,9,0,12,1.0
-9graph,MostChangedInterval (200),69,9,0,12,1.0
-9graph,MostChangedInterval (200),70,8,0,13,1.0
-9graph,MostChangedInterval (200),71,11,0,10,1.0
-9graph,MostChangedInterval (200),72,11,0,10,1.0
-9graph,MostChangedInterval (200),73,7,0,14,1.0
-9graph,MostChangedInterval (200),74,9,0,12,1.0
-9graph,MostChangedInterval (200),75,9,0,12,1.0
-9graph,MostChangedInterval (200),76,8,0,13,1.0
-9graph,MostChangedInterval (200),77,11,0,10,1.0
-9graph,MostChangedInterval (200),78,11,0,10,1.0
-9graph,MostChangedInterval (200),79,7,0,14,1.0
-9graph,MostChangedInterval (200),80,9,0,12,1.0
-9graph,MostChangedInterval (200),81,9,0,12,1.0
-9graph,MostChangedInterval (200),82,8,0,13,1.0
-9graph,MostChangedInterval (200),83,11,0,10,1.0
-9graph,MostChangedInterval (200),84,11,0,10,1.0
-9graph,MostChangedInterval (200),85,7,0,14,1.0
-9graph,MostChangedInterval (200),86,9,0,12,1.0
-9graph,MostChangedInterval (200),87,9,0,12,1.0
-9graph,MostChangedInterval (200),88,8,0,13,1.0
-9graph,MostChangedInterval (200),89,11,0,10,1.0
-9graph,MostChangedInterval (200),90,11,0,10,1.0
-9graph,MostChangedInterval (200),91,7,0,14,1.0
-9graph,MostChangedInterval (200),92,9,0,12,1.0
-9graph,MostChangedInterval (200),93,9,0,12,1.0
-9graph,MostChangedInterval (200),94,8,0,13,1.0
-9graph,MostChangedInterval (200),95,11,0,10,1.0
-9graph,MostChangedInterval (200),96,11,0,10,1.0
-9graph,MostChangedInterval (200),97,7,0,14,1.0
-9graph,MostChangedInterval (200),98,9,0,12,1.0
-9graph,MostChangedInterval (200),99,9,0,12,1.0
-9graph,MostChangedInterval (200),100,8,0,13,1.0
-9graph,MostChangedInterval (200),101,11,0,10,1.0
-9graph,MostChangedInterval (200),102,11,0,10,1.0
-9graph,MostChangedInterval (200),103,7,0,14,1.0
-9graph,MostChangedInterval (200),104,9,0,12,1.0
-9graph,MostChangedInterval (200),105,9,0,12,1.0
-9graph,MostChangedInterval (200),106,8,0,13,1.0
-9graph,MostChangedInterval (200),107,11,0,10,1.0
-9graph,MostChangedInterval (200),108,11,0,10,1.0
-9graph,MostChangedInterval (200),109,7,0,14,1.0
-9graph,MostChangedInterval (200),110,9,0,12,1.0
-9graph,MostChangedInterval (200),111,9,0,12,1.0
-9graph,MostChangedInterval (200),112,8,0,13,1.0
-9graph,MostChangedInterval (200),113,11,0,10,1.0
-9graph,MostChangedInterval (200),114,11,0,10,1.0
-9graph,MostChangedInterval (200),115,7,0,14,1.0
-9graph,MostChangedInterval (200),116,9,0,12,1.0
-9graph,MostChangedInterval (200),117,9,0,12,1.0
-9graph,MostChangedInterval (200),118,8,0,13,1.0
-9graph,MostChangedInterval (200),119,11,0,10,1.0
-9graph,MostChangedInterval (200),120,11,0,10,1.0
-9graph,MostChangedInterval (200),121,7,0,14,1.0
-9graph,MostChangedInterval (200),122,9,0,12,1.0
-9graph,MostChangedInterval (200),123,9,0,12,1.0
-9graph,MostChangedInterval (200),124,8,0,13,1.0
-9graph,MostChangedInterval (200),125,11,0,10,1.0
-9graph,MostChangedInterval (200),126,11,0,10,1.0
-9graph,MostChangedInterval (200),127,7,0,14,1.0
-9graph,MostChangedInterval (200),128,9,0,12,1.0
-9graph,MostChangedInterval (200),129,9,0,12,1.0
-9graph,MostChangedInterval (200),130,8,0,13,1.0
-9graph,MostChangedInterval (200),131,11,0,10,1.0
-9graph,MostChangedInterval (200),132,11,0,10,1.0
-9graph,MostChangedInterval (200),133,7,0,14,1.0
-9graph,MostChangedInterval (200),134,9,0,12,1.0
-9graph,MostChangedInterval (200),135,9,0,12,1.0
-9graph,MostChangedInterval (200),136,8,0,13,1.0
-9graph,MostChangedInterval (200),137,11,0,10,1.0
-9graph,MostChangedInterval (200),138,11,0,10,1.0
-9graph,MostChangedInterval (200),139,7,0,14,1.0
-9graph,MostChangedInterval (200),140,9,0,12,1.0
-9graph,MostChangedInterval (200),141,9,0,12,1.0
-9graph,MostChangedInterval (200),142,8,0,13,1.0
-9graph,MostChangedInterval (200),143,11,0,10,1.0
-9graph,MostChangedInterval (200),144,11,0,10,1.0
-9graph,MostChangedInterval (200),145,7,0,14,1.0
-9graph,MostChangedInterval (200),146,9,0,12,1.0
-9graph,MostChangedInterval (200),147,9,0,12,1.0
-9graph,MostChangedInterval (200),148,8,0,13,1.0
-9graph,MostChangedInterval (200),149,11,0,10,1.0
-9graph,MostChangedInterval (200),150,11,0,10,1.0
-9graph,MostChangedInterval (200),151,7,0,14,1.0
-9graph,MostChangedInterval (200),152,9,0,12,1.0
-9graph,MostChangedInterval (200),153,9,0,12,1.0
-9graph,MostChangedInterval (200),154,8,0,13,1.0
-9graph,MostChangedInterval (200),155,11,0,10,1.0
-9graph,MostChangedInterval (200),156,11,0,10,1.0
-9graph,MostChangedInterval (200),157,7,0,14,1.0
-9graph,MostChangedInterval (200),158,9,0,12,1.0
-9graph,MostChangedInterval (200),159,9,0,12,1.0
-9graph,MostChangedInterval (200),160,8,0,13,1.0
-9graph,MostChangedInterval (200),161,11,0,10,1.0
-9graph,MostChangedInterval (200),162,11,0,10,1.0
-9graph,MostChangedInterval (200),163,7,0,14,1.0
-9graph,MostChangedInterval (200),164,9,0,12,1.0
-9graph,MostChangedInterval (200),165,9,0,12,1.0
-9graph,MostChangedInterval (200),166,8,0,13,1.0
-9graph,MostChangedInterval (200),167,11,0,10,1.0
-9graph,MostChangedInterval (200),168,11,0,10,1.0
-9graph,MostChangedInterval (200),169,7,0,14,1.0
-9graph,MostChangedInterval (200),170,9,0,12,1.0
-9graph,MostChangedInterval (200),171,9,0,12,1.0
-9graph,MostChangedInterval (200),172,8,0,13,1.0
-9graph,MostChangedInterval (200),173,11,0,10,1.0
-9graph,MostChangedInterval (200),174,11,0,10,1.0
-9graph,MostChangedInterval (200),175,7,0,14,1.0
-9graph,MostChangedInterval (200),176,9,0,12,1.0
-9graph,MostChangedInterval (200),177,9,0,12,1.0
-9graph,MostChangedInterval (200),178,8,0,13,1.0
-9graph,MostChangedInterval (200),179,11,0,10,1.0
-9graph,MostChangedInterval (200),180,11,0,10,1.0
-9graph,MostChangedInterval (200),181,7,0,14,1.0
-9graph,MostChangedInterval (200),182,9,0,12,1.0
-9graph,MostChangedInterval (200),183,9,0,12,1.0
-9graph,MostChangedInterval (200),184,8,0,13,1.0
-9graph,MostChangedInterval (200),185,11,0,10,1.0
-9graph,MostChangedInterval (200),186,11,0,10,1.0
-9graph,MostChangedInterval (200),187,7,0,14,1.0
-9graph,MostChangedInterval (200),188,9,0,12,1.0
-9graph,MostChangedInterval (200),189,9,0,12,1.0
-9graph,MostChangedInterval (200),190,8,0,13,1.0
-9graph,MostChangedInterval (200),191,11,0,10,1.0
-9graph,MostChangedInterval (200),192,11,0,10,1.0
-9graph,MostChangedInterval (200),193,7,0,14,1.0
-9graph,MostChangedInterval (200),194,9,0,12,1.0
-9graph,MostChangedInterval (200),195,9,0,12,1.0
-9graph,MostChangedInterval (200),196,8,0,13,1.0
-9graph,MostChangedInterval (200),197,11,0,10,1.0
-9graph,MostChangedInterval (200),198,11,0,10,1.0
-9graph,MostChangedInterval (200),199,7,0,14,1.0
-9graph,MostChangedInterval (200),200,9,0,12,1.0
-9graph,MIP,0,13,0,8,1.0
-9graph,MIP,1,10,0,11,1.0
-9graph,MIP,2,10,0,11,1.0
-9graph,MIP,3,8,0,13,1.0
-9graph,MIP,4,9,0,12,1.0
-9graph,MIP,5,7,0,14,1.0
-9graph,MIP,6,7,0,14,1.0
-9graph,MIP,7,8,0,13,1.0
-9graph,MIP,8,11,0,10,1.0
-9graph,MIP,9,11,0,10,1.0
-9graph,MIP,10,7,0,14,1.0
-9graph,MIP,11,9,0,12,1.0
-9graph,MIP,12,9,0,12,1.0
-9graph,MIP,13,8,0,13,1.0
-9graph,MIP,14,11,0,10,1.0
-9graph,MIP,15,11,0,10,1.0
-9graph,MIP,16,7,0,14,1.0
-9graph,MIP,17,9,0,12,1.0
-9graph,MIP,18,9,0,12,1.0
-9graph,MIP,19,8,0,13,1.0
-9graph,MIP,20,11,0,10,1.0
-9graph,MIP,21,11,0,10,1.0
-9graph,MIP,22,7,0,14,1.0
-9graph,MIP,23,9,0,12,1.0
-9graph,MIP,24,9,0,12,1.0
-9graph,MIP,25,8,0,13,1.0
-9graph,MIP,26,11,0,10,1.0
-9graph,MIP,27,11,0,10,1.0
-9graph,MIP,28,7,0,14,1.0
-9graph,MIP,29,9,0,12,1.0
-9graph,MIP,30,9,0,12,1.0
-9graph,MIP,31,8,0,13,1.0
-9graph,MIP,32,11,0,10,1.0
-9graph,MIP,33,11,0,10,1.0
-9graph,MIP,34,7,0,14,1.0
-9graph,MIP,35,9,0,12,1.0
-9graph,MIP,36,9,0,12,1.0
-9graph,MIP,37,8,0,13,1.0
-9graph,MIP,38,11,0,10,1.0
-9graph,MIP,39,11,0,10,1.0
-9graph,MIP,40,7,0,14,1.0
-9graph,MIP,41,9,0,12,1.0
-9graph,MIP,42,9,0,12,1.0
-9graph,MIP,43,8,0,13,1.0
-9graph,MIP,44,11,0,10,1.0
-9graph,MIP,45,11,0,10,1.0
-9graph,MIP,46,7,0,14,1.0
-9graph,MIP,47,9,0,12,1.0
-9graph,MIP,48,9,0,12,1.0
-9graph,MIP,49,8,0,13,1.0
-9graph,MIP,50,11,0,10,1.0
-9graph,MIP,51,11,0,10,1.0
-9graph,MIP,52,7,0,14,1.0
-9graph,MIP,53,9,0,12,1.0
-9graph,MIP,54,9,0,12,1.0
-9graph,MIP,55,8,0,13,1.0
-9graph,MIP,56,11,0,10,1.0
-9graph,MIP,57,11,0,10,1.0
-9graph,MIP,58,7,0,14,1.0
-9graph,MIP,59,9,0,12,1.0
-9graph,MIP,60,9,0,12,1.0
-9graph,MIP,61,8,0,13,1.0
-9graph,MIP,62,11,0,10,1.0
-9graph,MIP,63,11,0,10,1.0
-9graph,MIP,64,7,0,14,1.0
-9graph,MIP,65,9,0,12,1.0
-9graph,MIP,66,9,0,12,1.0
-9graph,MIP,67,8,0,13,1.0
-9graph,MIP,68,11,0,10,1.0
-9graph,MIP,69,11,0,10,1.0
-9graph,MIP,70,7,0,14,1.0
-9graph,MIP,71,9,0,12,1.0
-9graph,MIP,72,9,0,12,1.0
-9graph,MIP,73,8,0,13,1.0
-9graph,MIP,74,11,0,10,1.0
-9graph,MIP,75,11,0,10,1.0
-9graph,MIP,76,7,0,14,1.0
-9graph,MIP,77,9,0,12,1.0
-9graph,MIP,78,9,0,12,1.0
-9graph,MIP,79,8,0,13,1.0
-9graph,MIP,80,11,0,10,1.0
-9graph,MIP,81,11,0,10,1.0
-9graph,MIP,82,7,0,14,1.0
-9graph,MIP,83,9,0,12,1.0
-9graph,MIP,84,9,0,12,1.0
-9graph,MIP,85,8,0,13,1.0
-9graph,MIP,86,11,0,10,1.0
-9graph,MIP,87,11,0,10,1.0
-9graph,MIP,88,7,0,14,1.0
-9graph,MIP,89,9,0,12,1.0
-9graph,MIP,90,9,0,12,1.0
-9graph,MIP,91,8,0,13,1.0
-9graph,MIP,92,11,0,10,1.0
-9graph,MIP,93,11,0,10,1.0
-9graph,MIP,94,7,0,14,1.0
-9graph,MIP,95,9,0,12,1.0
-9graph,MIP,96,9,0,12,1.0
-9graph,MIP,97,8,0,13,1.0
-9graph,MIP,98,11,0,10,1.0
-9graph,MIP,99,11,0,10,1.0
-9graph,MIP,100,7,0,14,1.0
-9graph,MIP,101,9,0,12,1.0
-9graph,MIP,102,9,0,12,1.0
-9graph,MIP,103,8,0,13,1.0
-9graph,MIP,104,11,0,10,1.0
-9graph,MIP,105,11,0,10,1.0
-9graph,MIP,106,7,0,14,1.0
-9graph,MIP,107,9,0,12,1.0
-9graph,MIP,108,9,0,12,1.0
-9graph,MIP,109,8,0,13,1.0
-9graph,MIP,110,11,0,10,1.0
-9graph,MIP,111,11,0,10,1.0
-9graph,MIP,112,7,0,14,1.0
-9graph,MIP,113,9,0,12,1.0
-9graph,MIP,114,9,0,12,1.0
-9graph,MIP,115,8,0,13,1.0
-9graph,MIP,116,11,0,10,1.0
-9graph,MIP,117,11,0,10,1.0
-9graph,MIP,118,7,0,14,1.0
-9graph,MIP,119,9,0,12,1.0
-9graph,MIP,120,9,0,12,1.0
-9graph,MIP,121,8,0,13,1.0
-9graph,MIP,122,11,0,10,1.0
-9graph,MIP,123,11,0,10,1.0
-9graph,MIP,124,7,0,14,1.0
-9graph,MIP,125,9,0,12,1.0
-9graph,MIP,126,9,0,12,1.0
-9graph,MIP,127,8,0,13,1.0
-9graph,MIP,128,11,0,10,1.0
-9graph,MIP,129,11,0,10,1.0
-9graph,MIP,130,7,0,14,1.0
-9graph,MIP,131,9,0,12,1.0
-9graph,MIP,132,9,0,12,1.0
-9graph,MIP,133,8,0,13,1.0
-9graph,MIP,134,11,0,10,1.0
-9graph,MIP,135,11,0,10,1.0
-9graph,MIP,136,7,0,14,1.0
-9graph,MIP,137,9,0,12,1.0
-9graph,MIP,138,9,0,12,1.0
-9graph,MIP,139,8,0,13,1.0
-9graph,MIP,140,11,0,10,1.0
-9graph,MIP,141,11,0,10,1.0
-9graph,MIP,142,7,0,14,1.0
-9graph,MIP,143,9,0,12,1.0
-9graph,MIP,144,9,0,12,1.0
-9graph,MIP,145,8,0,13,1.0
-9graph,MIP,146,11,0,10,1.0
-9graph,MIP,147,11,0,10,1.0
-9graph,MIP,148,7,0,14,1.0
-9graph,MIP,149,9,0,12,1.0
-9graph,MIP,150,9,0,12,1.0
-9graph,MIP,151,8,0,13,1.0
-9graph,MIP,152,11,0,10,1.0
-9graph,MIP,153,11,0,10,1.0
-9graph,MIP,154,7,0,14,1.0
-9graph,MIP,155,9,0,12,1.0
-9graph,MIP,156,9,0,12,1.0
-9graph,MIP,157,8,0,13,1.0
-9graph,MIP,158,11,0,10,1.0
-9graph,MIP,159,11,0,10,1.0
-9graph,MIP,160,7,0,14,1.0
-9graph,MIP,161,9,0,12,1.0
-9graph,MIP,162,9,0,12,1.0
-9graph,MIP,163,8,0,13,1.0
-9graph,MIP,164,11,0,10,1.0
-9graph,MIP,165,11,0,10,1.0
-9graph,MIP,166,7,0,14,1.0
-9graph,MIP,167,9,0,12,1.0
-9graph,MIP,168,9,0,12,1.0
-9graph,MIP,169,8,0,13,1.0
-9graph,MIP,170,11,0,10,1.0
-9graph,MIP,171,11,0,10,1.0
-9graph,MIP,172,7,0,14,1.0
-9graph,MIP,173,9,0,12,1.0
-9graph,MIP,174,9,0,12,1.0
-9graph,MIP,175,8,0,13,1.0
-9graph,MIP,176,11,0,10,1.0
-9graph,MIP,177,11,0,10,1.0
-9graph,MIP,178,7,0,14,1.0
-9graph,MIP,179,9,0,12,1.0
-9graph,MIP,180,9,0,12,1.0
-9graph,MIP,181,8,0,13,1.0
-9graph,MIP,182,11,0,10,1.0
-9graph,MIP,183,11,0,10,1.0
-9graph,MIP,184,7,0,14,1.0
-9graph,MIP,185,9,0,12,1.0
-9graph,MIP,186,9,0,12,1.0
-9graph,MIP,187,8,0,13,1.0
-9graph,MIP,188,11,0,10,1.0
-9graph,MIP,189,11,0,10,1.0
-9graph,MIP,190,7,0,14,1.0
-9graph,MIP,191,9,0,12,1.0
-9graph,MIP,192,9,0,12,1.0
-9graph,MIP,193,8,0,13,1.0
-9graph,MIP,194,11,0,10,1.0
-9graph,MIP,195,11,0,10,1.0
-9graph,MIP,196,7,0,14,1.0
-9graph,MIP,197,9,0,12,1.0
-9graph,MIP,198,9,0,12,1.0
-9graph,MIP,199,8,0,13,1.0
-9graph,MIP,200,11,0,10,1.0
-9graph,MostChangedInterval (5),0,13,0,8,1.0
-9graph,MostChangedInterval (5),1,11,0,10,1.0
-9graph,MostChangedInterval (5),2,10,0,11,1.0
-9graph,MostChangedInterval (5),3,8,0,13,1.0
-9graph,MostChangedInterval (5),4,11,0,10,1.0
-9graph,MostChangedInterval (5),5,8,0,13,1.0
-9graph,MostChangedInterval (5),6,8,0,13,1.0
-9graph,MostChangedInterval (5),7,9,0,12,1.0
-9graph,MostChangedInterval (5),8,7,0,14,1.0
-9graph,MostChangedInterval (5),9,7,0,14,1.0
-9graph,MostChangedInterval (5),10,8,0,13,1.0
-9graph,MostChangedInterval (5),11,11,0,10,1.0
-9graph,MostChangedInterval (5),12,11,0,10,1.0
-9graph,MostChangedInterval (5),13,7,0,14,1.0
-9graph,MostChangedInterval (5),14,9,0,12,1.0
-9graph,MostChangedInterval (5),15,9,0,12,1.0
-9graph,MostChangedInterval (5),16,8,0,13,1.0
-9graph,MostChangedInterval (5),17,11,0,10,1.0
-9graph,MostChangedInterval (5),18,11,0,10,1.0
-9graph,MostChangedInterval (5),19,7,0,14,1.0
-9graph,MostChangedInterval (5),20,9,0,12,1.0
-9graph,MostChangedInterval (5),21,9,0,12,1.0
-9graph,MostChangedInterval (5),22,8,0,13,1.0
-9graph,MostChangedInterval (5),23,11,0,10,1.0
-9graph,MostChangedInterval (5),24,11,0,10,1.0
-9graph,MostChangedInterval (5),25,7,0,14,1.0
-9graph,MostChangedInterval (5),26,9,0,12,1.0
-9graph,MostChangedInterval (5),27,9,0,12,1.0
-9graph,MostChangedInterval (5),28,8,0,13,1.0
-9graph,MostChangedInterval (5),29,11,0,10,1.0
-9graph,MostChangedInterval (5),30,11,0,10,1.0
-9graph,MostChangedInterval (5),31,7,0,14,1.0
-9graph,MostChangedInterval (5),32,9,0,12,1.0
-9graph,MostChangedInterval (5),33,9,0,12,1.0
-9graph,MostChangedInterval (5),34,8,0,13,1.0
-9graph,MostChangedInterval (5),35,11,0,10,1.0
-9graph,MostChangedInterval (5),36,11,0,10,1.0
-9graph,MostChangedInterval (5),37,7,0,14,1.0
-9graph,MostChangedInterval (5),38,9,0,12,1.0
-9graph,MostChangedInterval (5),39,9,0,12,1.0
-9graph,MostChangedInterval (5),40,8,0,13,1.0
-9graph,MostChangedInterval (5),41,11,0,10,1.0
-9graph,MostChangedInterval (5),42,11,0,10,1.0
-9graph,MostChangedInterval (5),43,7,0,14,1.0
-9graph,MostChangedInterval (5),44,9,0,12,1.0
-9graph,MostChangedInterval (5),45,9,0,12,1.0
-9graph,MostChangedInterval (5),46,8,0,13,1.0
-9graph,MostChangedInterval (5),47,11,0,10,1.0
-9graph,MostChangedInterval (5),48,11,0,10,1.0
-9graph,MostChangedInterval (5),49,7,0,14,1.0
-9graph,MostChangedInterval (5),50,9,0,12,1.0
-9graph,MostChangedInterval (5),51,9,0,12,1.0
-9graph,MostChangedInterval (5),52,8,0,13,1.0
-9graph,MostChangedInterval (5),53,11,0,10,1.0
-9graph,MostChangedInterval (5),54,11,0,10,1.0
-9graph,MostChangedInterval (5),55,7,0,14,1.0
-9graph,MostChangedInterval (5),56,9,0,12,1.0
-9graph,MostChangedInterval (5),57,9,0,12,1.0
-9graph,MostChangedInterval (5),58,8,0,13,1.0
-9graph,MostChangedInterval (5),59,11,0,10,1.0
-9graph,MostChangedInterval (5),60,11,0,10,1.0
-9graph,MostChangedInterval (5),61,7,0,14,1.0
-9graph,MostChangedInterval (5),62,9,0,12,1.0
-9graph,MostChangedInterval (5),63,9,0,12,1.0
-9graph,MostChangedInterval (5),64,8,0,13,1.0
-9graph,MostChangedInterval (5),65,11,0,10,1.0
-9graph,MostChangedInterval (5),66,11,0,10,1.0
-9graph,MostChangedInterval (5),67,7,0,14,1.0
-9graph,MostChangedInterval (5),68,9,0,12,1.0
-9graph,MostChangedInterval (5),69,9,0,12,1.0
-9graph,MostChangedInterval (5),70,8,0,13,1.0
-9graph,MostChangedInterval (5),71,11,0,10,1.0
-9graph,MostChangedInterval (5),72,11,0,10,1.0
-9graph,MostChangedInterval (5),73,7,0,14,1.0
-9graph,MostChangedInterval (5),74,9,0,12,1.0
-9graph,MostChangedInterval (5),75,9,0,12,1.0
-9graph,MostChangedInterval (5),76,8,0,13,1.0
-9graph,MostChangedInterval (5),77,11,0,10,1.0
-9graph,MostChangedInterval (5),78,11,0,10,1.0
-9graph,MostChangedInterval (5),79,7,0,14,1.0
-9graph,MostChangedInterval (5),80,9,0,12,1.0
-9graph,MostChangedInterval (5),81,9,0,12,1.0
-9graph,MostChangedInterval (5),82,8,0,13,1.0
-9graph,MostChangedInterval (5),83,11,0,10,1.0
-9graph,MostChangedInterval (5),84,11,0,10,1.0
-9graph,MostChangedInterval (5),85,7,0,14,1.0
-9graph,MostChangedInterval (5),86,9,0,12,1.0
-9graph,MostChangedInterval (5),87,9,0,12,1.0
-9graph,MostChangedInterval (5),88,8,0,13,1.0
-9graph,MostChangedInterval (5),89,11,0,10,1.0
-9graph,MostChangedInterval (5),90,11,0,10,1.0
-9graph,MostChangedInterval (5),91,7,0,14,1.0
-9graph,MostChangedInterval (5),92,9,0,12,1.0
-9graph,MostChangedInterval (5),93,9,0,12,1.0
-9graph,MostChangedInterval (5),94,8,0,13,1.0
-9graph,MostChangedInterval (5),95,11,0,10,1.0
-9graph,MostChangedInterval (5),96,11,0,10,1.0
-9graph,MostChangedInterval (5),97,7,0,14,1.0
-9graph,MostChangedInterval (5),98,9,0,12,1.0
-9graph,MostChangedInterval (5),99,9,0,12,1.0
-9graph,MostChangedInterval (5),100,8,0,13,1.0
-9graph,MostChangedInterval (5),101,11,0,10,1.0
-9graph,MostChangedInterval (5),102,11,0,10,1.0
-9graph,MostChangedInterval (5),103,7,0,14,1.0
-9graph,MostChangedInterval (5),104,9,0,12,1.0
-9graph,MostChangedInterval (5),105,9,0,12,1.0
-9graph,MostChangedInterval (5),106,8,0,13,1.0
-9graph,MostChangedInterval (5),107,11,0,10,1.0
-9graph,MostChangedInterval (5),108,11,0,10,1.0
-9graph,MostChangedInterval (5),109,7,0,14,1.0
-9graph,MostChangedInterval (5),110,9,0,12,1.0
-9graph,MostChangedInterval (5),111,9,0,12,1.0
-9graph,MostChangedInterval (5),112,8,0,13,1.0
-9graph,MostChangedInterval (5),113,11,0,10,1.0
-9graph,MostChangedInterval (5),114,11,0,10,1.0
-9graph,MostChangedInterval (5),115,7,0,14,1.0
-9graph,MostChangedInterval (5),116,9,0,12,1.0
-9graph,MostChangedInterval (5),117,9,0,12,1.0
-9graph,MostChangedInterval (5),118,8,0,13,1.0
-9graph,MostChangedInterval (5),119,11,0,10,1.0
-9graph,MostChangedInterval (5),120,11,0,10,1.0
-9graph,MostChangedInterval (5),121,7,0,14,1.0
-9graph,MostChangedInterval (5),122,9,0,12,1.0
-9graph,MostChangedInterval (5),123,9,0,12,1.0
-9graph,MostChangedInterval (5),124,8,0,13,1.0
-9graph,MostChangedInterval (5),125,11,0,10,1.0
-9graph,MostChangedInterval (5),126,11,0,10,1.0
-9graph,MostChangedInterval (5),127,7,0,14,1.0
-9graph,MostChangedInterval (5),128,9,0,12,1.0
-9graph,MostChangedInterval (5),129,9,0,12,1.0
-9graph,MostChangedInterval (5),130,8,0,13,1.0
-9graph,MostChangedInterval (5),131,11,0,10,1.0
-9graph,MostChangedInterval (5),132,11,0,10,1.0
-9graph,MostChangedInterval (5),133,7,0,14,1.0
-9graph,MostChangedInterval (5),134,9,0,12,1.0
-9graph,MostChangedInterval (5),135,9,0,12,1.0
-9graph,MostChangedInterval (5),136,8,0,13,1.0
-9graph,MostChangedInterval (5),137,11,0,10,1.0
-9graph,MostChangedInterval (5),138,11,0,10,1.0
-9graph,MostChangedInterval (5),139,7,0,14,1.0
-9graph,MostChangedInterval (5),140,9,0,12,1.0
-9graph,MostChangedInterval (5),141,9,0,12,1.0
-9graph,MostChangedInterval (5),142,8,0,13,1.0
-9graph,MostChangedInterval (5),143,11,0,10,1.0
-9graph,MostChangedInterval (5),144,11,0,10,1.0
-9graph,MostChangedInterval (5),145,7,0,14,1.0
-9graph,MostChangedInterval (5),146,9,0,12,1.0
-9graph,MostChangedInterval (5),147,9,0,12,1.0
-9graph,MostChangedInterval (5),148,8,0,13,1.0
-9graph,MostChangedInterval (5),149,11,0,10,1.0
-9graph,MostChangedInterval (5),150,11,0,10,1.0
-9graph,MostChangedInterval (5),151,7,0,14,1.0
-9graph,MostChangedInterval (5),152,9,0,12,1.0
-9graph,MostChangedInterval (5),153,9,0,12,1.0
-9graph,MostChangedInterval (5),154,8,0,13,1.0
-9graph,MostChangedInterval (5),155,11,0,10,1.0
-9graph,MostChangedInterval (5),156,11,0,10,1.0
-9graph,MostChangedInterval (5),157,7,0,14,1.0
-9graph,MostChangedInterval (5),158,9,0,12,1.0
-9graph,MostChangedInterval (5),159,9,0,12,1.0
-9graph,MostChangedInterval (5),160,8,0,13,1.0
-9graph,MostChangedInterval (5),161,11,0,10,1.0
-9graph,MostChangedInterval (5),162,11,0,10,1.0
-9graph,MostChangedInterval (5),163,7,0,14,1.0
-9graph,MostChangedInterval (5),164,9,0,12,1.0
-9graph,MostChangedInterval (5),165,9,0,12,1.0
-9graph,MostChangedInterval (5),166,8,0,13,1.0
-9graph,MostChangedInterval (5),167,11,0,10,1.0
-9graph,MostChangedInterval (5),168,11,0,10,1.0
-9graph,MostChangedInterval (5),169,7,0,14,1.0
-9graph,MostChangedInterval (5),170,9,0,12,1.0
-9graph,MostChangedInterval (5),171,9,0,12,1.0
-9graph,MostChangedInterval (5),172,8,0,13,1.0
-9graph,MostChangedInterval (5),173,11,0,10,1.0
-9graph,MostChangedInterval (5),174,11,0,10,1.0
-9graph,MostChangedInterval (5),175,7,0,14,1.0
-9graph,MostChangedInterval (5),176,9,0,12,1.0
-9graph,MostChangedInterval (5),177,9,0,12,1.0
-9graph,MostChangedInterval (5),178,8,0,13,1.0
-9graph,MostChangedInterval (5),179,11,0,10,1.0
-9graph,MostChangedInterval (5),180,11,0,10,1.0
-9graph,MostChangedInterval (5),181,7,0,14,1.0
-9graph,MostChangedInterval (5),182,9,0,12,1.0
-9graph,MostChangedInterval (5),183,9,0,12,1.0
-9graph,MostChangedInterval (5),184,8,0,13,1.0
-9graph,MostChangedInterval (5),185,11,0,10,1.0
-9graph,MostChangedInterval (5),186,11,0,10,1.0
-9graph,MostChangedInterval (5),187,7,0,14,1.0
-9graph,MostChangedInterval (5),188,9,0,12,1.0
-9graph,MostChangedInterval (5),189,9,0,12,1.0
-9graph,MostChangedInterval (5),190,8,0,13,1.0
-9graph,MostChangedInterval (5),191,11,0,10,1.0
-9graph,MostChangedInterval (5),192,11,0,10,1.0
-9graph,MostChangedInterval (5),193,7,0,14,1.0
-9graph,MostChangedInterval (5),194,9,0,12,1.0
-9graph,MostChangedInterval (5),195,9,0,12,1.0
-9graph,MostChangedInterval (5),196,8,0,13,1.0
-9graph,MostChangedInterval (5),197,11,0,10,1.0
-9graph,MostChangedInterval (5),198,11,0,10,1.0
-9graph,MostChangedInterval (5),199,7,0,14,1.0
-9graph,MostChangedInterval (5),200,9,0,12,1.0
-9graph,RecentChanges,0,13,0,8,1.0
-9graph,RecentChanges,1,10,0,11,1.0
-9graph,RecentChanges,2,10,0,11,1.0
-9graph,RecentChanges,3,8,0,13,1.0
-9graph,RecentChanges,4,9,0,12,1.0
-9graph,RecentChanges,5,7,0,14,1.0
-9graph,RecentChanges,6,7,0,14,1.0
-9graph,RecentChanges,7,8,0,13,1.0
-9graph,RecentChanges,8,11,0,10,1.0
-9graph,RecentChanges,9,11,0,10,1.0
-9graph,RecentChanges,10,7,0,14,1.0
-9graph,RecentChanges,11,9,0,12,1.0
-9graph,RecentChanges,12,9,0,12,1.0
-9graph,RecentChanges,13,8,0,13,1.0
-9graph,RecentChanges,14,11,0,10,1.0
-9graph,RecentChanges,15,11,0,10,1.0
-9graph,RecentChanges,16,7,0,14,1.0
-9graph,RecentChanges,17,9,0,12,1.0
-9graph,RecentChanges,18,9,0,12,1.0
-9graph,RecentChanges,19,8,0,13,1.0
-9graph,RecentChanges,20,11,0,10,1.0
-9graph,RecentChanges,21,11,0,10,1.0
-9graph,RecentChanges,22,7,0,14,1.0
-9graph,RecentChanges,23,9,0,12,1.0
-9graph,RecentChanges,24,9,0,12,1.0
-9graph,RecentChanges,25,8,0,13,1.0
-9graph,RecentChanges,26,11,0,10,1.0
-9graph,RecentChanges,27,11,0,10,1.0
-9graph,RecentChanges,28,7,0,14,1.0
-9graph,RecentChanges,29,9,0,12,1.0
-9graph,RecentChanges,30,9,0,12,1.0
-9graph,RecentChanges,31,8,0,13,1.0
-9graph,RecentChanges,32,11,0,10,1.0
-9graph,RecentChanges,33,11,0,10,1.0
-9graph,RecentChanges,34,7,0,14,1.0
-9graph,RecentChanges,35,9,0,12,1.0
-9graph,RecentChanges,36,9,0,12,1.0
-9graph,RecentChanges,37,8,0,13,1.0
-9graph,RecentChanges,38,11,0,10,1.0
-9graph,RecentChanges,39,11,0,10,1.0
-9graph,RecentChanges,40,7,0,14,1.0
-9graph,RecentChanges,41,9,0,12,1.0
-9graph,RecentChanges,42,9,0,12,1.0
-9graph,RecentChanges,43,8,0,13,1.0
-9graph,RecentChanges,44,11,0,10,1.0
-9graph,RecentChanges,45,11,0,10,1.0
-9graph,RecentChanges,46,7,0,14,1.0
-9graph,RecentChanges,47,9,0,12,1.0
-9graph,RecentChanges,48,9,0,12,1.0
-9graph,RecentChanges,49,8,0,13,1.0
-9graph,RecentChanges,50,11,0,10,1.0
-9graph,RecentChanges,51,11,0,10,1.0
-9graph,RecentChanges,52,7,0,14,1.0
-9graph,RecentChanges,53,9,0,12,1.0
-9graph,RecentChanges,54,9,0,12,1.0
-9graph,RecentChanges,55,8,0,13,1.0
-9graph,RecentChanges,56,11,0,10,1.0
-9graph,RecentChanges,57,11,0,10,1.0
-9graph,RecentChanges,58,7,0,14,1.0
-9graph,RecentChanges,59,9,0,12,1.0
-9graph,RecentChanges,60,9,0,12,1.0
-9graph,RecentChanges,61,8,0,13,1.0
-9graph,RecentChanges,62,11,0,10,1.0
-9graph,RecentChanges,63,11,0,10,1.0
-9graph,RecentChanges,64,7,0,14,1.0
-9graph,RecentChanges,65,9,0,12,1.0
-9graph,RecentChanges,66,9,0,12,1.0
-9graph,RecentChanges,67,8,0,13,1.0
-9graph,RecentChanges,68,11,0,10,1.0
-9graph,RecentChanges,69,11,0,10,1.0
-9graph,RecentChanges,70,7,0,14,1.0
-9graph,RecentChanges,71,9,0,12,1.0
-9graph,RecentChanges,72,9,0,12,1.0
-9graph,RecentChanges,73,8,0,13,1.0
-9graph,RecentChanges,74,11,0,10,1.0
-9graph,RecentChanges,75,11,0,10,1.0
-9graph,RecentChanges,76,7,0,14,1.0
-9graph,RecentChanges,77,9,0,12,1.0
-9graph,RecentChanges,78,9,0,12,1.0
-9graph,RecentChanges,79,8,0,13,1.0
-9graph,RecentChanges,80,11,0,10,1.0
-9graph,RecentChanges,81,11,0,10,1.0
-9graph,RecentChanges,82,7,0,14,1.0
-9graph,RecentChanges,83,9,0,12,1.0
-9graph,RecentChanges,84,9,0,12,1.0
-9graph,RecentChanges,85,8,0,13,1.0
-9graph,RecentChanges,86,11,0,10,1.0
-9graph,RecentChanges,87,11,0,10,1.0
-9graph,RecentChanges,88,7,0,14,1.0
-9graph,RecentChanges,89,9,0,12,1.0
-9graph,RecentChanges,90,9,0,12,1.0
-9graph,RecentChanges,91,8,0,13,1.0
-9graph,RecentChanges,92,11,0,10,1.0
-9graph,RecentChanges,93,11,0,10,1.0
-9graph,RecentChanges,94,7,0,14,1.0
-9graph,RecentChanges,95,9,0,12,1.0
-9graph,RecentChanges,96,9,0,12,1.0
-9graph,RecentChanges,97,8,0,13,1.0
-9graph,RecentChanges,98,11,0,10,1.0
-9graph,RecentChanges,99,11,0,10,1.0
-9graph,RecentChanges,100,7,0,14,1.0
-9graph,RecentChanges,101,9,0,12,1.0
-9graph,RecentChanges,102,9,0,12,1.0
-9graph,RecentChanges,103,8,0,13,1.0
-9graph,RecentChanges,104,11,0,10,1.0
-9graph,RecentChanges,105,11,0,10,1.0
-9graph,RecentChanges,106,7,0,14,1.0
-9graph,RecentChanges,107,9,0,12,1.0
-9graph,RecentChanges,108,9,0,12,1.0
-9graph,RecentChanges,109,8,0,13,1.0
-9graph,RecentChanges,110,11,0,10,1.0
-9graph,RecentChanges,111,11,0,10,1.0
-9graph,RecentChanges,112,7,0,14,1.0
-9graph,RecentChanges,113,9,0,12,1.0
-9graph,RecentChanges,114,9,0,12,1.0
-9graph,RecentChanges,115,8,0,13,1.0
-9graph,RecentChanges,116,11,0,10,1.0
-9graph,RecentChanges,117,11,0,10,1.0
-9graph,RecentChanges,118,7,0,14,1.0
-9graph,RecentChanges,119,9,0,12,1.0
-9graph,RecentChanges,120,9,0,12,1.0
-9graph,RecentChanges,121,8,0,13,1.0
-9graph,RecentChanges,122,11,0,10,1.0
-9graph,RecentChanges,123,11,0,10,1.0
-9graph,RecentChanges,124,7,0,14,1.0
-9graph,RecentChanges,125,9,0,12,1.0
-9graph,RecentChanges,126,9,0,12,1.0
-9graph,RecentChanges,127,8,0,13,1.0
-9graph,RecentChanges,128,11,0,10,1.0
-9graph,RecentChanges,129,11,0,10,1.0
-9graph,RecentChanges,130,7,0,14,1.0
-9graph,RecentChanges,131,9,0,12,1.0
-9graph,RecentChanges,132,9,0,12,1.0
-9graph,RecentChanges,133,8,0,13,1.0
-9graph,RecentChanges,134,11,0,10,1.0
-9graph,RecentChanges,135,11,0,10,1.0
-9graph,RecentChanges,136,7,0,14,1.0
-9graph,RecentChanges,137,9,0,12,1.0
-9graph,RecentChanges,138,9,0,12,1.0
-9graph,RecentChanges,139,8,0,13,1.0
-9graph,RecentChanges,140,11,0,10,1.0
-9graph,RecentChanges,141,11,0,10,1.0
-9graph,RecentChanges,142,7,0,14,1.0
-9graph,RecentChanges,143,9,0,12,1.0
-9graph,RecentChanges,144,9,0,12,1.0
-9graph,RecentChanges,145,8,0,13,1.0
-9graph,RecentChanges,146,11,0,10,1.0
-9graph,RecentChanges,147,11,0,10,1.0
-9graph,RecentChanges,148,7,0,14,1.0
-9graph,RecentChanges,149,9,0,12,1.0
-9graph,RecentChanges,150,9,0,12,1.0
-9graph,RecentChanges,151,8,0,13,1.0
-9graph,RecentChanges,152,11,0,10,1.0
-9graph,RecentChanges,153,11,0,10,1.0
-9graph,RecentChanges,154,7,0,14,1.0
-9graph,RecentChanges,155,9,0,12,1.0
-9graph,RecentChanges,156,9,0,12,1.0
-9graph,RecentChanges,157,8,0,13,1.0
-9graph,RecentChanges,158,11,0,10,1.0
-9graph,RecentChanges,159,11,0,10,1.0
-9graph,RecentChanges,160,7,0,14,1.0
-9graph,RecentChanges,161,9,0,12,1.0
-9graph,RecentChanges,162,9,0,12,1.0
-9graph,RecentChanges,163,8,0,13,1.0
-9graph,RecentChanges,164,11,0,10,1.0
-9graph,RecentChanges,165,11,0,10,1.0
-9graph,RecentChanges,166,7,0,14,1.0
-9graph,RecentChanges,167,9,0,12,1.0
-9graph,RecentChanges,168,9,0,12,1.0
-9graph,RecentChanges,169,8,0,13,1.0
-9graph,RecentChanges,170,11,0,10,1.0
-9graph,RecentChanges,171,11,0,10,1.0
-9graph,RecentChanges,172,7,0,14,1.0
-9graph,RecentChanges,173,9,0,12,1.0
-9graph,RecentChanges,174,9,0,12,1.0
-9graph,RecentChanges,175,8,0,13,1.0
-9graph,RecentChanges,176,11,0,10,1.0
-9graph,RecentChanges,177,11,0,10,1.0
-9graph,RecentChanges,178,7,0,14,1.0
-9graph,RecentChanges,179,9,0,12,1.0
-9graph,RecentChanges,180,9,0,12,1.0
-9graph,RecentChanges,181,8,0,13,1.0
-9graph,RecentChanges,182,11,0,10,1.0
-9graph,RecentChanges,183,11,0,10,1.0
-9graph,RecentChanges,184,7,0,14,1.0
-9graph,RecentChanges,185,9,0,12,1.0
-9graph,RecentChanges,186,9,0,12,1.0
-9graph,RecentChanges,187,8,0,13,1.0
-9graph,RecentChanges,188,11,0,10,1.0
-9graph,RecentChanges,189,11,0,10,1.0
-9graph,RecentChanges,190,7,0,14,1.0
-9graph,RecentChanges,191,9,0,12,1.0
-9graph,RecentChanges,192,9,0,12,1.0
-9graph,RecentChanges,193,8,0,13,1.0
-9graph,RecentChanges,194,11,0,10,1.0
-9graph,RecentChanges,195,11,0,10,1.0
-9graph,RecentChanges,196,7,0,14,1.0
-9graph,RecentChanges,197,9,0,12,1.0
-9graph,RecentChanges,198,9,0,12,1.0
-9graph,RecentChanges,199,8,0,13,1.0
-9graph,RecentChanges,200,11,0,10,1.0
+9graph,MIP,0,0,21,0,0.0
+9graph,MIP,1,0,18,3,0.3
+9graph,MIP,2,0,13,8,0.6
+9graph,MIP,3,0,8,13,0.8
+9graph,MIP,4,1,4,16,0.9
+9graph,MIP,5,1,4,16,0.9
+9graph,MIP,6,1,0,20,1.0
+9graph,MIP,7,1,0,20,1.0
+9graph,MIP,8,2,0,19,1.0
+9graph,MIP,9,3,0,18,1.0
+9graph,MIP,10,2,0,19,1.0
+9graph,MIP,11,2,0,19,1.0
+9graph,MIP,12,1,0,20,1.0
+9graph,MIP,13,1,0,20,1.0
+9graph,MIP,14,2,0,19,1.0
+9graph,MIP,15,3,0,18,1.0
+9graph,MIP,16,2,0,19,1.0
+9graph,MIP,17,2,0,19,1.0
+9graph,MIP,18,1,0,20,1.0
+9graph,MIP,19,1,0,20,1.0
+9graph,MIP,20,2,0,19,1.0
+9graph,MIP,21,3,0,18,1.0
+9graph,MIP,22,2,0,19,1.0
+9graph,MIP,23,2,0,19,1.0
+9graph,MIP,24,1,0,20,1.0
+9graph,MIP,25,1,0,20,1.0
+9graph,MIP,26,2,0,19,1.0
+9graph,MIP,27,3,0,18,1.0
+9graph,MIP,28,2,0,19,1.0
+9graph,MIP,29,2,0,19,1.0
+9graph,MIP,30,1,0,20,1.0
+9graph,MIP,31,1,0,20,1.0
+9graph,MIP,32,2,0,19,1.0
+9graph,MIP,33,3,0,18,1.0
+9graph,MIP,34,2,0,19,1.0
+9graph,MIP,35,2,0,19,1.0
+9graph,MIP,36,1,0,20,1.0
+9graph,MIP,37,1,0,20,1.0
+9graph,MIP,38,2,0,19,1.0
+9graph,MIP,39,3,0,18,1.0
+9graph,MIP,40,2,0,19,1.0
+9graph,MIP,41,2,0,19,1.0
+9graph,MIP,42,1,0,20,1.0
+9graph,MIP,43,1,0,20,1.0
+9graph,MIP,44,2,0,19,1.0
+9graph,MIP,45,3,0,18,1.0
+9graph,MIP,46,2,0,19,1.0
+9graph,MIP,47,2,0,19,1.0
+9graph,MIP,48,1,0,20,1.0
+9graph,MIP,49,1,0,20,1.0
+9graph,MIP,50,2,0,19,1.0
+9graph,MIP,51,3,0,18,1.0
+9graph,MIP,52,2,0,19,1.0
+9graph,MIP,53,2,0,19,1.0
+9graph,MIP,54,1,0,20,1.0
+9graph,MIP,55,1,0,20,1.0
+9graph,MIP,56,2,0,19,1.0
+9graph,MIP,57,3,0,18,1.0
+9graph,MIP,58,2,0,19,1.0
+9graph,MIP,59,2,0,19,1.0
+9graph,MIP,60,1,0,20,1.0
+9graph,MIP,61,1,0,20,1.0
+9graph,MIP,62,2,0,19,1.0
+9graph,MIP,63,3,0,18,1.0
+9graph,MIP,64,2,0,19,1.0
+9graph,MIP,65,2,0,19,1.0
+9graph,MIP,66,1,0,20,1.0
+9graph,MIP,67,1,0,20,1.0
+9graph,MIP,68,2,0,19,1.0
+9graph,MIP,69,3,0,18,1.0
+9graph,MIP,70,2,0,19,1.0
+9graph,MIP,71,2,0,19,1.0
+9graph,MIP,72,1,0,20,1.0
+9graph,MIP,73,1,0,20,1.0
+9graph,MIP,74,2,0,19,1.0
+9graph,MIP,75,3,0,18,1.0
+9graph,MIP,76,2,0,19,1.0
+9graph,MIP,77,2,0,19,1.0
+9graph,MIP,78,1,0,20,1.0
+9graph,MIP,79,1,0,20,1.0
+9graph,MIP,80,2,0,19,1.0
+9graph,MIP,81,3,0,18,1.0
+9graph,MIP,82,2,0,19,1.0
+9graph,MIP,83,2,0,19,1.0
+9graph,MIP,84,1,0,20,1.0
+9graph,MIP,85,1,0,20,1.0
+9graph,MIP,86,2,0,19,1.0
+9graph,MIP,87,3,0,18,1.0
+9graph,MIP,88,2,0,19,1.0
+9graph,MIP,89,2,0,19,1.0
+9graph,MIP,90,1,0,20,1.0
+9graph,MIP,91,1,0,20,1.0
+9graph,MIP,92,2,0,19,1.0
+9graph,MIP,93,3,0,18,1.0
+9graph,MIP,94,2,0,19,1.0
+9graph,MIP,95,2,0,19,1.0
+9graph,MIP,96,1,0,20,1.0
+9graph,MIP,97,1,0,20,1.0
+9graph,MIP,98,2,0,19,1.0
+9graph,MIP,99,3,0,18,1.0
+9graph,MIP,100,2,0,19,1.0
+9graph,MIP,101,2,0,19,1.0
+9graph,MIP,102,1,0,20,1.0
+9graph,MIP,103,1,0,20,1.0
+9graph,MIP,104,2,0,19,1.0
+9graph,MIP,105,3,0,18,1.0
+9graph,MIP,106,2,0,19,1.0
+9graph,MIP,107,2,0,19,1.0
+9graph,MIP,108,1,0,20,1.0
+9graph,MIP,109,1,0,20,1.0
+9graph,MIP,110,2,0,19,1.0
+9graph,MIP,111,3,0,18,1.0
+9graph,MIP,112,2,0,19,1.0
+9graph,MIP,113,2,0,19,1.0
+9graph,MIP,114,1,0,20,1.0
+9graph,MIP,115,1,0,20,1.0
+9graph,MIP,116,2,0,19,1.0
+9graph,MIP,117,3,0,18,1.0
+9graph,MIP,118,2,0,19,1.0
+9graph,MIP,119,2,0,19,1.0
+9graph,MIP,120,1,0,20,1.0
+9graph,MIP,121,1,0,20,1.0
+9graph,MIP,122,2,0,19,1.0
+9graph,MIP,123,3,0,18,1.0
+9graph,MIP,124,2,0,19,1.0
+9graph,MIP,125,2,0,19,1.0
+9graph,MIP,126,1,0,20,1.0
+9graph,MIP,127,1,0,20,1.0
+9graph,MIP,128,2,0,19,1.0
+9graph,MIP,129,3,0,18,1.0
+9graph,MIP,130,2,0,19,1.0
+9graph,MIP,131,2,0,19,1.0
+9graph,MIP,132,1,0,20,1.0
+9graph,MIP,133,1,0,20,1.0
+9graph,MIP,134,2,0,19,1.0
+9graph,MIP,135,3,0,18,1.0
+9graph,MIP,136,2,0,19,1.0
+9graph,MIP,137,2,0,19,1.0
+9graph,MIP,138,1,0,20,1.0
+9graph,MIP,139,1,0,20,1.0
+9graph,MIP,140,2,0,19,1.0
+9graph,MIP,141,3,0,18,1.0
+9graph,MIP,142,2,0,19,1.0
+9graph,MIP,143,2,0,19,1.0
+9graph,MIP,144,1,0,20,1.0
+9graph,MIP,145,1,0,20,1.0
+9graph,MIP,146,2,0,19,1.0
+9graph,MIP,147,3,0,18,1.0
+9graph,MIP,148,2,0,19,1.0
+9graph,MIP,149,2,0,19,1.0
+9graph,MIP,150,1,0,20,1.0
+9graph,MIP,151,1,0,20,1.0
+9graph,MIP,152,2,0,19,1.0
+9graph,MIP,153,3,0,18,1.0
+9graph,MIP,154,2,0,19,1.0
+9graph,MIP,155,2,0,19,1.0
+9graph,MIP,156,1,0,20,1.0
+9graph,MIP,157,1,0,20,1.0
+9graph,MIP,158,2,0,19,1.0
+9graph,MIP,159,3,0,18,1.0
+9graph,MIP,160,2,0,19,1.0
+9graph,MIP,161,2,0,19,1.0
+9graph,MIP,162,1,0,20,1.0
+9graph,MIP,163,1,0,20,1.0
+9graph,MIP,164,2,0,19,1.0
+9graph,MIP,165,3,0,18,1.0
+9graph,MIP,166,2,0,19,1.0
+9graph,MIP,167,2,0,19,1.0
+9graph,MIP,168,1,0,20,1.0
+9graph,MIP,169,1,0,20,1.0
+9graph,MIP,170,2,0,19,1.0
+9graph,MIP,171,3,0,18,1.0
+9graph,MIP,172,2,0,19,1.0
+9graph,MIP,173,2,0,19,1.0
+9graph,MIP,174,1,0,20,1.0
+9graph,MIP,175,1,0,20,1.0
+9graph,MIP,176,2,0,19,1.0
+9graph,MIP,177,3,0,18,1.0
+9graph,MIP,178,2,0,19,1.0
+9graph,MIP,179,2,0,19,1.0
+9graph,MIP,180,1,0,20,1.0
+9graph,MIP,181,1,0,20,1.0
+9graph,MIP,182,2,0,19,1.0
+9graph,MIP,183,3,0,18,1.0
+9graph,MIP,184,2,0,19,1.0
+9graph,MIP,185,2,0,19,1.0
+9graph,MIP,186,1,0,20,1.0
+9graph,MIP,187,1,0,20,1.0
+9graph,MIP,188,2,0,19,1.0
+9graph,MIP,189,3,0,18,1.0
+9graph,MIP,190,2,0,19,1.0
+9graph,MIP,191,2,0,19,1.0
+9graph,MIP,192,1,0,20,1.0
+9graph,MIP,193,1,0,20,1.0
+9graph,MIP,194,2,0,19,1.0
+9graph,MIP,195,3,0,18,1.0
+9graph,MIP,196,2,0,19,1.0
+9graph,MIP,197,2,0,19,1.0
+9graph,MIP,198,1,0,20,1.0
+9graph,MIP,199,1,0,20,1.0
+9graph,MIP,200,2,0,19,1.0

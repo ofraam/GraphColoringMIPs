@@ -7,7 +7,7 @@ import networkx as nx
 import math
 
 class Mip:
-    def __init__(self, alpha = 0.3, beta = 0.5, gamma = 0.2, similarityMetric = "adamic"):
+    def __init__(self, alpha = 0.3, beta = 0.5, gamma = 0.2, similarityMetric = "simple"):
         self.mip = nx.Graph()
         self.users = {}
         self.objects  = {}
@@ -33,7 +33,9 @@ class Mip:
 #            nodes = [i[0] for i in nodesToShare]
 #        else: #choosing only of changed objects
         rankedObjects = self.rankChangesForUser(user, startRev)
-        nodesToShare = rankedObjects[:infoLimit]
+        nodesToShare = rankedObjects[:infoLimit-1]
+        if len(rankedObjects)>0:
+            nodesToShare.append(rankedObjects[len(rankedObjects)-1])
         nodes = [i[0] for i in nodesToShare]            
         
         for node in nodes:
@@ -81,10 +83,13 @@ class Mip:
                     self.updateEdge(ao_node1, ao_node2, 'ao-ao', self.objectsInc)
                         
         #TODO: think about adding decay here!
-#        for edge in self.mip.edges_iter(data=True):
-#            if edge[2]['updated']==0:
-#                if edge[2]['type']=='ao-ao':
-#                    edge[2]['weight'] = edge[2]['weight']-self.decay
+        for edge in self.mip.edges_iter(data=True):
+            if edge[2]['updated']==0:
+                if edge[2]['edge_type']=='ao-ao':
+                    edge[2]['weight'] = max(edge[2]['weight']-self.decay,0)
+                elif edge[2]['edge_type']=='u-ao':
+                    if ((edge[0]==user_node) | (edge[1]==user_node)):
+                        edge[2]['weight'] = max(edge[2]['weight']-self.decay,0)
         self.currentSession=session
 #        print'updating'
 
@@ -102,7 +107,7 @@ class Mip:
             self.lastID=self.lastID+1
             self.users[user_name] = self.lastID
             attr = {}
-            attr['type']='user'
+            attr['node_type']='user'
             self.mip.add_node(self.lastID, attr)
 #            self.nodeIdsToUsers[self.lastID]=user_name
         return self.users[user_name]
@@ -115,7 +120,7 @@ class Mip:
             self.lastID=self.lastID+1
             self.objects[object_id] = self.lastID
             attr = {}
-            attr['type']='object'
+            attr['node_type']='object'
             attr['deleted'] = 0
             attr['revisions'] = []
             self.mip.add_node(self.lastID, attr)
@@ -129,7 +134,7 @@ class Mip:
             self.mip[i1][i2]['lastKnown']=self.iteration #update last time user knew about object
         else:
             attr = {}
-            attr['type']=type
+            attr['edge_type']=edge_type
             attr['weight']=increment
             attr['lastKnown']=self.iteration #update last time user knew about object
             self.mip.add_edge(i1, i2, attr)
@@ -139,7 +144,7 @@ class Mip:
     def getLiveAos(self): #return the mip nodes that represent live object
         liveObjects = []
         for node in self.mip.nodes(data = True):
-            if node[1]['type']=='object':
+            if node[1]['node_type']=='object':
                 if node[1]['deleted']==0:
                     liveObjects.append(node[0])
         return liveObjects
@@ -164,7 +169,8 @@ class Mip:
             if self.similarityMetric == "adamic":
                 proximity = self.adamicAdarProximity(userNodeID,obj) #Adamic/Adar proximity
             else:
-                proximity = self.CFEC(userNodeID,obj) #cfec proximity
+#                proximity = self.CFEC(userNodeID,obj) #cfec proximity
+                proximity = self.simpleProximity(userNodeID,obj)
         
         changeExtent = 0.0
         if self.gamma > 0:#need to consider how frequently the object has been changed since user last known about it: user is userId (might not be in MIP), obj is object Node id
@@ -191,6 +197,15 @@ class Mip:
                 proximity = proximity + (weights*(1/(math.log(self.mip.degree(node, weight = 'weight'))+0.00000000000000000000000001))) #gives more weight to "rare" shared neighbors, adding small number to avoid dividing by zero
 #                print 'proximity = '+str(proximity)
         return proximity    
+    
+    def simpleProximity(self, s, t): #s and t are the mip node IDs, NOT user/obj ids
+        proximity = 0.0
+        sharedWeight = 0.0
+        for node in nx.common_neighbors(self.mip, s, t):
+            sharedWeight = sharedWeight + self.mip[s][node]['weight'] + self.mip[t][node]['weight'] #the weight of the path connecting s and t through the current node
+        proximity = sharedWeight/(self.mip.degree(s, weight = 'weight')+self.mip.degree(t, weight = 'weight'))
+        return proximity  
+        
     '''
     computes Cycle-Free-Edge-Conductance from Koren et al. 2007
     for each simple path, we compute the path probability (based on weights) 
