@@ -7,7 +7,7 @@ import networkx as nx
 import math
 
 class Mip:
-    def __init__(self, alpha = 0.0, beta = 1.5, gamma = 0.0, similarityMetric = "simple"):
+    def __init__(self, alpha = 0.1, beta = 0.8, gamma = 0.1, similarityMetric = "simple"):
         self.mip = nx.Graph()
         self.users = {}
         self.objects  = {}
@@ -26,7 +26,7 @@ class Mip:
     def update(self, session): #to fit System API
         self.updateMIP(session)
         
-    def query(self, user, infoLimit, startRev = 0): #to fit System API
+    def query(self, user, infoLimit, startRev = 0, node = None): #to fit System API
 #        if startRev == 0: #choosing of all objects
 #            rankedObjects = self.rankObjectsForUser(user)
 #            nodesToShare = rankedObjects[:infoLimit]
@@ -350,7 +350,7 @@ class Mip:
         return notificationsList
 
     def __str__(self):
-        return "MIP" 
+        return "MIP_"+str(self.alpha)+"_"+str(self.beta)+"_"+str(self.gamma) 
                  
                 
     '''
