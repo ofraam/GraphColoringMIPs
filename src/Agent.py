@@ -8,21 +8,25 @@ import math
 import copy
 import random
 import matplotlib.pyplot as plt
+from random import shuffle
 
 class Agent:
-    def __init__(self, id, subgraph, knownGraph, colors, actionLimit):
+    def __init__(self, id, subgraph, knownGraph, colors, actionLimit, reset):
         self.id = id
         self.controlledNodes = subgraph
         self.knownGraph = knownGraph
         self.actionLimit = actionLimit #number of change color actions allowed per round
-        self.colors = colors #possible colors 
+        self.colors = colors #possible colors
+        self.lastRevision = -1 
         #the graph sent by simulation has the colors, need to remove them for each agent
         for node, data in self.knownGraph.nodes(data = True):
             data['color']= -1 #for testing, might need to change (start with knowing some colors)
             data['uptoDate']= False
         
+        self.reset = reset #controls agents' "memory" 
         self.graphState = {}; #will hold current known numbers for 'conflicts' 'notConflicts' and 'unknown'
         self.countNumConflicts()
+        
         
     #count initial number of conflicts
     def countNumConflicts(self):
@@ -52,23 +56,31 @@ class Agent:
     #nodesColorsList is a dict of node_id and current color
     def updateBelief(self, nodesColorsList):
         #reset old stuff
-        for node, data in self.knownGraph.nodes(data = True):
-            if data['uptoDate']== True: # if node was uptoDate in the last turn, treat the color unchanged but reset uptoDate so next turn it gets reset
-                data['uptoDate']= False
-            else: #the node is not uptodate, reset the color to unknown
-                data['color'] = -1
+        if self.reset == True:
+            for node, data in self.knownGraph.nodes(data = True):
+                if data['uptoDate']== True: # if node was uptoDate in the last turn, treat the color unchanged but reset uptoDate so next turn it gets reset
+                    data['uptoDate']= False
+                else: #the node is not uptodate, reset the color to unknown
+                    data['color'] = -1
         
         #update new stuff
-        for node,color in nodesColorsList.iteritems():
-            self.knownGraph.node[node]['color'] = color
-            self.knownGraph.node[node]['uptoDate'] = True
+        if isinstance(nodesColorsList, list):
+            for node,color in nodesColorsList:
+                self.knownGraph.node[node]['color'] = color
+                self.knownGraph.node[node]['uptoDate'] = True
+        else:
+            for node,color in nodesColorsList.iteritems():
+                self.knownGraph.node[node]['color'] = color
+                self.knownGraph.node[node]['uptoDate'] = True            
             
         self.countNumConflicts() #update conflict counts
         return 
     
     #chooses the color changes made by the agent.
     #limit is the maximum number of nodes that the agent is allowed to change in one round
-    def chooseActions(self):
+    def chooseActions(self, revision, minActions = 0):
+        self.lastRevision = revision
+        
         initialSolution = {}
         initialSolution['actionSet'] = []
         initialSolution['conflicts'] = 1000000
@@ -81,28 +93,34 @@ class Agent:
         initialBestSolution['unknown'] = 0
         initialBestSolution['notConflicts'] = 0
         
-        bestSolution = self.chooseActionsRecur(initialSolution,0,initialBestSolution)
+        bestSolution = self.chooseActionsRecur(initialSolution,0,initialBestSolution, minActions)
         
+        #update belief (agent just changed the node so it knows its color
+        self.updateBelief(bestSolution['actionSet'])
+        
+        #return chosen solution
         return bestSolution['actionSet'];
     
-    def chooseActionsRecur(self, currSolution, nodeCounter, bestSolution):
-        #TODO: add caching of partial action sets as to not recompute stuff?
+    def chooseActionsRecur(self, currSolution, nodeCounter, bestSolution, minActions):
+        #TODO: add caching of partial action sets as to not recompute stuff? prune solutions that won't have enough actions? (minActions)
         #stop condition - when we reached the limit of actions permitted, or when reached the last node we can change
         if ((len(currSolution['actionSet']) == self.actionLimit) | (nodeCounter == len(self.controlledNodes))):
-            if currSolution['conflicts'] < bestSolution['conflicts']: 
-#                print 'oldBest: '+str(bestSolution)
-                
-                bestSolution=currSolution
-#                print 'newBest: '+str(bestSolution)
-                
-            #break ties in favor of more known non-conflicts (otherwise might bias towards doing nothing)   
-            elif currSolution['conflicts'] == bestSolution['conflicts']:
-                if currSolution['notConflicts'] > bestSolution['notConflicts']:
+            if len(currSolution['actionSet'])>=minActions:
+                if currSolution['conflicts'] < bestSolution['conflicts']: 
+    #                print 'oldBest: '+str(bestSolution)
+                    
                     bestSolution=currSolution
+    #                print 'newBest: '+str(bestSolution)
+                    
+                #break ties in favor of more known non-conflicts (otherwise might bias towards doing nothing)   
+                elif currSolution['conflicts'] == bestSolution['conflicts']:
+                    if currSolution['notConflicts'] > bestSolution['notConflicts']:
+                        bestSolution=currSolution
             return bestSolution
         else:
             #call function with all possible options for next node (not change, change to each of the colors that differ from the current color)
             for color in self.colors: #change current node and recall function with each option
+#                print 'node counter = '+str(nodeCounter)+" color = "+str(color)
                 if color != self.knownGraph.node[self.controlledNodes[nodeCounter]]['color']: #don't try the same color, that is equivalent to no action so should not "waste" real action on that
                     newActionSet = copy.deepcopy(currSolution['actionSet'])
                     newActionSet.append((self.controlledNodes[nodeCounter],color))
@@ -120,9 +138,10 @@ class Agent:
                         newSolution['conflicts'] = newGraphState['conflicts']
                         newSolution['notConflicts'] = newGraphState['notConflicts']
                         newSolution['unknown'] = newGraphState['unknown']
-                        bestSolution = self.chooseActionsRecur(newSolution,nodeCounter+1,bestSolution) #call function to check this action set                  
+                        bestSolution = self.chooseActionsRecur(newSolution,nodeCounter+1,bestSolution,minActions) #call function to check this action set                  
             
-            bestSolution = self.chooseActionsRecur(currSolution,nodeCounter+1,bestSolution) #don't include a change to this node in action set
+           
+            bestSolution = self.chooseActionsRecur(currSolution,nodeCounter+1,bestSolution,minActions) #don't include a change to this node in action set
                         
         return bestSolution;
                     
@@ -130,6 +149,7 @@ class Agent:
     def computeNumConflicts(self,actionSet): 
         newGraphState = {} #dictionary with 'conflicts' 'notConflicts' and 'unknown'
         prevColors = {} #store previous colors to check changed conflicts
+        newColors = {}
         #counters of updates to conflicts
         unknown = 0
         conf = 0
@@ -146,10 +166,11 @@ class Agent:
         
         for action in actionSet:
             prevColors[action[0]] = self.knownGraph.node[action[0]]['color'] #saving old color to see if conflicts changed
+            newColors[action[0]] = action[1]
             #re-checking all neighbors of node that changed, except neighbors that include another changed node (will check them next)
             for n in self.knownGraph.neighbors(action[0]):
                 node = self.knownGraph.node[n] #get data for node (for color)
-                if node not in changedNodes:
+                if n not in changedNodes:
                     if node['color']!=-1: #if the neighbor is uncolored, we move from unknown-> unknown which is not going to make any difference. 
                         if action[1]!=node['color']: #there is currently no conflict (and that is not because the neighboring node is not colored) 
                             if ((action[1]!=prevColors[action[0]]) & (prevColors[action[0]]==-1)): #unknown --> not conflict
@@ -170,9 +191,7 @@ class Agent:
         
         #finished changing nodes; check updates to conflicts when two nodes changed
         for n1,n2 in pairsOfChanged:
-            node1 = self.knownGraph.node[n1]
-            node2 = self.knownGraph.node[n2]
-            if node1['color'] != node2['color']: #currently, no conflict; could be no->no (nothing to do), yes->no or unknown->no
+            if newColors[n1] != newColors[n2]: #currently, no conflict; could be no->no (nothing to do), yes->no or unknown->no
                 if ((prevColors[n1]==-1) | (prevColors[n2]==-1)): #unknown->no
                     unknown = unknown-1
                     nonConf = nonConf+1
@@ -204,6 +223,17 @@ def createKnownGraph(graph, knownNodes):
     return knownGraph
 '-----------------test util functions end--------------------'
 if __name__ == '__main__':
+    
+    t = ['a','b','c']
+    for tt in t:
+        print tt
+        shuffle(t)
+        
+    a = 1/0
+    
+    l = {}
+    if isinstance(l, dict):
+        print 'yay'
     G=nx.Graph()
     colors = [0,1,2] # 0 = blue, 1 = red, 2 = green (unknown = black)
     possibleColorValues = [-1,0,1,2]

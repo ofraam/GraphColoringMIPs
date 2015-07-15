@@ -1,0 +1,1001 @@
+graphName,algorithm,iteration,conflicts,unknown,notConflicts,percentColored
+binomial_30_05_0,Random,0,66,0,152,1.0
+binomial_30_05_0,Random,1,71,0,147,1.0
+binomial_30_05_0,Random,2,72,0,146,1.0
+binomial_30_05_0,Random,3,70,0,148,1.0
+binomial_30_05_0,Random,4,68,0,150,1.0
+binomial_30_05_0,Random,5,71,0,147,1.0
+binomial_30_05_0,Random,6,67,0,151,1.0
+binomial_30_05_0,Random,7,66,0,152,1.0
+binomial_30_05_0,Random,8,67,0,151,1.0
+binomial_30_05_0,Random,9,67,0,151,1.0
+binomial_30_05_0,Random,10,59,0,159,1.0
+binomial_30_05_0,Random,11,59,0,159,1.0
+binomial_30_05_0,Random,12,59,0,159,1.0
+binomial_30_05_0,Random,13,55,0,163,1.0
+binomial_30_05_0,Random,14,58,0,160,1.0
+binomial_30_05_0,Random,15,52,0,166,1.0
+binomial_30_05_0,Random,16,55,0,163,1.0
+binomial_30_05_0,Random,17,53,0,165,1.0
+binomial_30_05_0,Random,18,54,0,164,1.0
+binomial_30_05_0,Random,19,52,0,166,1.0
+binomial_30_05_0,Random,20,49,0,169,1.0
+binomial_30_05_0,Random,21,49,0,169,1.0
+binomial_30_05_0,Random,22,49,0,169,1.0
+binomial_30_05_0,Random,23,48,0,170,1.0
+binomial_30_05_0,Random,24,48,0,170,1.0
+binomial_30_05_0,Random,25,47,0,171,1.0
+binomial_30_05_0,Random,26,47,0,171,1.0
+binomial_30_05_0,Random,27,47,0,171,1.0
+binomial_30_05_0,Random,28,47,0,171,1.0
+binomial_30_05_0,Random,29,50,0,168,1.0
+binomial_30_05_0,Random,30,49,0,169,1.0
+binomial_30_05_0,Random,31,55,0,163,1.0
+binomial_30_05_0,Random,32,56,0,162,1.0
+binomial_30_05_0,Random,33,54,0,164,1.0
+binomial_30_05_0,Random,34,54,0,164,1.0
+binomial_30_05_0,Random,35,54,0,164,1.0
+binomial_30_05_0,Random,36,59,0,159,1.0
+binomial_30_05_0,Random,37,54,0,164,1.0
+binomial_30_05_0,Random,38,50,0,168,1.0
+binomial_30_05_0,Random,39,51,0,167,1.0
+binomial_30_05_0,Random,40,55,0,163,1.0
+binomial_30_05_0,Random,41,55,0,163,1.0
+binomial_30_05_0,Random,42,53,0,165,1.0
+binomial_30_05_0,Random,43,56,0,162,1.0
+binomial_30_05_0,Random,44,64,0,154,1.0
+binomial_30_05_0,Random,45,60,0,158,1.0
+binomial_30_05_0,Random,46,60,0,158,1.0
+binomial_30_05_0,Random,47,62,0,156,1.0
+binomial_30_05_0,Random,48,62,0,156,1.0
+binomial_30_05_0,Random,49,55,0,163,1.0
+binomial_30_05_0,Random,50,59,0,159,1.0
+binomial_30_05_0,Random,51,62,0,156,1.0
+binomial_30_05_0,Random,52,64,0,154,1.0
+binomial_30_05_0,Random,53,65,0,153,1.0
+binomial_30_05_0,Random,54,62,0,156,1.0
+binomial_30_05_0,Random,55,59,0,159,1.0
+binomial_30_05_0,Random,56,64,0,154,1.0
+binomial_30_05_0,Random,57,64,0,154,1.0
+binomial_30_05_0,Random,58,64,0,154,1.0
+binomial_30_05_0,Random,59,66,0,152,1.0
+binomial_30_05_0,Random,60,63,0,155,1.0
+binomial_30_05_0,Random,61,58,0,160,1.0
+binomial_30_05_0,Random,62,62,0,156,1.0
+binomial_30_05_0,Random,63,60,0,158,1.0
+binomial_30_05_0,Random,64,56,0,162,1.0
+binomial_30_05_0,Random,65,63,0,155,1.0
+binomial_30_05_0,Random,66,58,0,160,1.0
+binomial_30_05_0,Random,67,61,0,157,1.0
+binomial_30_05_0,Random,68,60,0,158,1.0
+binomial_30_05_0,Random,69,61,0,157,1.0
+binomial_30_05_0,Random,70,60,0,158,1.0
+binomial_30_05_0,Random,71,70,0,148,1.0
+binomial_30_05_0,Random,72,69,0,149,1.0
+binomial_30_05_0,Random,73,63,0,155,1.0
+binomial_30_05_0,Random,74,69,0,149,1.0
+binomial_30_05_0,Random,75,59,0,159,1.0
+binomial_30_05_0,Random,76,59,0,159,1.0
+binomial_30_05_0,Random,77,57,0,161,1.0
+binomial_30_05_0,Random,78,62,0,156,1.0
+binomial_30_05_0,Random,79,65,0,153,1.0
+binomial_30_05_0,Random,80,70,0,148,1.0
+binomial_30_05_0,Random,81,62,0,156,1.0
+binomial_30_05_0,Random,82,63,0,155,1.0
+binomial_30_05_0,Random,83,61,0,157,1.0
+binomial_30_05_0,Random,84,66,0,152,1.0
+binomial_30_05_0,Random,85,66,0,152,1.0
+binomial_30_05_0,Random,86,65,0,153,1.0
+binomial_30_05_0,Random,87,67,0,151,1.0
+binomial_30_05_0,Random,88,66,0,152,1.0
+binomial_30_05_0,Random,89,61,0,157,1.0
+binomial_30_05_0,Random,90,62,0,156,1.0
+binomial_30_05_0,Random,91,68,0,150,1.0
+binomial_30_05_0,Random,92,60,0,158,1.0
+binomial_30_05_0,Random,93,60,0,158,1.0
+binomial_30_05_0,Random,94,55,0,163,1.0
+binomial_30_05_0,Random,95,52,0,166,1.0
+binomial_30_05_0,Random,96,58,0,160,1.0
+binomial_30_05_0,Random,97,58,0,160,1.0
+binomial_30_05_0,Random,98,58,0,160,1.0
+binomial_30_05_0,Random,99,56,0,162,1.0
+binomial_30_05_0,Random,100,51,0,167,1.0
+binomial_30_05_0,Random,101,52,0,166,1.0
+binomial_30_05_0,Random,102,52,0,166,1.0
+binomial_30_05_0,Random,103,52,0,166,1.0
+binomial_30_05_0,Random,104,53,0,165,1.0
+binomial_30_05_0,Random,105,54,0,164,1.0
+binomial_30_05_0,Random,106,57,0,161,1.0
+binomial_30_05_0,Random,107,54,0,164,1.0
+binomial_30_05_0,Random,108,56,0,162,1.0
+binomial_30_05_0,Random,109,56,0,162,1.0
+binomial_30_05_0,Random,110,52,0,166,1.0
+binomial_30_05_0,Random,111,52,0,166,1.0
+binomial_30_05_0,Random,112,61,0,157,1.0
+binomial_30_05_0,Random,113,64,0,154,1.0
+binomial_30_05_0,Random,114,56,0,162,1.0
+binomial_30_05_0,Random,115,62,0,156,1.0
+binomial_30_05_0,Random,116,66,0,152,1.0
+binomial_30_05_0,Random,117,67,0,151,1.0
+binomial_30_05_0,Random,118,62,0,156,1.0
+binomial_30_05_0,Random,119,62,0,156,1.0
+binomial_30_05_0,Random,120,63,0,155,1.0
+binomial_30_05_0,Random,121,59,0,159,1.0
+binomial_30_05_0,Random,122,68,0,150,1.0
+binomial_30_05_0,Random,123,59,0,159,1.0
+binomial_30_05_0,Random,124,59,0,159,1.0
+binomial_30_05_0,Random,125,63,0,155,1.0
+binomial_30_05_0,Random,126,59,0,159,1.0
+binomial_30_05_0,Random,127,62,0,156,1.0
+binomial_30_05_0,Random,128,60,0,158,1.0
+binomial_30_05_0,Random,129,65,0,153,1.0
+binomial_30_05_0,Random,130,70,0,148,1.0
+binomial_30_05_0,Random,131,73,0,145,1.0
+binomial_30_05_0,Random,132,67,0,151,1.0
+binomial_30_05_0,Random,133,64,0,154,1.0
+binomial_30_05_0,Random,134,56,0,162,1.0
+binomial_30_05_0,Random,135,57,0,161,1.0
+binomial_30_05_0,Random,136,61,0,157,1.0
+binomial_30_05_0,Random,137,61,0,157,1.0
+binomial_30_05_0,Random,138,65,0,153,1.0
+binomial_30_05_0,Random,139,74,0,144,1.0
+binomial_30_05_0,Random,140,62,0,156,1.0
+binomial_30_05_0,Random,141,59,0,159,1.0
+binomial_30_05_0,Random,142,59,0,159,1.0
+binomial_30_05_0,Random,143,60,0,158,1.0
+binomial_30_05_0,Random,144,61,0,157,1.0
+binomial_30_05_0,Random,145,59,0,159,1.0
+binomial_30_05_0,Random,146,64,0,154,1.0
+binomial_30_05_0,Random,147,68,0,150,1.0
+binomial_30_05_0,Random,148,63,0,155,1.0
+binomial_30_05_0,Random,149,59,0,159,1.0
+binomial_30_05_0,Random,150,59,0,159,1.0
+binomial_30_05_0,Random,151,60,0,158,1.0
+binomial_30_05_0,Random,152,66,0,152,1.0
+binomial_30_05_0,Random,153,54,0,164,1.0
+binomial_30_05_0,Random,154,56,0,162,1.0
+binomial_30_05_0,Random,155,54,0,164,1.0
+binomial_30_05_0,Random,156,51,0,167,1.0
+binomial_30_05_0,Random,157,51,0,167,1.0
+binomial_30_05_0,Random,158,50,0,168,1.0
+binomial_30_05_0,Random,159,53,0,165,1.0
+binomial_30_05_0,Random,160,59,0,159,1.0
+binomial_30_05_0,Random,161,52,0,166,1.0
+binomial_30_05_0,Random,162,56,0,162,1.0
+binomial_30_05_0,Random,163,56,0,162,1.0
+binomial_30_05_0,Random,164,54,0,164,1.0
+binomial_30_05_0,Random,165,53,0,165,1.0
+binomial_30_05_0,Random,166,49,0,169,1.0
+binomial_30_05_0,Random,167,50,0,168,1.0
+binomial_30_05_0,Random,168,50,0,168,1.0
+binomial_30_05_0,Random,169,53,0,165,1.0
+binomial_30_05_0,Random,170,48,0,170,1.0
+binomial_30_05_0,Random,171,46,0,172,1.0
+binomial_30_05_0,Random,172,49,0,169,1.0
+binomial_30_05_0,Random,173,50,0,168,1.0
+binomial_30_05_0,Random,174,48,0,170,1.0
+binomial_30_05_0,Random,175,46,0,172,1.0
+binomial_30_05_0,Random,176,46,0,172,1.0
+binomial_30_05_0,Random,177,46,0,172,1.0
+binomial_30_05_0,Random,178,46,0,172,1.0
+binomial_30_05_0,Random,179,46,0,172,1.0
+binomial_30_05_0,Random,180,49,0,169,1.0
+binomial_30_05_0,Random,181,49,0,169,1.0
+binomial_30_05_0,Random,182,46,0,172,1.0
+binomial_30_05_0,Random,183,49,0,169,1.0
+binomial_30_05_0,Random,184,49,0,169,1.0
+binomial_30_05_0,Random,185,51,0,167,1.0
+binomial_30_05_0,Random,186,50,0,168,1.0
+binomial_30_05_0,Random,187,53,0,165,1.0
+binomial_30_05_0,Random,188,53,0,165,1.0
+binomial_30_05_0,Random,189,53,0,165,1.0
+binomial_30_05_0,Random,190,60,0,158,1.0
+binomial_30_05_0,Random,191,54,0,164,1.0
+binomial_30_05_0,Random,192,54,0,164,1.0
+binomial_30_05_0,Random,193,53,0,165,1.0
+binomial_30_05_0,Random,194,49,0,169,1.0
+binomial_30_05_0,Random,195,53,0,165,1.0
+binomial_30_05_0,Random,196,48,0,170,1.0
+binomial_30_05_0,Random,197,52,0,166,1.0
+binomial_30_05_0,Random,198,50,0,168,1.0
+binomial_30_05_0,Random,199,50,0,168,1.0
+binomial_30_05_0,MostChanged,0,66,0,152,1.0
+binomial_30_05_0,MostChanged,1,67,0,151,1.0
+binomial_30_05_0,MostChanged,2,65,0,153,1.0
+binomial_30_05_0,MostChanged,3,66,0,152,1.0
+binomial_30_05_0,MostChanged,4,60,0,158,1.0
+binomial_30_05_0,MostChanged,5,66,0,152,1.0
+binomial_30_05_0,MostChanged,6,62,0,156,1.0
+binomial_30_05_0,MostChanged,7,62,0,156,1.0
+binomial_30_05_0,MostChanged,8,61,0,157,1.0
+binomial_30_05_0,MostChanged,9,57,0,161,1.0
+binomial_30_05_0,MostChanged,10,56,0,162,1.0
+binomial_30_05_0,MostChanged,11,56,0,162,1.0
+binomial_30_05_0,MostChanged,12,53,0,165,1.0
+binomial_30_05_0,MostChanged,13,55,0,163,1.0
+binomial_30_05_0,MostChanged,14,49,0,169,1.0
+binomial_30_05_0,MostChanged,15,49,0,169,1.0
+binomial_30_05_0,MostChanged,16,49,0,169,1.0
+binomial_30_05_0,MostChanged,17,48,0,170,1.0
+binomial_30_05_0,MostChanged,18,52,0,166,1.0
+binomial_30_05_0,MostChanged,19,56,0,162,1.0
+binomial_30_05_0,MostChanged,20,56,0,162,1.0
+binomial_30_05_0,MostChanged,21,56,0,162,1.0
+binomial_30_05_0,MostChanged,22,56,0,162,1.0
+binomial_30_05_0,MostChanged,23,57,0,161,1.0
+binomial_30_05_0,MostChanged,24,52,0,166,1.0
+binomial_30_05_0,MostChanged,25,52,0,166,1.0
+binomial_30_05_0,MostChanged,26,52,0,166,1.0
+binomial_30_05_0,MostChanged,27,53,0,165,1.0
+binomial_30_05_0,MostChanged,28,53,0,165,1.0
+binomial_30_05_0,MostChanged,29,56,0,162,1.0
+binomial_30_05_0,MostChanged,30,56,0,162,1.0
+binomial_30_05_0,MostChanged,31,57,0,161,1.0
+binomial_30_05_0,MostChanged,32,57,0,161,1.0
+binomial_30_05_0,MostChanged,33,54,0,164,1.0
+binomial_30_05_0,MostChanged,34,56,0,162,1.0
+binomial_30_05_0,MostChanged,35,53,0,165,1.0
+binomial_30_05_0,MostChanged,36,53,0,165,1.0
+binomial_30_05_0,MostChanged,37,56,0,162,1.0
+binomial_30_05_0,MostChanged,38,57,0,161,1.0
+binomial_30_05_0,MostChanged,39,57,0,161,1.0
+binomial_30_05_0,MostChanged,40,57,0,161,1.0
+binomial_30_05_0,MostChanged,41,57,0,161,1.0
+binomial_30_05_0,MostChanged,42,57,0,161,1.0
+binomial_30_05_0,MostChanged,43,58,0,160,1.0
+binomial_30_05_0,MostChanged,44,58,0,160,1.0
+binomial_30_05_0,MostChanged,45,58,0,160,1.0
+binomial_30_05_0,MostChanged,46,58,0,160,1.0
+binomial_30_05_0,MostChanged,47,58,0,160,1.0
+binomial_30_05_0,MostChanged,48,64,0,154,1.0
+binomial_30_05_0,MostChanged,49,64,0,154,1.0
+binomial_30_05_0,MostChanged,50,64,0,154,1.0
+binomial_30_05_0,MostChanged,51,64,0,154,1.0
+binomial_30_05_0,MostChanged,52,64,0,154,1.0
+binomial_30_05_0,MostChanged,53,64,0,154,1.0
+binomial_30_05_0,MostChanged,54,64,0,154,1.0
+binomial_30_05_0,MostChanged,55,64,0,154,1.0
+binomial_30_05_0,MostChanged,56,64,0,154,1.0
+binomial_30_05_0,MostChanged,57,64,0,154,1.0
+binomial_30_05_0,MostChanged,58,64,0,154,1.0
+binomial_30_05_0,MostChanged,59,64,0,154,1.0
+binomial_30_05_0,MostChanged,60,62,0,156,1.0
+binomial_30_05_0,MostChanged,61,62,0,156,1.0
+binomial_30_05_0,MostChanged,62,62,0,156,1.0
+binomial_30_05_0,MostChanged,63,56,0,162,1.0
+binomial_30_05_0,MostChanged,64,56,0,162,1.0
+binomial_30_05_0,MostChanged,65,58,0,160,1.0
+binomial_30_05_0,MostChanged,66,57,0,161,1.0
+binomial_30_05_0,MostChanged,67,57,0,161,1.0
+binomial_30_05_0,MostChanged,68,61,0,157,1.0
+binomial_30_05_0,MostChanged,69,61,0,157,1.0
+binomial_30_05_0,MostChanged,70,58,0,160,1.0
+binomial_30_05_0,MostChanged,71,61,0,157,1.0
+binomial_30_05_0,MostChanged,72,61,0,157,1.0
+binomial_30_05_0,MostChanged,73,61,0,157,1.0
+binomial_30_05_0,MostChanged,74,69,0,149,1.0
+binomial_30_05_0,MostChanged,75,64,0,154,1.0
+binomial_30_05_0,MostChanged,76,62,0,156,1.0
+binomial_30_05_0,MostChanged,77,62,0,156,1.0
+binomial_30_05_0,MostChanged,78,62,0,156,1.0
+binomial_30_05_0,MostChanged,79,62,0,156,1.0
+binomial_30_05_0,MostChanged,80,62,0,156,1.0
+binomial_30_05_0,MostChanged,81,65,0,153,1.0
+binomial_30_05_0,MostChanged,82,65,0,153,1.0
+binomial_30_05_0,MostChanged,83,63,0,155,1.0
+binomial_30_05_0,MostChanged,84,63,0,155,1.0
+binomial_30_05_0,MostChanged,85,63,0,155,1.0
+binomial_30_05_0,MostChanged,86,63,0,155,1.0
+binomial_30_05_0,MostChanged,87,63,0,155,1.0
+binomial_30_05_0,MostChanged,88,62,0,156,1.0
+binomial_30_05_0,MostChanged,89,63,0,155,1.0
+binomial_30_05_0,MostChanged,90,63,0,155,1.0
+binomial_30_05_0,MostChanged,91,63,0,155,1.0
+binomial_30_05_0,MostChanged,92,63,0,155,1.0
+binomial_30_05_0,MostChanged,93,62,0,156,1.0
+binomial_30_05_0,MostChanged,94,63,0,155,1.0
+binomial_30_05_0,MostChanged,95,61,0,157,1.0
+binomial_30_05_0,MostChanged,96,62,0,156,1.0
+binomial_30_05_0,MostChanged,97,64,0,154,1.0
+binomial_30_05_0,MostChanged,98,64,0,154,1.0
+binomial_30_05_0,MostChanged,99,64,0,154,1.0
+binomial_30_05_0,MostChanged,100,64,0,154,1.0
+binomial_30_05_0,MostChanged,101,64,0,154,1.0
+binomial_30_05_0,MostChanged,102,64,0,154,1.0
+binomial_30_05_0,MostChanged,103,64,0,154,1.0
+binomial_30_05_0,MostChanged,104,64,0,154,1.0
+binomial_30_05_0,MostChanged,105,64,0,154,1.0
+binomial_30_05_0,MostChanged,106,64,0,154,1.0
+binomial_30_05_0,MostChanged,107,64,0,154,1.0
+binomial_30_05_0,MostChanged,108,64,0,154,1.0
+binomial_30_05_0,MostChanged,109,64,0,154,1.0
+binomial_30_05_0,MostChanged,110,64,0,154,1.0
+binomial_30_05_0,MostChanged,111,64,0,154,1.0
+binomial_30_05_0,MostChanged,112,64,0,154,1.0
+binomial_30_05_0,MostChanged,113,64,0,154,1.0
+binomial_30_05_0,MostChanged,114,64,0,154,1.0
+binomial_30_05_0,MostChanged,115,64,0,154,1.0
+binomial_30_05_0,MostChanged,116,64,0,154,1.0
+binomial_30_05_0,MostChanged,117,64,0,154,1.0
+binomial_30_05_0,MostChanged,118,64,0,154,1.0
+binomial_30_05_0,MostChanged,119,64,0,154,1.0
+binomial_30_05_0,MostChanged,120,64,0,154,1.0
+binomial_30_05_0,MostChanged,121,64,0,154,1.0
+binomial_30_05_0,MostChanged,122,64,0,154,1.0
+binomial_30_05_0,MostChanged,123,64,0,154,1.0
+binomial_30_05_0,MostChanged,124,64,0,154,1.0
+binomial_30_05_0,MostChanged,125,64,0,154,1.0
+binomial_30_05_0,MostChanged,126,64,0,154,1.0
+binomial_30_05_0,MostChanged,127,64,0,154,1.0
+binomial_30_05_0,MostChanged,128,64,0,154,1.0
+binomial_30_05_0,MostChanged,129,64,0,154,1.0
+binomial_30_05_0,MostChanged,130,64,0,154,1.0
+binomial_30_05_0,MostChanged,131,64,0,154,1.0
+binomial_30_05_0,MostChanged,132,64,0,154,1.0
+binomial_30_05_0,MostChanged,133,62,0,156,1.0
+binomial_30_05_0,MostChanged,134,62,0,156,1.0
+binomial_30_05_0,MostChanged,135,62,0,156,1.0
+binomial_30_05_0,MostChanged,136,64,0,154,1.0
+binomial_30_05_0,MostChanged,137,64,0,154,1.0
+binomial_30_05_0,MostChanged,138,62,0,156,1.0
+binomial_30_05_0,MostChanged,139,62,0,156,1.0
+binomial_30_05_0,MostChanged,140,62,0,156,1.0
+binomial_30_05_0,MostChanged,141,64,0,154,1.0
+binomial_30_05_0,MostChanged,142,64,0,154,1.0
+binomial_30_05_0,MostChanged,143,64,0,154,1.0
+binomial_30_05_0,MostChanged,144,69,0,149,1.0
+binomial_30_05_0,MostChanged,145,69,0,149,1.0
+binomial_30_05_0,MostChanged,146,73,0,145,1.0
+binomial_30_05_0,MostChanged,147,73,0,145,1.0
+binomial_30_05_0,MostChanged,148,73,0,145,1.0
+binomial_30_05_0,MostChanged,149,73,0,145,1.0
+binomial_30_05_0,MostChanged,150,73,0,145,1.0
+binomial_30_05_0,MostChanged,151,72,0,146,1.0
+binomial_30_05_0,MostChanged,152,65,0,153,1.0
+binomial_30_05_0,MostChanged,153,65,0,153,1.0
+binomial_30_05_0,MostChanged,154,65,0,153,1.0
+binomial_30_05_0,MostChanged,155,65,0,153,1.0
+binomial_30_05_0,MostChanged,156,66,0,152,1.0
+binomial_30_05_0,MostChanged,157,66,0,152,1.0
+binomial_30_05_0,MostChanged,158,66,0,152,1.0
+binomial_30_05_0,MostChanged,159,65,0,153,1.0
+binomial_30_05_0,MostChanged,160,65,0,153,1.0
+binomial_30_05_0,MostChanged,161,65,0,153,1.0
+binomial_30_05_0,MostChanged,162,65,0,153,1.0
+binomial_30_05_0,MostChanged,163,64,0,154,1.0
+binomial_30_05_0,MostChanged,164,64,0,154,1.0
+binomial_30_05_0,MostChanged,165,63,0,155,1.0
+binomial_30_05_0,MostChanged,166,63,0,155,1.0
+binomial_30_05_0,MostChanged,167,63,0,155,1.0
+binomial_30_05_0,MostChanged,168,64,0,154,1.0
+binomial_30_05_0,MostChanged,169,65,0,153,1.0
+binomial_30_05_0,MostChanged,170,64,0,154,1.0
+binomial_30_05_0,MostChanged,171,64,0,154,1.0
+binomial_30_05_0,MostChanged,172,64,0,154,1.0
+binomial_30_05_0,MostChanged,173,65,0,153,1.0
+binomial_30_05_0,MostChanged,174,65,0,153,1.0
+binomial_30_05_0,MostChanged,175,69,0,149,1.0
+binomial_30_05_0,MostChanged,176,69,0,149,1.0
+binomial_30_05_0,MostChanged,177,72,0,146,1.0
+binomial_30_05_0,MostChanged,178,67,0,151,1.0
+binomial_30_05_0,MostChanged,179,67,0,151,1.0
+binomial_30_05_0,MostChanged,180,67,0,151,1.0
+binomial_30_05_0,MostChanged,181,67,0,151,1.0
+binomial_30_05_0,MostChanged,182,67,0,151,1.0
+binomial_30_05_0,MostChanged,183,69,0,149,1.0
+binomial_30_05_0,MostChanged,184,60,0,158,1.0
+binomial_30_05_0,MostChanged,185,61,0,157,1.0
+binomial_30_05_0,MostChanged,186,61,0,157,1.0
+binomial_30_05_0,MostChanged,187,61,0,157,1.0
+binomial_30_05_0,MostChanged,188,58,0,160,1.0
+binomial_30_05_0,MostChanged,189,58,0,160,1.0
+binomial_30_05_0,MostChanged,190,58,0,160,1.0
+binomial_30_05_0,MostChanged,191,58,0,160,1.0
+binomial_30_05_0,MostChanged,192,58,0,160,1.0
+binomial_30_05_0,MostChanged,193,58,0,160,1.0
+binomial_30_05_0,MostChanged,194,58,0,160,1.0
+binomial_30_05_0,MostChanged,195,58,0,160,1.0
+binomial_30_05_0,MostChanged,196,58,0,160,1.0
+binomial_30_05_0,MostChanged,197,58,0,160,1.0
+binomial_30_05_0,MostChanged,198,58,0,160,1.0
+binomial_30_05_0,MostChanged,199,58,0,160,1.0
+binomial_30_05_0,MIP,0,66,0,152,1.0
+binomial_30_05_0,MIP,1,71,0,147,1.0
+binomial_30_05_0,MIP,2,64,0,154,1.0
+binomial_30_05_0,MIP,3,67,0,151,1.0
+binomial_30_05_0,MIP,4,66,0,152,1.0
+binomial_30_05_0,MIP,5,61,0,157,1.0
+binomial_30_05_0,MIP,6,61,0,157,1.0
+binomial_30_05_0,MIP,7,57,0,161,1.0
+binomial_30_05_0,MIP,8,56,0,162,1.0
+binomial_30_05_0,MIP,9,57,0,161,1.0
+binomial_30_05_0,MIP,10,54,0,164,1.0
+binomial_30_05_0,MIP,11,54,0,164,1.0
+binomial_30_05_0,MIP,12,54,0,164,1.0
+binomial_30_05_0,MIP,13,60,0,158,1.0
+binomial_30_05_0,MIP,14,65,0,153,1.0
+binomial_30_05_0,MIP,15,63,0,155,1.0
+binomial_30_05_0,MIP,16,64,0,154,1.0
+binomial_30_05_0,MIP,17,68,0,150,1.0
+binomial_30_05_0,MIP,18,69,0,149,1.0
+binomial_30_05_0,MIP,19,68,0,150,1.0
+binomial_30_05_0,MIP,20,63,0,155,1.0
+binomial_30_05_0,MIP,21,64,0,154,1.0
+binomial_30_05_0,MIP,22,64,0,154,1.0
+binomial_30_05_0,MIP,23,59,0,159,1.0
+binomial_30_05_0,MIP,24,56,0,162,1.0
+binomial_30_05_0,MIP,25,52,0,166,1.0
+binomial_30_05_0,MIP,26,54,0,164,1.0
+binomial_30_05_0,MIP,27,58,0,160,1.0
+binomial_30_05_0,MIP,28,57,0,161,1.0
+binomial_30_05_0,MIP,29,53,0,165,1.0
+binomial_30_05_0,MIP,30,58,0,160,1.0
+binomial_30_05_0,MIP,31,65,0,153,1.0
+binomial_30_05_0,MIP,32,65,0,153,1.0
+binomial_30_05_0,MIP,33,66,0,152,1.0
+binomial_30_05_0,MIP,34,66,0,152,1.0
+binomial_30_05_0,MIP,35,67,0,151,1.0
+binomial_30_05_0,MIP,36,62,0,156,1.0
+binomial_30_05_0,MIP,37,63,0,155,1.0
+binomial_30_05_0,MIP,38,63,0,155,1.0
+binomial_30_05_0,MIP,39,59,0,159,1.0
+binomial_30_05_0,MIP,40,59,0,159,1.0
+binomial_30_05_0,MIP,41,57,0,161,1.0
+binomial_30_05_0,MIP,42,61,0,157,1.0
+binomial_30_05_0,MIP,43,64,0,154,1.0
+binomial_30_05_0,MIP,44,64,0,154,1.0
+binomial_30_05_0,MIP,45,66,0,152,1.0
+binomial_30_05_0,MIP,46,66,0,152,1.0
+binomial_30_05_0,MIP,47,66,0,152,1.0
+binomial_30_05_0,MIP,48,63,0,155,1.0
+binomial_30_05_0,MIP,49,60,0,158,1.0
+binomial_30_05_0,MIP,50,59,0,159,1.0
+binomial_30_05_0,MIP,51,60,0,158,1.0
+binomial_30_05_0,MIP,52,61,0,157,1.0
+binomial_30_05_0,MIP,53,61,0,157,1.0
+binomial_30_05_0,MIP,54,60,0,158,1.0
+binomial_30_05_0,MIP,55,66,0,152,1.0
+binomial_30_05_0,MIP,56,64,0,154,1.0
+binomial_30_05_0,MIP,57,62,0,156,1.0
+binomial_30_05_0,MIP,58,60,0,158,1.0
+binomial_30_05_0,MIP,59,61,0,157,1.0
+binomial_30_05_0,MIP,60,63,0,155,1.0
+binomial_30_05_0,MIP,61,63,0,155,1.0
+binomial_30_05_0,MIP,62,63,0,155,1.0
+binomial_30_05_0,MIP,63,65,0,153,1.0
+binomial_30_05_0,MIP,64,65,0,153,1.0
+binomial_30_05_0,MIP,65,65,0,153,1.0
+binomial_30_05_0,MIP,66,62,0,156,1.0
+binomial_30_05_0,MIP,67,62,0,156,1.0
+binomial_30_05_0,MIP,68,65,0,153,1.0
+binomial_30_05_0,MIP,69,64,0,154,1.0
+binomial_30_05_0,MIP,70,61,0,157,1.0
+binomial_30_05_0,MIP,71,63,0,155,1.0
+binomial_30_05_0,MIP,72,64,0,154,1.0
+binomial_30_05_0,MIP,73,61,0,157,1.0
+binomial_30_05_0,MIP,74,63,0,155,1.0
+binomial_30_05_0,MIP,75,61,0,157,1.0
+binomial_30_05_0,MIP,76,61,0,157,1.0
+binomial_30_05_0,MIP,77,62,0,156,1.0
+binomial_30_05_0,MIP,78,62,0,156,1.0
+binomial_30_05_0,MIP,79,60,0,158,1.0
+binomial_30_05_0,MIP,80,64,0,154,1.0
+binomial_30_05_0,MIP,81,67,0,151,1.0
+binomial_30_05_0,MIP,82,67,0,151,1.0
+binomial_30_05_0,MIP,83,64,0,154,1.0
+binomial_30_05_0,MIP,84,61,0,157,1.0
+binomial_30_05_0,MIP,85,61,0,157,1.0
+binomial_30_05_0,MIP,86,61,0,157,1.0
+binomial_30_05_0,MIP,87,56,0,162,1.0
+binomial_30_05_0,MIP,88,56,0,162,1.0
+binomial_30_05_0,MIP,89,56,0,162,1.0
+binomial_30_05_0,MIP,90,56,0,162,1.0
+binomial_30_05_0,MIP,91,56,0,162,1.0
+binomial_30_05_0,MIP,92,52,0,166,1.0
+binomial_30_05_0,MIP,93,52,0,166,1.0
+binomial_30_05_0,MIP,94,55,0,163,1.0
+binomial_30_05_0,MIP,95,60,0,158,1.0
+binomial_30_05_0,MIP,96,54,0,164,1.0
+binomial_30_05_0,MIP,97,59,0,159,1.0
+binomial_30_05_0,MIP,98,59,0,159,1.0
+binomial_30_05_0,MIP,99,60,0,158,1.0
+binomial_30_05_0,MIP,100,60,0,158,1.0
+binomial_30_05_0,MIP,101,58,0,160,1.0
+binomial_30_05_0,MIP,102,58,0,160,1.0
+binomial_30_05_0,MIP,103,57,0,161,1.0
+binomial_30_05_0,MIP,104,54,0,164,1.0
+binomial_30_05_0,MIP,105,57,0,161,1.0
+binomial_30_05_0,MIP,106,57,0,161,1.0
+binomial_30_05_0,MIP,107,57,0,161,1.0
+binomial_30_05_0,MIP,108,56,0,162,1.0
+binomial_30_05_0,MIP,109,55,0,163,1.0
+binomial_30_05_0,MIP,110,55,0,163,1.0
+binomial_30_05_0,MIP,111,55,0,163,1.0
+binomial_30_05_0,MIP,112,60,0,158,1.0
+binomial_30_05_0,MIP,113,62,0,156,1.0
+binomial_30_05_0,MIP,114,60,0,158,1.0
+binomial_30_05_0,MIP,115,60,0,158,1.0
+binomial_30_05_0,MIP,116,60,0,158,1.0
+binomial_30_05_0,MIP,117,61,0,157,1.0
+binomial_30_05_0,MIP,118,63,0,155,1.0
+binomial_30_05_0,MIP,119,62,0,156,1.0
+binomial_30_05_0,MIP,120,62,0,156,1.0
+binomial_30_05_0,MIP,121,56,0,162,1.0
+binomial_30_05_0,MIP,122,61,0,157,1.0
+binomial_30_05_0,MIP,123,60,0,158,1.0
+binomial_30_05_0,MIP,124,64,0,154,1.0
+binomial_30_05_0,MIP,125,64,0,154,1.0
+binomial_30_05_0,MIP,126,62,0,156,1.0
+binomial_30_05_0,MIP,127,62,0,156,1.0
+binomial_30_05_0,MIP,128,61,0,157,1.0
+binomial_30_05_0,MIP,129,57,0,161,1.0
+binomial_30_05_0,MIP,130,57,0,161,1.0
+binomial_30_05_0,MIP,131,55,0,163,1.0
+binomial_30_05_0,MIP,132,67,0,151,1.0
+binomial_30_05_0,MIP,133,71,0,147,1.0
+binomial_30_05_0,MIP,134,62,0,156,1.0
+binomial_30_05_0,MIP,135,63,0,155,1.0
+binomial_30_05_0,MIP,136,75,0,143,1.0
+binomial_30_05_0,MIP,137,75,0,143,1.0
+binomial_30_05_0,MIP,138,74,0,144,1.0
+binomial_30_05_0,MIP,139,74,0,144,1.0
+binomial_30_05_0,MIP,140,66,0,152,1.0
+binomial_30_05_0,MIP,141,66,0,152,1.0
+binomial_30_05_0,MIP,142,66,0,152,1.0
+binomial_30_05_0,MIP,143,66,0,152,1.0
+binomial_30_05_0,MIP,144,64,0,154,1.0
+binomial_30_05_0,MIP,145,63,0,155,1.0
+binomial_30_05_0,MIP,146,59,0,159,1.0
+binomial_30_05_0,MIP,147,62,0,156,1.0
+binomial_30_05_0,MIP,148,62,0,156,1.0
+binomial_30_05_0,MIP,149,60,0,158,1.0
+binomial_30_05_0,MIP,150,60,0,158,1.0
+binomial_30_05_0,MIP,151,60,0,158,1.0
+binomial_30_05_0,MIP,152,61,0,157,1.0
+binomial_30_05_0,MIP,153,61,0,157,1.0
+binomial_30_05_0,MIP,154,61,0,157,1.0
+binomial_30_05_0,MIP,155,61,0,157,1.0
+binomial_30_05_0,MIP,156,61,0,157,1.0
+binomial_30_05_0,MIP,157,61,0,157,1.0
+binomial_30_05_0,MIP,158,61,0,157,1.0
+binomial_30_05_0,MIP,159,61,0,157,1.0
+binomial_30_05_0,MIP,160,61,0,157,1.0
+binomial_30_05_0,MIP,161,61,0,157,1.0
+binomial_30_05_0,MIP,162,59,0,159,1.0
+binomial_30_05_0,MIP,163,59,0,159,1.0
+binomial_30_05_0,MIP,164,59,0,159,1.0
+binomial_30_05_0,MIP,165,57,0,161,1.0
+binomial_30_05_0,MIP,166,57,0,161,1.0
+binomial_30_05_0,MIP,167,57,0,161,1.0
+binomial_30_05_0,MIP,168,57,0,161,1.0
+binomial_30_05_0,MIP,169,61,0,157,1.0
+binomial_30_05_0,MIP,170,60,0,158,1.0
+binomial_30_05_0,MIP,171,60,0,158,1.0
+binomial_30_05_0,MIP,172,60,0,158,1.0
+binomial_30_05_0,MIP,173,60,0,158,1.0
+binomial_30_05_0,MIP,174,60,0,158,1.0
+binomial_30_05_0,MIP,175,60,0,158,1.0
+binomial_30_05_0,MIP,176,56,0,162,1.0
+binomial_30_05_0,MIP,177,56,0,162,1.0
+binomial_30_05_0,MIP,178,56,0,162,1.0
+binomial_30_05_0,MIP,179,56,0,162,1.0
+binomial_30_05_0,MIP,180,56,0,162,1.0
+binomial_30_05_0,MIP,181,56,0,162,1.0
+binomial_30_05_0,MIP,182,57,0,161,1.0
+binomial_30_05_0,MIP,183,57,0,161,1.0
+binomial_30_05_0,MIP,184,57,0,161,1.0
+binomial_30_05_0,MIP,185,57,0,161,1.0
+binomial_30_05_0,MIP,186,57,0,161,1.0
+binomial_30_05_0,MIP,187,57,0,161,1.0
+binomial_30_05_0,MIP,188,54,0,164,1.0
+binomial_30_05_0,MIP,189,54,0,164,1.0
+binomial_30_05_0,MIP,190,54,0,164,1.0
+binomial_30_05_0,MIP,191,54,0,164,1.0
+binomial_30_05_0,MIP,192,54,0,164,1.0
+binomial_30_05_0,MIP,193,52,0,166,1.0
+binomial_30_05_0,MIP,194,52,0,166,1.0
+binomial_30_05_0,MIP,195,52,0,166,1.0
+binomial_30_05_0,MIP,196,52,0,166,1.0
+binomial_30_05_0,MIP,197,56,0,162,1.0
+binomial_30_05_0,MIP,198,57,0,161,1.0
+binomial_30_05_0,MIP,199,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),0,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),1,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),2,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),3,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),4,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),5,65,0,153,1.0
+binomial_30_05_0,MostChangedInterval (5),6,70,0,148,1.0
+binomial_30_05_0,MostChangedInterval (5),7,69,0,149,1.0
+binomial_30_05_0,MostChangedInterval (5),8,68,0,150,1.0
+binomial_30_05_0,MostChangedInterval (5),9,64,0,154,1.0
+binomial_30_05_0,MostChangedInterval (5),10,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),11,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),12,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),13,55,0,163,1.0
+binomial_30_05_0,MostChangedInterval (5),14,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),15,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),16,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),17,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),18,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),19,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),20,65,0,153,1.0
+binomial_30_05_0,MostChangedInterval (5),21,67,0,151,1.0
+binomial_30_05_0,MostChangedInterval (5),22,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),23,71,0,147,1.0
+binomial_30_05_0,MostChangedInterval (5),24,69,0,149,1.0
+binomial_30_05_0,MostChangedInterval (5),25,67,0,151,1.0
+binomial_30_05_0,MostChangedInterval (5),26,67,0,151,1.0
+binomial_30_05_0,MostChangedInterval (5),27,65,0,153,1.0
+binomial_30_05_0,MostChangedInterval (5),28,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),29,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),30,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),31,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),32,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),33,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),34,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),35,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),36,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),37,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),38,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),39,52,0,166,1.0
+binomial_30_05_0,MostChangedInterval (5),40,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),41,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),42,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),43,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),44,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),45,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),46,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),47,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),48,61,0,157,1.0
+binomial_30_05_0,MostChangedInterval (5),49,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),50,61,0,157,1.0
+binomial_30_05_0,MostChangedInterval (5),51,65,0,153,1.0
+binomial_30_05_0,MostChangedInterval (5),52,65,0,153,1.0
+binomial_30_05_0,MostChangedInterval (5),53,55,0,163,1.0
+binomial_30_05_0,MostChangedInterval (5),54,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),55,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),56,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),57,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),58,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),59,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),60,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),61,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),62,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),63,72,0,146,1.0
+binomial_30_05_0,MostChangedInterval (5),64,64,0,154,1.0
+binomial_30_05_0,MostChangedInterval (5),65,67,0,151,1.0
+binomial_30_05_0,MostChangedInterval (5),66,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),67,65,0,153,1.0
+binomial_30_05_0,MostChangedInterval (5),68,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),69,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),70,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),71,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),72,64,0,154,1.0
+binomial_30_05_0,MostChangedInterval (5),73,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),74,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),75,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),76,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),77,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),78,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),79,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),80,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),81,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),82,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),83,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),84,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),85,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),86,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),87,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),88,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),89,62,0,156,1.0
+binomial_30_05_0,MostChangedInterval (5),90,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),91,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),92,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),93,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),94,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),95,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),96,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),97,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),98,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),99,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),100,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),101,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),102,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),103,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),104,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),105,66,0,152,1.0
+binomial_30_05_0,MostChangedInterval (5),106,71,0,147,1.0
+binomial_30_05_0,MostChangedInterval (5),107,64,0,154,1.0
+binomial_30_05_0,MostChangedInterval (5),108,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),109,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),110,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),111,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),112,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),113,53,0,165,1.0
+binomial_30_05_0,MostChangedInterval (5),114,51,0,167,1.0
+binomial_30_05_0,MostChangedInterval (5),115,48,0,170,1.0
+binomial_30_05_0,MostChangedInterval (5),116,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),117,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),118,64,0,154,1.0
+binomial_30_05_0,MostChangedInterval (5),119,64,0,154,1.0
+binomial_30_05_0,MostChangedInterval (5),120,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),121,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),122,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),123,65,0,153,1.0
+binomial_30_05_0,MostChangedInterval (5),124,65,0,153,1.0
+binomial_30_05_0,MostChangedInterval (5),125,64,0,154,1.0
+binomial_30_05_0,MostChangedInterval (5),126,61,0,157,1.0
+binomial_30_05_0,MostChangedInterval (5),127,61,0,157,1.0
+binomial_30_05_0,MostChangedInterval (5),128,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),129,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),130,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),131,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),132,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),133,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),134,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),135,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),136,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),137,63,0,155,1.0
+binomial_30_05_0,MostChangedInterval (5),138,65,0,153,1.0
+binomial_30_05_0,MostChangedInterval (5),139,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),140,65,0,153,1.0
+binomial_30_05_0,MostChangedInterval (5),141,64,0,154,1.0
+binomial_30_05_0,MostChangedInterval (5),142,64,0,154,1.0
+binomial_30_05_0,MostChangedInterval (5),143,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),144,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),145,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),146,52,0,166,1.0
+binomial_30_05_0,MostChangedInterval (5),147,52,0,166,1.0
+binomial_30_05_0,MostChangedInterval (5),148,52,0,166,1.0
+binomial_30_05_0,MostChangedInterval (5),149,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),150,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),151,64,0,154,1.0
+binomial_30_05_0,MostChangedInterval (5),152,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),153,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),154,53,0,165,1.0
+binomial_30_05_0,MostChangedInterval (5),155,50,0,168,1.0
+binomial_30_05_0,MostChangedInterval (5),156,50,0,168,1.0
+binomial_30_05_0,MostChangedInterval (5),157,53,0,165,1.0
+binomial_30_05_0,MostChangedInterval (5),158,55,0,163,1.0
+binomial_30_05_0,MostChangedInterval (5),159,55,0,163,1.0
+binomial_30_05_0,MostChangedInterval (5),160,55,0,163,1.0
+binomial_30_05_0,MostChangedInterval (5),161,55,0,163,1.0
+binomial_30_05_0,MostChangedInterval (5),162,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),163,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),164,53,0,165,1.0
+binomial_30_05_0,MostChangedInterval (5),165,53,0,165,1.0
+binomial_30_05_0,MostChangedInterval (5),166,52,0,166,1.0
+binomial_30_05_0,MostChangedInterval (5),167,52,0,166,1.0
+binomial_30_05_0,MostChangedInterval (5),168,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),169,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),170,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),171,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),172,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),173,62,0,156,1.0
+binomial_30_05_0,MostChangedInterval (5),174,67,0,151,1.0
+binomial_30_05_0,MostChangedInterval (5),175,67,0,151,1.0
+binomial_30_05_0,MostChangedInterval (5),176,62,0,156,1.0
+binomial_30_05_0,MostChangedInterval (5),177,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),178,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),179,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),180,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),181,55,0,163,1.0
+binomial_30_05_0,MostChangedInterval (5),182,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),183,54,0,164,1.0
+binomial_30_05_0,MostChangedInterval (5),184,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),185,62,0,156,1.0
+binomial_30_05_0,MostChangedInterval (5),186,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),187,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),188,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),189,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),190,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),191,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),192,59,0,159,1.0
+binomial_30_05_0,MostChangedInterval (5),193,56,0,162,1.0
+binomial_30_05_0,MostChangedInterval (5),194,58,0,160,1.0
+binomial_30_05_0,MostChangedInterval (5),195,64,0,154,1.0
+binomial_30_05_0,MostChangedInterval (5),196,65,0,153,1.0
+binomial_30_05_0,MostChangedInterval (5),197,60,0,158,1.0
+binomial_30_05_0,MostChangedInterval (5),198,57,0,161,1.0
+binomial_30_05_0,MostChangedInterval (5),199,59,0,159,1.0
+binomial_30_05_0,RecentChanges,0,66,0,152,1.0
+binomial_30_05_0,RecentChanges,1,65,0,153,1.0
+binomial_30_05_0,RecentChanges,2,66,0,152,1.0
+binomial_30_05_0,RecentChanges,3,70,0,148,1.0
+binomial_30_05_0,RecentChanges,4,71,0,147,1.0
+binomial_30_05_0,RecentChanges,5,61,0,157,1.0
+binomial_30_05_0,RecentChanges,6,62,0,156,1.0
+binomial_30_05_0,RecentChanges,7,64,0,154,1.0
+binomial_30_05_0,RecentChanges,8,66,0,152,1.0
+binomial_30_05_0,RecentChanges,9,66,0,152,1.0
+binomial_30_05_0,RecentChanges,10,71,0,147,1.0
+binomial_30_05_0,RecentChanges,11,71,0,147,1.0
+binomial_30_05_0,RecentChanges,12,63,0,155,1.0
+binomial_30_05_0,RecentChanges,13,63,0,155,1.0
+binomial_30_05_0,RecentChanges,14,63,0,155,1.0
+binomial_30_05_0,RecentChanges,15,63,0,155,1.0
+binomial_30_05_0,RecentChanges,16,58,0,160,1.0
+binomial_30_05_0,RecentChanges,17,64,0,154,1.0
+binomial_30_05_0,RecentChanges,18,64,0,154,1.0
+binomial_30_05_0,RecentChanges,19,62,0,156,1.0
+binomial_30_05_0,RecentChanges,20,72,0,146,1.0
+binomial_30_05_0,RecentChanges,21,79,0,139,1.0
+binomial_30_05_0,RecentChanges,22,86,0,132,1.0
+binomial_30_05_0,RecentChanges,23,77,0,141,1.0
+binomial_30_05_0,RecentChanges,24,74,0,144,1.0
+binomial_30_05_0,RecentChanges,25,74,0,144,1.0
+binomial_30_05_0,RecentChanges,26,67,0,151,1.0
+binomial_30_05_0,RecentChanges,27,62,0,156,1.0
+binomial_30_05_0,RecentChanges,28,57,0,161,1.0
+binomial_30_05_0,RecentChanges,29,65,0,153,1.0
+binomial_30_05_0,RecentChanges,30,65,0,153,1.0
+binomial_30_05_0,RecentChanges,31,69,0,149,1.0
+binomial_30_05_0,RecentChanges,32,63,0,155,1.0
+binomial_30_05_0,RecentChanges,33,77,0,141,1.0
+binomial_30_05_0,RecentChanges,34,70,0,148,1.0
+binomial_30_05_0,RecentChanges,35,60,0,158,1.0
+binomial_30_05_0,RecentChanges,36,60,0,158,1.0
+binomial_30_05_0,RecentChanges,37,60,0,158,1.0
+binomial_30_05_0,RecentChanges,38,65,0,153,1.0
+binomial_30_05_0,RecentChanges,39,65,0,153,1.0
+binomial_30_05_0,RecentChanges,40,72,0,146,1.0
+binomial_30_05_0,RecentChanges,41,67,0,151,1.0
+binomial_30_05_0,RecentChanges,42,62,0,156,1.0
+binomial_30_05_0,RecentChanges,43,61,0,157,1.0
+binomial_30_05_0,RecentChanges,44,55,0,163,1.0
+binomial_30_05_0,RecentChanges,45,55,0,163,1.0
+binomial_30_05_0,RecentChanges,46,55,0,163,1.0
+binomial_30_05_0,RecentChanges,47,60,0,158,1.0
+binomial_30_05_0,RecentChanges,48,58,0,160,1.0
+binomial_30_05_0,RecentChanges,49,56,0,162,1.0
+binomial_30_05_0,RecentChanges,50,56,0,162,1.0
+binomial_30_05_0,RecentChanges,51,57,0,161,1.0
+binomial_30_05_0,RecentChanges,52,62,0,156,1.0
+binomial_30_05_0,RecentChanges,53,62,0,156,1.0
+binomial_30_05_0,RecentChanges,54,70,0,148,1.0
+binomial_30_05_0,RecentChanges,55,69,0,149,1.0
+binomial_30_05_0,RecentChanges,56,57,0,161,1.0
+binomial_30_05_0,RecentChanges,57,62,0,156,1.0
+binomial_30_05_0,RecentChanges,58,62,0,156,1.0
+binomial_30_05_0,RecentChanges,59,66,0,152,1.0
+binomial_30_05_0,RecentChanges,60,63,0,155,1.0
+binomial_30_05_0,RecentChanges,61,71,0,147,1.0
+binomial_30_05_0,RecentChanges,62,72,0,146,1.0
+binomial_30_05_0,RecentChanges,63,61,0,157,1.0
+binomial_30_05_0,RecentChanges,64,63,0,155,1.0
+binomial_30_05_0,RecentChanges,65,70,0,148,1.0
+binomial_30_05_0,RecentChanges,66,70,0,148,1.0
+binomial_30_05_0,RecentChanges,67,68,0,150,1.0
+binomial_30_05_0,RecentChanges,68,73,0,145,1.0
+binomial_30_05_0,RecentChanges,69,65,0,153,1.0
+binomial_30_05_0,RecentChanges,70,51,0,167,1.0
+binomial_30_05_0,RecentChanges,71,64,0,154,1.0
+binomial_30_05_0,RecentChanges,72,67,0,151,1.0
+binomial_30_05_0,RecentChanges,73,77,0,141,1.0
+binomial_30_05_0,RecentChanges,74,73,0,145,1.0
+binomial_30_05_0,RecentChanges,75,81,0,137,1.0
+binomial_30_05_0,RecentChanges,76,76,0,142,1.0
+binomial_30_05_0,RecentChanges,77,82,0,136,1.0
+binomial_30_05_0,RecentChanges,78,71,0,147,1.0
+binomial_30_05_0,RecentChanges,79,71,0,147,1.0
+binomial_30_05_0,RecentChanges,80,66,0,152,1.0
+binomial_30_05_0,RecentChanges,81,66,0,152,1.0
+binomial_30_05_0,RecentChanges,82,63,0,155,1.0
+binomial_30_05_0,RecentChanges,83,70,0,148,1.0
+binomial_30_05_0,RecentChanges,84,69,0,149,1.0
+binomial_30_05_0,RecentChanges,85,62,0,156,1.0
+binomial_30_05_0,RecentChanges,86,61,0,157,1.0
+binomial_30_05_0,RecentChanges,87,61,0,157,1.0
+binomial_30_05_0,RecentChanges,88,67,0,151,1.0
+binomial_30_05_0,RecentChanges,89,69,0,149,1.0
+binomial_30_05_0,RecentChanges,90,75,0,143,1.0
+binomial_30_05_0,RecentChanges,91,78,0,140,1.0
+binomial_30_05_0,RecentChanges,92,77,0,141,1.0
+binomial_30_05_0,RecentChanges,93,65,0,153,1.0
+binomial_30_05_0,RecentChanges,94,73,0,145,1.0
+binomial_30_05_0,RecentChanges,95,76,0,142,1.0
+binomial_30_05_0,RecentChanges,96,76,0,142,1.0
+binomial_30_05_0,RecentChanges,97,69,0,149,1.0
+binomial_30_05_0,RecentChanges,98,74,0,144,1.0
+binomial_30_05_0,RecentChanges,99,75,0,143,1.0
+binomial_30_05_0,RecentChanges,100,63,0,155,1.0
+binomial_30_05_0,RecentChanges,101,62,0,156,1.0
+binomial_30_05_0,RecentChanges,102,63,0,155,1.0
+binomial_30_05_0,RecentChanges,103,71,0,147,1.0
+binomial_30_05_0,RecentChanges,104,70,0,148,1.0
+binomial_30_05_0,RecentChanges,105,81,0,137,1.0
+binomial_30_05_0,RecentChanges,106,78,0,140,1.0
+binomial_30_05_0,RecentChanges,107,70,0,148,1.0
+binomial_30_05_0,RecentChanges,108,75,0,143,1.0
+binomial_30_05_0,RecentChanges,109,74,0,144,1.0
+binomial_30_05_0,RecentChanges,110,74,0,144,1.0
+binomial_30_05_0,RecentChanges,111,74,0,144,1.0
+binomial_30_05_0,RecentChanges,112,85,0,133,1.0
+binomial_30_05_0,RecentChanges,113,82,0,136,1.0
+binomial_30_05_0,RecentChanges,114,77,0,141,1.0
+binomial_30_05_0,RecentChanges,115,77,0,141,1.0
+binomial_30_05_0,RecentChanges,116,75,0,143,1.0
+binomial_30_05_0,RecentChanges,117,75,0,143,1.0
+binomial_30_05_0,RecentChanges,118,75,0,143,1.0
+binomial_30_05_0,RecentChanges,119,77,0,141,1.0
+binomial_30_05_0,RecentChanges,120,77,0,141,1.0
+binomial_30_05_0,RecentChanges,121,74,0,144,1.0
+binomial_30_05_0,RecentChanges,122,74,0,144,1.0
+binomial_30_05_0,RecentChanges,123,68,0,150,1.0
+binomial_30_05_0,RecentChanges,124,77,0,141,1.0
+binomial_30_05_0,RecentChanges,125,77,0,141,1.0
+binomial_30_05_0,RecentChanges,126,77,0,141,1.0
+binomial_30_05_0,RecentChanges,127,81,0,137,1.0
+binomial_30_05_0,RecentChanges,128,74,0,144,1.0
+binomial_30_05_0,RecentChanges,129,73,0,145,1.0
+binomial_30_05_0,RecentChanges,130,73,0,145,1.0
+binomial_30_05_0,RecentChanges,131,74,0,144,1.0
+binomial_30_05_0,RecentChanges,132,74,0,144,1.0
+binomial_30_05_0,RecentChanges,133,83,0,135,1.0
+binomial_30_05_0,RecentChanges,134,75,0,143,1.0
+binomial_30_05_0,RecentChanges,135,71,0,147,1.0
+binomial_30_05_0,RecentChanges,136,73,0,145,1.0
+binomial_30_05_0,RecentChanges,137,78,0,140,1.0
+binomial_30_05_0,RecentChanges,138,68,0,150,1.0
+binomial_30_05_0,RecentChanges,139,64,0,154,1.0
+binomial_30_05_0,RecentChanges,140,76,0,142,1.0
+binomial_30_05_0,RecentChanges,141,76,0,142,1.0
+binomial_30_05_0,RecentChanges,142,81,0,137,1.0
+binomial_30_05_0,RecentChanges,143,77,0,141,1.0
+binomial_30_05_0,RecentChanges,144,82,0,136,1.0
+binomial_30_05_0,RecentChanges,145,78,0,140,1.0
+binomial_30_05_0,RecentChanges,146,78,0,140,1.0
+binomial_30_05_0,RecentChanges,147,79,0,139,1.0
+binomial_30_05_0,RecentChanges,148,88,0,130,1.0
+binomial_30_05_0,RecentChanges,149,85,0,133,1.0
+binomial_30_05_0,RecentChanges,150,68,0,150,1.0
+binomial_30_05_0,RecentChanges,151,66,0,152,1.0
+binomial_30_05_0,RecentChanges,152,66,0,152,1.0
+binomial_30_05_0,RecentChanges,153,81,0,137,1.0
+binomial_30_05_0,RecentChanges,154,79,0,139,1.0
+binomial_30_05_0,RecentChanges,155,76,0,142,1.0
+binomial_30_05_0,RecentChanges,156,76,0,142,1.0
+binomial_30_05_0,RecentChanges,157,75,0,143,1.0
+binomial_30_05_0,RecentChanges,158,71,0,147,1.0
+binomial_30_05_0,RecentChanges,159,68,0,150,1.0
+binomial_30_05_0,RecentChanges,160,74,0,144,1.0
+binomial_30_05_0,RecentChanges,161,63,0,155,1.0
+binomial_30_05_0,RecentChanges,162,63,0,155,1.0
+binomial_30_05_0,RecentChanges,163,60,0,158,1.0
+binomial_30_05_0,RecentChanges,164,59,0,159,1.0
+binomial_30_05_0,RecentChanges,165,61,0,157,1.0
+binomial_30_05_0,RecentChanges,166,61,0,157,1.0
+binomial_30_05_0,RecentChanges,167,61,0,157,1.0
+binomial_30_05_0,RecentChanges,168,61,0,157,1.0
+binomial_30_05_0,RecentChanges,169,63,0,155,1.0
+binomial_30_05_0,RecentChanges,170,63,0,155,1.0
+binomial_30_05_0,RecentChanges,171,61,0,157,1.0
+binomial_30_05_0,RecentChanges,172,60,0,158,1.0
+binomial_30_05_0,RecentChanges,173,60,0,158,1.0
+binomial_30_05_0,RecentChanges,174,62,0,156,1.0
+binomial_30_05_0,RecentChanges,175,63,0,155,1.0
+binomial_30_05_0,RecentChanges,176,71,0,147,1.0
+binomial_30_05_0,RecentChanges,177,71,0,147,1.0
+binomial_30_05_0,RecentChanges,178,72,0,146,1.0
+binomial_30_05_0,RecentChanges,179,62,0,156,1.0
+binomial_30_05_0,RecentChanges,180,62,0,156,1.0
+binomial_30_05_0,RecentChanges,181,64,0,154,1.0
+binomial_30_05_0,RecentChanges,182,67,0,151,1.0
+binomial_30_05_0,RecentChanges,183,66,0,152,1.0
+binomial_30_05_0,RecentChanges,184,65,0,153,1.0
+binomial_30_05_0,RecentChanges,185,65,0,153,1.0
+binomial_30_05_0,RecentChanges,186,64,0,154,1.0
+binomial_30_05_0,RecentChanges,187,64,0,154,1.0
+binomial_30_05_0,RecentChanges,188,67,0,151,1.0
+binomial_30_05_0,RecentChanges,189,68,0,150,1.0
+binomial_30_05_0,RecentChanges,190,66,0,152,1.0
+binomial_30_05_0,RecentChanges,191,64,0,154,1.0
+binomial_30_05_0,RecentChanges,192,67,0,151,1.0
+binomial_30_05_0,RecentChanges,193,63,0,155,1.0
+binomial_30_05_0,RecentChanges,194,63,0,155,1.0
+binomial_30_05_0,RecentChanges,195,68,0,150,1.0
+binomial_30_05_0,RecentChanges,196,70,0,148,1.0
+binomial_30_05_0,RecentChanges,197,63,0,155,1.0
+binomial_30_05_0,RecentChanges,198,67,0,151,1.0
+binomial_30_05_0,RecentChanges,199,63,0,155,1.0
