@@ -55,7 +55,7 @@ class Simulation:
         problemGraph = copy.deepcopy(self.graph)
         self.instance = GraphProblem(problemGraph, self.colors)                
         #assign nodes to agents
-        agentAssignments = self.assignAgentsToClustersStrict()
+        agentAssignments = self.assignAgentsDistriburtions()
 #        agentAssignments = {0: [2, 5, 6, 7, 8, 9, 10, 11, 14, 16, 19, 21, 22, 25, 27, 29], 1: [0, 1, 3, 4, 5, 6, 8, 11, 14, 15, 20, 22, 23, 24, 26, 29], 2: [1, 3, 8, 9, 10, 12, 13, 15, 17, 18, 19, 22, 24, 28]}
 #        agentAssignments = {0: [0, 1, 3, 5, 6, 7, 16, 18, 19, 20, 22, 23, 25, 26, 28, 29, 33, 36, 38, 39, 41, 43, 45, 46, 47], 1: [7, 9, 10, 11, 12, 13, 15, 16, 20, 21, 22, 24, 27, 28, 31, 32, 33, 34, 35, 37, 38, 39, 40, 41, 43, 44, 45, 46, 49], 2: [1, 2, 4, 7, 8, 11, 13, 14, 15, 17, 23, 24, 26, 28, 30, 32, 35, 36, 38, 42, 48]}
 
@@ -79,7 +79,19 @@ class Simulation:
             agentAssignments[i] = self.clusters[i]
         
         return agentAssignments
-    
+    def assignAgentsDistriburtions(self):
+        agentAssignments = {}
+        for i in range(self.numAgents):
+            agentAssignments[i] = []
+            for c in range(len(self.clusters)):
+                if c == i:
+                    for node in self.clusters[c]:
+                        agentAssignments[i].append((node, 0.8/len(self.clusters[c]))) #even distribution
+                else:
+                    for node in self.clusters[c]:
+                        agentAssignments[i].append((node, (0.2/(len(self.clusters)-1))/len(self.clusters[c]))) #even distribution                    
+            
+        return agentAssignments
      
     def assignAgents(self):
         agentAssignments = {}
@@ -103,7 +115,7 @@ class Simulation:
 
         for clust in range(numClusters):
             numNodesInClust = max(np.random.poisson(nodesPerCluster),2)
-            numNodesInClust =nodesPerCluster
+#            numNodesInClust =nodesPerCluster
             clusterNodes = [] #TODO: verify doesn't mess up other lists
             for node in range(numNodesInClust):
                 g.add_node(totalNodeCount)
@@ -140,15 +152,17 @@ class Simulation:
                 if self.numIterations > 50:
                     a = 0
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
+                    nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
                     if self.setting == "all":
-                        nodesToShare = system.query(agent.id, self.queryLimit) #get nodes info to share with agent. nodesToShare is list of nodes
+                        nodesToShare = system.query(agent.id, self.queryLimit, nodesToChange[0]) #get nodes info to share with agent. nodesToShare is list of nodes
                     else: #only ranking changes, need to send first rev to consider
-                        nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1)
+                        nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0])
                     info = {} #dict holding nodes and their colors (to share with agent)
                     for node in nodesToShare:
                         info[node] = self.instance.getColor(node)
                     agent.updateBelief(info) #update agents knowledge
-
+                    
+                    
                     actions = agent.chooseActions(self.numIterations,minActions = 0) #query agent for actions
 #                    print actions
                     #send update to system
@@ -174,7 +188,8 @@ class Simulation:
                     #send update to GraphProblem
                     self.instance.updateGraph(actions)
                     filename = "../graphPlots1/"+str(system)+"_"+str(self.numIterations)+".png"
-                    self.instance.drawGraph(filename)
+                    if self.numIterations == 0:
+                        self.instance.drawGraph(filename)
                     
                     #increment num of iterations
                     self.numIterations = self.numIterations + 1
@@ -302,10 +317,10 @@ if __name__ == '__main__':
     systems.append(mip)
     systems.append(mostChangeInt)
     systems.append(latestSys)                  
-    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = 150, actionLimit = 3, queryLimit = 3, weightInc = 1.0, setting = "changes")
+    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = 300, actionLimit = 3, queryLimit = 3, weightInc = 1.0, setting = "changes")
     systemsBeforeRun = copy.deepcopy(systems)
-    filename= '../results/'+graphName+"200iter_colored_changes_minAction0__queryLimit3_actionLimit3_agents"+str(numAgents)+"_overlap2.csv"
-    for i in range(1):            
+    filename= '../results/'+graphName+"300iter_notcolored_changes_minAction0__queryLimit3_actionLimit3_agents"+str(numAgents)+"_5.csv"
+    for i in range(10):            
         sim.runSimulation(filename,graphName, run = i)
         sim.resetSystems(systemsBeforeRun)  
                     

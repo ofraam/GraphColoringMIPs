@@ -26,7 +26,7 @@ class Agent:
         self.reset = reset #controls agents' "memory" 
         self.graphState = {}; #will hold current known numbers for 'conflicts' 'notConflicts' and 'unknown'
         self.countNumConflicts()
-        
+        self.nodesToChange = [] #will hold the nodes chosen for the round
         
     #count initial number of conflicts
     def countNumConflicts(self):
@@ -75,12 +75,40 @@ class Agent:
             
         self.countNumConflicts() #update conflict counts
         return 
+    '''
+    chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more nodes that are on a path (without repeating any node)
+    '''
+    def chooseNodesByDistribution(self):
+        self.nodesToChange = [] #reset from previous turns 
+        #choose first node based on distribution
+        rand = random.random()
+        cumProb = 0.0
+        currIndex = 0
+        currNode = self.controlledNodes[currIndex]
+        cumProb = cumProb+currNode[1]
+        while rand>cumProb:
+            currIndex = currIndex+1
+            currNode = self.controlledNodes[currIndex]
+            cumProb = cumProb+currNode[1]
+        chosenNode = copy.deepcopy(currNode[0])
+        currNode = chosenNode
+        self.nodesToChange.append(chosenNode)
+        #get remaining nodes from neighbors
+        for i in range(self.actionLimit-1): #TODO: consider randomizing number of nodes chosen; consider prioritizing just neighbors of first node
+            newNode = random.sample(nx.neighbors(self.knownGraph, currNode),1)
+            while ((len(newNode)==0) & (newNode not in self.nodesToChange)):
+                newNode = random.sample(nx.neighbors(self.knownGraph, currNode),1)
+            self.nodesToChange.append(newNode[0])
+            currNode = newNode[0]
+        
+        return self.nodesToChange
+            
     
     #chooses the color changes made by the agent.
     #limit is the maximum number of nodes that the agent is allowed to change in one round
     def chooseActions(self, revision, minActions = 0):
-        self.lastRevision = revision
         
+        self.lastRevision = revision
         initialSolution = {}
         initialSolution['actionSet'] = []
         initialSolution['conflicts'] = 1000000
@@ -91,15 +119,58 @@ class Agent:
         initialBestSolution['actionSet'] = []
         initialBestSolution['conflicts'] = 1000000
         initialBestSolution['unknown'] = 0
-        initialBestSolution['notConflicts'] = 0
+        initialBestSolution['notConflicts'] = 0        
         
-        bestSolution = self.chooseActionsRecur(initialSolution,0,initialBestSolution, minActions)
-        
-        #update belief (agent just changed the node so it knows its color
-        self.updateBelief(bestSolution['actionSet'])
+        if len(self.nodesToChange)>0: #need to choose colors for *given* nodes
+            bestSolution = self.chooseActionsRecurNodeSetGiven(initialSolution,0,initialBestSolution, minActions)
+        else: #choose best actions given knowledge
+            bestSolution = self.chooseActionsRecur(initialSolution,0,initialBestSolution, minActions)
+            
+            #update belief (agent just changed the node so it knows its color
+            self.updateBelief(bestSolution['actionSet'])
         
         #return chosen solution
         return bestSolution['actionSet'];
+    
+
+    
+    def chooseActionsRecurNodeSetGiven(self, currSolution, nodeCounter, bestSolution, minActions):
+        #TODO: add caching of partial action sets as to not recompute stuff? prune solutions that won't have enough actions? (minActions)
+        #stop condition - when we reached the limit of actions permitted, or when reached the last node we can change
+        if nodeCounter == len(self.nodesToChange):
+            if len(currSolution['actionSet'])>=minActions:
+                if currSolution['conflicts'] < bestSolution['conflicts']: 
+    #                print 'oldBest: '+str(bestSolution)
+                    bestSolution=currSolution
+    #                print 'newBest: '+str(bestSolution)
+                #break ties in favor of more known non-conflicts (otherwise might bias towards doing nothing)   
+                elif currSolution['conflicts'] == bestSolution['conflicts']:
+                    if currSolution['notConflicts'] > bestSolution['notConflicts']:
+                        bestSolution=currSolution
+            return bestSolution
+        else:
+            #call function with all possible options for next node (not change, change to each of the colors that differ from the current color)
+            for color in self.colors: #change current node and recall function with each option
+#                print 'node counter = '+str(nodeCounter)+" color = "+str(color)
+                newActionSet = copy.deepcopy(currSolution['actionSet'])
+                newActionSet.append((self.nodesToChange[nodeCounter],color))
+                newGraphState = self.computeNumConflicts(newActionSet)
+
+                if newGraphState['conflicts']>bestSolution['conflicts']:
+#                        print 'pruned: '+str(newActionSet)
+#                        print 'best solution = '+str(bestSolution)
+#                        print 'newGraphState = '+str(newGraphState)
+                    continue;
+
+                else:
+                    newSolution = {}
+                    newSolution['actionSet'] = newActionSet
+                    newSolution['conflicts'] = newGraphState['conflicts']
+                    newSolution['notConflicts'] = newGraphState['notConflicts']
+                    newSolution['unknown'] = newGraphState['unknown']
+                    bestSolution = self.chooseActionsRecurNodeSetGiven(newSolution,nodeCounter+1,bestSolution,minActions) #call function to check this action set                  
+                        
+        return bestSolution;    
     
     def chooseActionsRecur(self, currSolution, nodeCounter, bestSolution, minActions):
         #TODO: add caching of partial action sets as to not recompute stuff? prune solutions that won't have enough actions? (minActions)

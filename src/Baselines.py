@@ -28,7 +28,7 @@ class RandomSystem:
                     self.nodes[rev].append(act.ao)            
             
         
-    def query(self, agent, infoLimit, startRev = 0):
+    def query(self, agent, infoLimit, startRev = 0, node = None):
         if self.setting == "all":
             nodesToShare = random.sample(self.nodes,min(infoLimit,len(self.nodes)))
         else:
@@ -57,7 +57,7 @@ class MostChangedSystem:
                 self.nodeChangeCounts[act.ao]=1
                 
     
-    def query(self, agent, infoLimit):
+    def query(self, agent, infoLimit, node = None):
         sorted_dict = sorted(self.nodeChangeCounts.items(), key=operator.itemgetter(1), reverse = True)
         rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
         nodesToShare = rankedNodes[:infoLimit]
@@ -99,7 +99,7 @@ class MostChangedInIntervalSystem:
             self.nodeChangeCount[node] = len(timeList)                    
 
             
-    def query(self, agent, infoLimit, startRev = 0):
+    def query(self, agent, infoLimit, startRev = 0, node = None):
         if startRev == 0:
             sorted_dict = sorted(self.nodeChangeCount.items(), key=operator.itemgetter(1), reverse = True)
             rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
@@ -126,7 +126,7 @@ class LatestChangedSystem:
         for act in session.actions:
             self.nodeChangetimes[act.ao] = session.time
                 
-    def query(self, agent, infoLimit, startRev = 0):
+    def query(self, agent, infoLimit, startRev = 0, node = None):
         sorted_dict = sorted(self.nodeChangetimes.items(), key=operator.itemgetter(1), reverse = True)
         rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
         nodesToShare = rankedNodes[:infoLimit]
