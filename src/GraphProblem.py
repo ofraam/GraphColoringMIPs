@@ -21,8 +21,8 @@ class GraphProblem:
         self.drawn = False
         self.pos = {}
 
-        for node,data in self.graph.nodes(data=True): #initialize all colors to -1 (color not set yet)
-            data['color'] = -1
+#        for node,data in self.graph.nodes(data=True): #initialize all colors to -1 (color not set yet)
+#            data['color'] = -1
         
     def updateGraph(self, changes):
         for node,col in changes:

@@ -7,7 +7,7 @@ import networkx as nx
 import math
 
 class Mip:
-    def __init__(self, alpha = 0.3, beta = 0.5, gamma = 0.2, similarityMetric = "simple"):
+    def __init__(self, alpha = 0.0, beta = 1.5, gamma = 0.0, similarityMetric = "simple"):
         self.mip = nx.Graph()
         self.users = {}
         self.objects  = {}

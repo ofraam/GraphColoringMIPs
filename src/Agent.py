@@ -8,6 +8,7 @@ import math
 import copy
 import random
 import matplotlib.pyplot as plt
+from random import shuffle
 
 class Agent:
     def __init__(self, id, subgraph, knownGraph, colors, actionLimit, reset):
@@ -119,6 +120,7 @@ class Agent:
         else:
             #call function with all possible options for next node (not change, change to each of the colors that differ from the current color)
             for color in self.colors: #change current node and recall function with each option
+#                print 'node counter = '+str(nodeCounter)+" color = "+str(color)
                 if color != self.knownGraph.node[self.controlledNodes[nodeCounter]]['color']: #don't try the same color, that is equivalent to no action so should not "waste" real action on that
                     newActionSet = copy.deepcopy(currSolution['actionSet'])
                     newActionSet.append((self.controlledNodes[nodeCounter],color))
@@ -221,6 +223,14 @@ def createKnownGraph(graph, knownNodes):
     return knownGraph
 '-----------------test util functions end--------------------'
 if __name__ == '__main__':
+    
+    t = ['a','b','c']
+    for tt in t:
+        print tt
+        shuffle(t)
+        
+    a = 1/0
+    
     l = {}
     if isinstance(l, dict):
         print 'yay'

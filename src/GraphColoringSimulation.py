@@ -52,7 +52,9 @@ class Simulation:
         self.agents = []        
         #assign nodes to agents
         agentAssignments = self.assignAgents()
-        
+#        agentAssignments = {0: [2, 5, 6, 7, 8, 9, 10, 11, 14, 16, 19, 21, 22, 25, 27, 29], 1: [0, 1, 3, 4, 5, 6, 8, 11, 14, 15, 20, 22, 23, 24, 26, 29], 2: [1, 3, 8, 9, 10, 12, 13, 15, 17, 18, 19, 22, 24, 28]}
+#        agentAssignments = {0: [0, 1, 3, 5, 6, 7, 16, 18, 19, 20, 22, 23, 25, 26, 28, 29, 33, 36, 38, 39, 41, 43, 45, 46, 47], 1: [7, 9, 10, 11, 12, 13, 15, 16, 20, 21, 22, 24, 27, 28, 31, 32, 33, 34, 35, 37, 38, 39, 40, 41, 43, 44, 45, 46, 49], 2: [1, 2, 4, 7, 8, 11, 13, 14, 15, 17, 23, 24, 26, 28, 30, 32, 35, 36, 38, 42, 48]}
+
 #        #TODO: revert after testing
 #        agentAssignments = {}
 #        agentAssignments[0] = [0,4,5,6,8]
@@ -63,7 +65,9 @@ class Simulation:
 
             
         return
-        
+    def resetSystems(self, newSystems):
+        self.systems = newSystems
+            
     def assignAgents(self):
         agentAssignments = {}
         agentIds = []
@@ -80,7 +84,7 @@ class Simulation:
         
         return agentAssignments
     
-    def runSimulation(self, outputFilename, graphName):
+    def runSimulation(self, outputFilename, graphName, run = 0):
         #store results
         results = []
         #save initial state to revert for each system
@@ -106,7 +110,7 @@ class Simulation:
                         info[node] = self.instance.getColor(node)
                     agent.updateBelief(info) #update agents knowledge
 
-                    actions = agent.chooseActions(self.numIterations,minActions = 0) #query agent for actions
+                    actions = agent.chooseActions(self.numIterations,minActions = 3) #query agent for actions
 #                    print actions
                     #send update to system
                     actionObjs = []
@@ -126,12 +130,12 @@ class Simulation:
                     res['unknown'] = state['unknown']
                     res['notConflicts'] = state['notConflicts']
                     res['percentColored'] = self.instance.getPercentColored()
-                    
+                    res['run'] = run
                     results.append(res)
                     #send update to GraphProblem
                     self.instance.updateGraph(actions)
-                    filename = "../graphPlots1/"+str(system)+"_"+str(self.numIterations)
-                    self.instance.drawGraph(filename)
+#                    filename = "../graphPlots1/"+str(system)+"_"+str(self.numIterations)
+#                    self.instance.drawGraph(filename)
                     
                     #increment num of iterations
                     self.numIterations = self.numIterations + 1
@@ -147,10 +151,11 @@ class Simulation:
             
         #save results to file
         with open(outputFilename, 'ab') as csvfile:
-            fieldnames = ['graphName', 'algorithm', 'iteration', 'conflicts','unknown','notConflicts','percentColored']
+            fieldnames = ['graphName', 'algorithm', 'iteration', 'conflicts','unknown','notConflicts','percentColored','run']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
-            writer.writeheader()
+            if run == 0:
+                writer.writeheader()
             for res in results:
                 writer.writerow(res)
         
@@ -200,7 +205,10 @@ def runGraph9nodes():
     sim = Simulation(g, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "changes")
     sim.runSimulation(filename,graphName)      
     
-    
+def frange(start,stop, step=1.0):
+    while start < stop:
+        yield start
+        start +=step    
     
 if __name__ == '__main__':
 #    runGraph9nodes()
@@ -237,12 +245,43 @@ if __name__ == '__main__':
 #    systems.append(mip)
 #    systems.append(mostChangeInt)
 #    systems.append(latestSys)
-#            
+#   
+    numNodes = 20
+    numAgents = 2
+    p = 0.1
+    
+    for numNodes in range(20,51,5):
+        for p in frange(0.05,0.3,0.05):
+            graph = nx.fast_gnp_random_graph(numNodes,p)
+            graphName = 'random_'+str(numNodes)+"_"+str(p)
+            for numAgents in range(2,6):                
+                systems = []
+                randSys = RandomSystem(setting = "changes")
+                mostChanged = MostChangedInIntervalSystem(200) #essentially all revisions...
+                mostChangeInt = MostChangedInIntervalSystem(5)
+                latestSys = LatestChangedSystem()
+                systems.append(randSys)
+                systems.append(mostChanged)
+                mip = Mip()
+                systems.append(mip)
+                systems.append(mostChangeInt)
+                systems.append(latestSys)                  
+                sim = Simulation(graph, numAgents, 3, systems, overlap = 2, maxIterations = 150, actionLimit = 5, queryLimit = 5, weightInc = 1.0, setting = "changes")
+                systemsBeforeRun = copy.deepcopy(systems)
+                filename= '../results/'+graphName+"onlyBetaMIP_200iter_colored_changes_minAction3__queryLimit5_actionLimit5_agents"+str(numAgents)+"_overlap2.csv"
+                for i in range(5):            
+                    sim.runSimulation(filename,graphName, run = i)
+                    sim.resetSystems(systemsBeforeRun)    
+
+#    graph = nx.fast_gnp_random_graph(20, 0.6)
+    print 'done'
+
+    a = 1/0         
     graph = nx.fast_gnp_random_graph(30, 0.1)
 #    graph = nx.watts_strogatz_graph(20, 5, 0.7)
     graphName = 'random_30_01'
-    filename= '../results/'+graphName+"test9_350iter_notcolored_changes_minAction0__queryLimit5_actionLimit5_agents5_overlap2.csv"
-    for i in range(10):     
+    filename= '../results/'+graphName+"onlyBetaMIP_150iter_colored_changes_minAction0__queryLimit5_actionLimit3_agents3_overlap2.csv"
+    for i in range(5):     
         systems = []
         randSys = RandomSystem(setting = "changes")
         mostChanged = MostChangedInIntervalSystem(200) #essentially all revisions...
@@ -255,12 +294,12 @@ if __name__ == '__main__':
 #        systems.append(mostChangeInt)
 #        systems.append(latestSys)      
         graphName = graphName+"_"+str(i)
-        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 350, actionLimit = 5, queryLimit = 5, weightInc = 1.0, setting = "changes")
-        sim.runSimulation(filename,graphName)    
+        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 150, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "changes")
+        sim.runSimulation(filename,graphName, run = i)    
 
 #    graph = nx.fast_gnp_random_graph(20, 0.6)
     print 'done'
-    a = 1/0
+
  
 #    return
 
