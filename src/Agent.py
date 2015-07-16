@@ -11,13 +11,14 @@ import matplotlib.pyplot as plt
 from random import shuffle
 
 class Agent:
-    def __init__(self, id, subgraph, knownGraph, colors, actionLimit, reset):
+    def __init__(self, id, subgraph, knownGraph, colors, actionLimit, reset, seed = 10):
         self.id = id
         self.controlledNodes = subgraph
         self.knownGraph = knownGraph
         self.actionLimit = actionLimit #number of change color actions allowed per round
         self.colors = colors #possible colors
         self.lastRevision = -1 
+        random.seed(seed)
         #the graph sent by simulation has the colors, need to remove them for each agent
         for node, data in self.knownGraph.nodes(data = True):
             data['color']= -1 #for testing, might need to change (start with knowing some colors)
@@ -79,29 +80,33 @@ class Agent:
     chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more nodes that are on a path (without repeating any node)
     '''
     def chooseNodesByDistribution(self):
-        self.nodesToChange = [] #reset from previous turns 
-        #choose first node based on distribution
-        rand = random.random()
-        cumProb = 0.0
-        currIndex = 0
-        currNode = self.controlledNodes[currIndex]
-        cumProb = cumProb+currNode[1]
-        while rand>cumProb:
-            currIndex = currIndex+1
+        try:
+            self.nodesToChange = [] #reset from previous turns 
+            #choose first node based on distribution
+            
+            rand = random.random()
+            cumProb = 0.0
+            currIndex = 0
             currNode = self.controlledNodes[currIndex]
             cumProb = cumProb+currNode[1]
-        chosenNode = copy.deepcopy(currNode[0])
-        currNode = chosenNode
-        self.nodesToChange.append(chosenNode)
-        #get remaining nodes from neighbors
-        for i in range(self.actionLimit-1): #TODO: consider randomizing number of nodes chosen; consider prioritizing just neighbors of first node
-            newNode = random.sample(nx.neighbors(self.knownGraph, currNode),1)
-            while ((len(newNode)==0) & (newNode not in self.nodesToChange)):
+            while rand>cumProb:
+                currIndex = currIndex+1
+                currNode = self.controlledNodes[currIndex]
+                cumProb = cumProb+currNode[1]
+            chosenNode = copy.deepcopy(currNode[0])
+            currNode = chosenNode
+            self.nodesToChange.append(chosenNode)
+            #get remaining nodes from neighbors
+            for i in range(self.actionLimit-1): #TODO: consider randomizing number of nodes chosen; consider prioritizing just neighbors of first node
                 newNode = random.sample(nx.neighbors(self.knownGraph, currNode),1)
-            self.nodesToChange.append(newNode[0])
-            currNode = newNode[0]
-        
-        return self.nodesToChange
+                while ((len(newNode)==0) & (newNode not in self.nodesToChange)):
+                    newNode = random.sample(nx.neighbors(self.knownGraph, currNode),1)
+                self.nodesToChange.append(newNode[0])
+                currNode = newNode[0]
+            
+            return self.nodesToChange
+        except:
+            return self.chooseNodesByDistribution()
             
     
     #chooses the color changes made by the agent.
@@ -127,7 +132,7 @@ class Agent:
             bestSolution = self.chooseActionsRecur(initialSolution,0,initialBestSolution, minActions)
             
             #update belief (agent just changed the node so it knows its color
-            self.updateBelief(bestSolution['actionSet'])
+        self.updateBelief(bestSolution['actionSet'])
         
         #return chosen solution
         return bestSolution['actionSet'];

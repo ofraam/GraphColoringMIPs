@@ -144,8 +144,9 @@ class Simulation:
         for system in self.systems:
             initialProblem = copy.deepcopy(self.instance)
             self.agents = [] #reset agents
+            seed = np.random.randint(2)
             for agent,nodes in self.agentAssignments.iteritems():
-                newAgent = Agent(agent,nodes,copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False)
+                newAgent = Agent(agent,nodes,copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed)
                 self.agents.append(newAgent)            
             print 'starting to run algorithm: '+str(system)
             while ((self.solved == False) & (self.numIterations<self.maxIterations)): 
@@ -156,6 +157,7 @@ class Simulation:
                     if self.setting == "all":
                         nodesToShare = system.query(agent.id, self.queryLimit, nodesToChange[0]) #get nodes info to share with agent. nodesToShare is list of nodes
                     else: #only ranking changes, need to send first rev to consider
+#                        nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0])
                         nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0])
                     info = {} #dict holding nodes and their colors (to share with agent)
                     for node in nodesToShare:
@@ -302,25 +304,29 @@ if __name__ == '__main__':
 #   
 
     nodesPerCluster = 8
-    pWithin = 0.35
+    pWithin = 0.3
     pBetween = 0.1
     graphName = 'clustered_'+str(nodesPerCluster)+"_"+str(pWithin)+"_"+str(pBetween)
-    numAgents = 3
+    numAgents = 5
     systems = []
     randSys = RandomSystem(setting = "changes")
-    mostChanged = MostChangedInIntervalSystem(200) #essentially all revisions...
+    mostChanged = MostChangedInIntervalSystem(500) #essentially all revisions...
     mostChangeInt = MostChangedInIntervalSystem(5)
     latestSys = LatestChangedSystem()
+    mip = Mip()
+    
     systems.append(randSys)
     systems.append(mostChanged)
-    mip = Mip()
-    systems.append(mip)
+    
+    
     systems.append(mostChangeInt)
-    systems.append(latestSys)                  
-    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = 300, actionLimit = 3, queryLimit = 3, weightInc = 1.0, setting = "changes")
+    systems.append(latestSys)  
+    systems.append(mip)                
+    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = 500, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "changes")
     systemsBeforeRun = copy.deepcopy(systems)
-    filename= '../results/'+graphName+"300iter_notcolored_changes_minAction0__queryLimit3_actionLimit3_agents"+str(numAgents)+"_5.csv"
-    for i in range(10):            
+    filename= '../results/'+graphName+"500iter_colored_changes_minAction0__queryLimit5_actionLimit3_agents"+str(numAgents)+".csv"
+    for i in range(20):  
+        systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
         sim.runSimulation(filename,graphName, run = i)
         sim.resetSystems(systemsBeforeRun)  
                     
