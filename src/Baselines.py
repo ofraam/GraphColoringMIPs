@@ -4,6 +4,7 @@ Created on Jul 1, 2015
 @author: Ofra
 '''
 import random
+import numpy as np
 import operator 
 from Utils import Session
 from Utils import Action
@@ -29,15 +30,18 @@ class RandomSystem:
             
         
     def query(self, agent, infoLimit, startRev = 0, node = None):
+        nodesToShare = []
         if self.setting == "all":
-            nodesToShare = random.sample(self.nodes,min(infoLimit,len(self.nodes)))
+            if len(self.nodes)>0:
+                nodesToShare = np.random.choice(self.nodes,size = min(infoLimit,len(self.nodes)), replace = False)
+#            nodesToShare = random.sample(self.nodes,min(infoLimit,len(self.nodes)))
         else:
             relevantNodes = []
             for i in range(startRev,len(self.nodes)):
                 for node in self.nodes[i]:
                     if node not in relevantNodes:
                         relevantNodes.append(node)
-            nodesToShare = random.sample(relevantNodes,min(infoLimit,len(relevantNodes)))
+            nodesToShare = np.random.choice(relevantNodes,size = min(infoLimit,len(relevantNodes)), replace = False)
         return nodesToShare
     
     def __str__(self):

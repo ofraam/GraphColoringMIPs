@@ -76,37 +76,83 @@ class Agent:
             
         self.countNumConflicts() #update conflict counts
         return 
+    
+    def checkRep(self):
+        for i in range(self.nodesToChange):
+            for j in range(i+1,self.nodesToChange):
+                if i == j:
+                    print 'problem'
+        return 1
     '''
     chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more nodes that are on a path (without repeating any node)
     '''
     def chooseNodesByDistribution(self):
-        try:
-            self.nodesToChange = [] #reset from previous turns 
-            #choose first node based on distribution
-            
-            rand = random.random()
-            cumProb = 0.0
-            currIndex = 0
+#        try:
+        self.nodesToChange = [] #reset from previous turns 
+        #choose first node based on distribution
+        
+        rand = random.random()
+        cumProb = 0.0
+        currIndex = 0
+        currNode = self.controlledNodes[currIndex]
+        cumProb = cumProb+currNode[1]
+        while rand>cumProb:
+            currIndex = currIndex+1
             currNode = self.controlledNodes[currIndex]
             cumProb = cumProb+currNode[1]
-            while rand>cumProb:
-                currIndex = currIndex+1
-                currNode = self.controlledNodes[currIndex]
-                cumProb = cumProb+currNode[1]
-            chosenNode = copy.deepcopy(currNode[0])
-            currNode = chosenNode
-            self.nodesToChange.append(chosenNode)
-            #get remaining nodes from neighbors
-            for i in range(self.actionLimit-1): #TODO: consider randomizing number of nodes chosen; consider prioritizing just neighbors of first node
+        chosenNode = copy.deepcopy(currNode[0])
+        currNode = chosenNode
+        self.nodesToChange.append(chosenNode)
+        #get remaining nodes from neighbors
+        neighbors = nx.neighbors(self.knownGraph, currNode)
+        additionalNodes = random.sample(neighbors,min(self.actionLimit-1,len(neighbors)))
+        self.nodesToChange.extend(additionalNodes)
+        
+        if len(self.nodesToChange)<self.actionLimit: #need to get more nodes
+            neighborsNeighbors = []
+            for i in range(1,len(self.nodesToChange)):
+                neighborsNeighbors.extend(nx.neighbors(self.knownGraph, self.nodesToChange[i]))
+            moreNodes = random.sample(neighborsNeighbors,min(self.actionLimit-len(self.nodesToChange),len(neighborsNeighbors)))
+            self.nodesToChange.extend(moreNodes)
+        
+                              
+       
+        return self.nodesToChange
+    
+    def chooseNodesByDistributionOld(self):
+#        try:
+        self.nodesToChange = [] #reset from previous turns 
+        #choose first node based on distribution
+        
+        rand = random.random()
+        cumProb = 0.0
+        currIndex = 0
+        currNode = self.controlledNodes[currIndex]
+        cumProb = cumProb+currNode[1]
+        while rand>cumProb:
+            currIndex = currIndex+1
+            currNode = self.controlledNodes[currIndex]
+            cumProb = cumProb+currNode[1]
+        chosenNode = copy.deepcopy(currNode[0])
+        currNode = chosenNode
+        self.nodesToChange.append(chosenNode)
+        #get remaining nodes from neighbors
+        for i in range(self.actionLimit-1): #TODO: consider randomizing number of nodes chosen; consider prioritizing just neighbors of first node
+            newNode = random.sample(nx.neighbors(self.knownGraph, currNode),1)
+            while ((len(newNode)==0)):
                 newNode = random.sample(nx.neighbors(self.knownGraph, currNode),1)
-                while ((len(newNode)==0) & (newNode not in self.nodesToChange)):
-                    newNode = random.sample(nx.neighbors(self.knownGraph, currNode),1)
-                self.nodesToChange.append(newNode[0])
-                currNode = newNode[0]
-            
-            return self.nodesToChange
-        except:
-            return self.chooseNodesByDistribution()
+                if newNode in self.nodesToChange:
+                    print 'why?'
+            self.nodesToChange.append(newNode[0])
+            currNode = newNode[0]
+        for i in range(len(self.nodesToChange)):
+            for j in range(i+1,len(self.nodesToChange)):
+                if self.nodesToChange[i] == self.nodesToChange[j]:
+                    print 'problem'
+       
+        return self.nodesToChange    
+#        except:
+#            return self.chooseNodesByDistribution()
             
     
     #chooses the color changes made by the agent.

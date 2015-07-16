@@ -5,6 +5,7 @@ Created on Jun 7, 2015
 '''
 import networkx as nx
 import math
+import matplotlib.pyplot as plt
 
 class Mip:
     def __init__(self, alpha = 0.2, beta = 0.6, gamma = 0.2, similarityMetric = "simple"):
@@ -22,6 +23,7 @@ class Mip:
         self.gamma = gamma
         self.similarityMetric = similarityMetric
         self.nodeIDsToObjectsIds = {}
+        self.nodeIDsToUsersIds = {}
     
     def update(self, session): #to fit System API
         self.updateMIP(session)
@@ -52,6 +54,7 @@ class Mip:
                     
     def updateMIP(self, session):
         if self.iteration>30:
+#            self.drawMIP('../mipPlots/mip30.png')
             a = 1
         #initialize 'updated' attribute of all edges to false
         for edge in self.mip.edges_iter(data=True):
@@ -117,6 +120,7 @@ class Mip:
             attr = {}
             attr['node_type']='user'
             self.mip.add_node(self.lastID, attr)
+            self.nodeIDsToUsersIds[self.lastID]=user_name
 #            self.nodeIdsToUsers[self.lastID]=user_name
         return self.users[user_name]
             
@@ -405,7 +409,7 @@ class Mip:
             focus_ao = self.objects[focus_obj]
             for ao in aoList:
                 changeExtentSinceLastKnown = self.changeExtent(user, ao)
-                if changeExtentSinceLastKnown != 0: #consider object only if it has changed at least once since agent last known about it            
+                if ((changeExtentSinceLastKnown != 0) & (ao!=focus_ao)): #consider object only if it has changed at least once since agent last known about it            
                     doi = self.DegreeOfInterestMIPsFocus(user, ao, focus_ao)  
                     
                     if len(notificationsList)==0:
@@ -496,7 +500,51 @@ class Mip:
     MIPs reasoning functions end
     -----------------------------------------------------------------------------
     '''
+    
+    def createNodeLabels(self):
+        labels = {}
+        for node,data in self.mip.nodes(data = True):
+            if data['node_type'] == 'user':
+                label = 'u'+str(self.nodeIDsToUsersIds[node])
+            else:
+                label = 'o'+str(self.nodeIDsToObjectsIds[node])
+            labels[node] = label
+        return labels
+    
+    def createEdgeLabels(self):
+        labels = {}
+        for n1,n2,data in self.mip.edges(data=True):
+            edge = (n1,n2)
+            labels[edge] = data['weight']
+        return labels
+            
+    def drawMIP(self, filename):
+        
+        G = self.mip
+        
+        pos = nx.spring_layout(G)
+        self.pos = pos
+        self.drawn = True
+        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToObjectsIds.keys(),node_size=300,font_size = 9, node_color='blue')
+        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToUsersIds.keys(),node_size=300,font_size = 9,node_color='black')
 
+        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
+        
+        nodeLabels = self.createNodeLabels()
+        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
+        
+        edgeLabels = self.createEdgeLabels()
+        nx.draw_networkx_edge_labels(G, pos, edgeLabels)
+    #    print 'clustering'
+    #    print(nx.average_clustering(mip.mip, weight = "weight"))
+    #    #    G=nx.dodecahedral_graph()
+    ##    nx.draw(mip.mip)
+
+        plt.draw()
+        plt.savefig(filename)
+        plt.clf()
+        plt.close()
+        
 
 if __name__ == '__main__':
     pass
