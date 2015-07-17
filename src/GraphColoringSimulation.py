@@ -325,18 +325,18 @@ if __name__ == '__main__':
     mip2 = Mip(alpha = 0.3, beta = 0.6, gamma = 0.1)
     mip = Mip()
     
-    systems.append(randSys)
-    systems.append(mostChanged)
-    
-    
-    systems.append(mostChangeInt)
-    systems.append(latestSys)  
+#    systems.append(randSys)
+#    systems.append(mostChanged)
+#    
+#    
+#    systems.append(mostChangeInt)
+#    systems.append(latestSys)  
     systems.append(mip)   
 #    systems.append(mip1) 
 #    systems.append(mip2)             
     sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = 500, actionLimit = 3, queryLimit = 3, weightInc = 1.0, setting = "changes")
     systemsBeforeRun = copy.deepcopy(systems)
-    filename= '../results/relevnace3_learnTime0_'+graphName+"500iter_colored_changes_queryLimit3_actionLimit3_agents"+str(numAgents)+".csv"
+    filename= '../results/drawMIP_learnTime0_'+graphName+"500iter_colored_changes_queryLimit3_actionLimit3_agents"+str(numAgents)+".csv"
     for i in range(20):  
         systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
         sim.runSimulation(filename,graphName, run = i, learnTime = 0)

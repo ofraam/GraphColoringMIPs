@@ -53,8 +53,9 @@ class Mip:
         return nodes
                     
     def updateMIP(self, session):
-        if self.iteration>30:
-#            self.drawMIP('../mipPlots/mip30.png')
+        if self.iteration>100:
+            self.drawMIP('../mipPlots/mip100.png')
+            self.drawMipObjects('../mipPlots/mipObjs100.png')
             a = 1
         #initialize 'updated' attribute of all edges to false
         for edge in self.mip.edges_iter(data=True):
@@ -501,21 +502,28 @@ class Mip:
     -----------------------------------------------------------------------------
     '''
     
-    def createNodeLabels(self):
+    def createNodeLabels(self, nodeTypes = 'both'):
         labels = {}
         for node,data in self.mip.nodes(data = True):
             if data['node_type'] == 'user':
-                label = 'u'+str(self.nodeIDsToUsersIds[node])
+                if ((nodeTypes=='user') | (nodeTypes=='both')):
+                    label = 'u'+str(self.nodeIDsToUsersIds[node])
+                    labels[node] = label
             else:
-                label = 'o'+str(self.nodeIDsToObjectsIds[node])
-            labels[node] = label
+                if ((nodeTypes=='object') | (nodeTypes=='both')):
+                    label = 'o'+str(self.nodeIDsToObjectsIds[node])
+                    labels[node] = label
         return labels
     
-    def createEdgeLabels(self):
+    def createEdgeLabels(self, nbunch = None):
         labels = {}
+        if nbunch is None:
+            nbunch = self.mip.nodes()
         for n1,n2,data in self.mip.edges(data=True):
-            edge = (n1,n2)
-            labels[edge] = data['weight']
+            if ((n1 in nbunch) & (n2 in nbunch)):
+                edge = (n1,n2)
+                if data['weight']>0:
+                    labels[edge] = data['weight']
         return labels
             
     def drawMIP(self, filename):
@@ -535,16 +543,58 @@ class Mip:
         
         edgeLabels = self.createEdgeLabels()
         nx.draw_networkx_edge_labels(G, pos, edgeLabels)
-    #    print 'clustering'
-    #    print(nx.average_clustering(mip.mip, weight = "weight"))
-    #    #    G=nx.dodecahedral_graph()
-    ##    nx.draw(mip.mip)
+
 
         plt.draw()
         plt.savefig(filename)
         plt.clf()
         plt.close()
         
+    def drawMipObjects(self, filename):
+        G = self.mip
+        
+        pos = nx.spring_layout(G)
+        self.pos = pos
+        self.drawn = True
+        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToObjectsIds.keys(),node_size=300,font_size = 9, node_color='blue')
 
+        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
+        
+        nodeLabels = self.createNodeLabels(nodeTypes = 'object')
+        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
+        
+        edgeLabels = self.createEdgeLabels(nodeLabels.keys())
+        nx.draw_networkx_edge_labels(G, pos, edgeLabels,font_size = 7)
+
+
+        plt.draw()
+        plt.savefig(filename)
+        plt.clf()
+        plt.close()  
+        
+    def drawMipForUser(self, filename, user):
+        G = self.mip
+        
+        pos = nx.spring_layout(G)
+        self.pos = pos
+        self.drawn = True
+        nodesToDraw = nx.neighbors(G, self.users[user])
+        nodesToDraw.append(self.users[user])
+        nx.draw_networkx_nodes(G,self.pos,nodelist=nodesToDraw,node_size=300,font_size = 9, node_color='blue')
+
+        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
+        
+        nodeLabels = self.createNodeLabels(nodeTypes = 'both')
+        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
+        
+        edgeLabels = self.createEdgeLabels(nodeLabels.keys())
+        nx.draw_networkx_edge_labels(G, pos, edgeLabels,font_size = 7)
+
+
+        plt.draw()
+        plt.savefig(filename)
+        plt.clf()
+        plt.close()          
+              
 if __name__ == '__main__':
     pass
