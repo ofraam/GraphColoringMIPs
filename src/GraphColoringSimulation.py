@@ -135,6 +135,34 @@ class Simulation:
                         
         return g
             
+    def relevanceMetric(self, actionNodes, sharedNodes):
+        relevanceCount = 0.0
+        for sharedNode in sharedNodes:
+            for actNode in actionNodes:
+                if sharedNode in nx.neighbors(self.graph, actNode):
+                    relevanceCount = relevanceCount + 1.0
+        opportunity= len(sharedNodes)*len(actionNodes)
+        if opportunity == 0:
+            return 0
+        else:
+            return relevanceCount/opportunity
+        
+    def relevanceMetricBinaryNodes(self, actionNodes, sharedNodes):
+        relevanceCount = 0.0
+        for sharedNode in sharedNodes:
+            for actNode in actionNodes:
+                if sharedNode in nx.neighbors(self.graph, actNode):
+                    relevanceCount = relevanceCount + 1.0
+                    break;
+        opportunity= len(sharedNodes)
+        if opportunity == 0:
+            return 0
+        else:
+            if relevanceCount/opportunity ==0.833333333:
+                print 'what'
+            return relevanceCount/opportunity        
+        
+    
     def runSimulation(self, outputFilename, graphName, run = 0, learnTime = -1):
         #store results
         results = []
@@ -169,6 +197,8 @@ class Simulation:
                                 nodesToShare = copy.deepcopy(sharedByRandSys[self.numIterations])
                         else:
                             nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0]) #assume random system is always first!
+                    relevance = self.relevanceMetric(nodesToChange, nodesToShare)
+                    relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
                     info = {} #dict holding nodes and their colors (to share with agent)
                     for node in nodesToShare:
                         info[node] = self.instance.getColor(node)
@@ -192,10 +222,13 @@ class Simulation:
                     res['iteration'] = self.numIterations
                     state = self.instance.getGraphState()
                     res['conflicts'] = state['conflicts']
+                    res['relevance'] = relevance
+                    res['relevanceBinary'] = relevanceBinary
                     res['unknown'] = state['unknown']
                     res['notConflicts'] = state['notConflicts']
                     res['percentColored'] = self.instance.getPercentColored()
                     res['run'] = run
+                    
                     results.append(res)
                     #send update to GraphProblem
                     self.instance.updateGraph(actions)
@@ -217,7 +250,7 @@ class Simulation:
             
         #save results to file
         with open(outputFilename, 'ab') as csvfile:
-            fieldnames = ['graphName', 'algorithm', 'iteration', 'conflicts','unknown','notConflicts','percentColored','run']
+            fieldnames = ['graphName', 'algorithm', 'iteration', 'conflicts','relevance','relevanceBinary','unknown','notConflicts','percentColored','run']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
             if run == 0:
@@ -277,9 +310,9 @@ def frange(start,stop, step=1.0):
         start +=step    
     
 if __name__ == '__main__':
-    nodesPerCluster = 12
-    pWithin = 0.3
-    pBetween = 0.1
+    nodesPerCluster = 8
+    pWithin = 0.25
+    pBetween = 0.08
     graphName = 'clustered_'+str(nodesPerCluster)+"_"+str(pWithin)+"_"+str(pBetween)
     numAgents = 3
     systems = []
@@ -287,6 +320,9 @@ if __name__ == '__main__':
     mostChanged = MostChangedInIntervalSystem(500) #essentially all revisions...
     mostChangeInt = MostChangedInIntervalSystem(5)
     latestSys = LatestChangedSystem()
+    
+    mip1 = Mip(alpha = 0.1, beta = 0.8, gamma = 0.1)
+    mip2 = Mip(alpha = 0.3, beta = 0.6, gamma = 0.1)
     mip = Mip()
     
     systems.append(randSys)
@@ -295,13 +331,15 @@ if __name__ == '__main__':
     
     systems.append(mostChangeInt)
     systems.append(latestSys)  
-    systems.append(mip)                
-    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = 500, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "changes")
+    systems.append(mip)   
+#    systems.append(mip1) 
+#    systems.append(mip2)             
+    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = 500, actionLimit = 3, queryLimit = 3, weightInc = 1.0, setting = "changes")
     systemsBeforeRun = copy.deepcopy(systems)
-    filename= '../results/learnTime30_'+graphName+"500iter_colored_changes_minAction0__queryLimit5_actionLimit3_agents"+str(numAgents)+".csv"
+    filename= '../results/relevnace3_learnTime0_'+graphName+"500iter_colored_changes_queryLimit3_actionLimit3_agents"+str(numAgents)+".csv"
     for i in range(20):  
         systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
-        sim.runSimulation(filename,graphName, run = i, learnTime = 50)
+        sim.runSimulation(filename,graphName, run = i, learnTime = 0)
         sim.resetSystems(systemsBeforeRun)  
                     
                         
