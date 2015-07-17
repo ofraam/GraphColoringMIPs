@@ -135,12 +135,13 @@ class Simulation:
                         
         return g
             
-    def runSimulation(self, outputFilename, graphName, run = 0):
+    def runSimulation(self, outputFilename, graphName, run = 0, learnTime = -1):
         #store results
         results = []
         #save initial state to revert for each system
         seed = np.random.randint(2)
-        #run each system       
+        #run each system  
+        sharedByRandSys = {} #for learning phase     
         for system in self.systems:
             initialProblem = copy.deepcopy(self.instance)
             self.agents = [] #reset agents
@@ -158,7 +159,16 @@ class Simulation:
                         nodesToShare = system.query(agent.id, self.queryLimit, nodesToChange[0]) #get nodes info to share with agent. nodesToShare is list of nodes
                     else: #only ranking changes, need to send first rev to consider
 #                        nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0])
-                        nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0])
+                        if self.numIterations<learnTime:
+                            if system == self.systems[0]:
+                                nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0])
+                                sharedByRandSys[self.numIterations] = copy.deepcopy(nodesToShare)
+                            else:
+                                if self.numIterations not in sharedByRandSys:
+                                    print 'woopsy'
+                                nodesToShare = copy.deepcopy(sharedByRandSys[self.numIterations])
+                        else:
+                            nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0]) #assume random system is always first!
                     info = {} #dict holding nodes and their colors (to share with agent)
                     for node in nodesToShare:
                         info[node] = self.instance.getColor(node)
@@ -259,7 +269,7 @@ def runGraph9nodes():
     filename = "../results/testingStuff6.csv"
     graphName = "9graph"
     sim = Simulation(g, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "changes")
-    sim.runSimulation(filename,graphName)      
+    sim.runSimulation(filename,graphName, learnTime = 30)      
     
 def frange(start,stop, step=1.0):
     while start < stop:
@@ -267,45 +277,9 @@ def frange(start,stop, step=1.0):
         start +=step    
     
 if __name__ == '__main__':
-#    runGraph9nodes()
-#    a = 1/0
-#    systems = []
-#    randSys = RandomSystem(setting = "changes")
-#    mostChanged = MostChangedInIntervalSystem(200) #essentially all revisions...
-#    mostChangeInt = MostChangedInIntervalSystem(5)
-#    latestSys = LatestChangedSystem()
-#    systems.append(randSys)
-#    systems.append(mostChanged)
-#    mip = Mip()
-#    systems.append(mip)
-#    systems.append(mostChangeInt)
-#    systems.append(latestSys)
-    
-#    graph = nx.fast_gnp_random_graph(20, 0.6)
-##    graph = nx.watts_strogatz_graph(20, 5, 0.7)
-#    graphName = 'random_20_06'
-#    filename= '../results/'+graphName+"__queryLimit3_agents3_overlap2.csv"
-#    for i in range(10):     
-#        graphName = graphName+"_"+str(i)
-#        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
-#        sim.runSimulation(filename,graphName)
-
-#    systems = []
-#    randSys = RandomSystem()
-#    mostChanged = MostChangedSystem()
-#    mostChangeInt = MostChangedInIntervalSystem(5)
-#    latestSys = LatestChangedSystem()
-#    systems.append(randSys)
-#    systems.append(mostChanged)
-#    mip = Mip()
-#    systems.append(mip)
-#    systems.append(mostChangeInt)
-#    systems.append(latestSys)
-#   
-
-    nodesPerCluster = 10
-    pWithin = 0.25
-    pBetween = 0.05
+    nodesPerCluster = 12
+    pWithin = 0.3
+    pBetween = 0.1
     graphName = 'clustered_'+str(nodesPerCluster)+"_"+str(pWithin)+"_"+str(pBetween)
     numAgents = 3
     systems = []
@@ -324,10 +298,10 @@ if __name__ == '__main__':
     systems.append(mip)                
     sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = 500, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "changes")
     systemsBeforeRun = copy.deepcopy(systems)
-    filename= '../results/4_'+graphName+"500iter_colored_changes_minAction0__queryLimit5_actionLimit3_agents"+str(numAgents)+".csv"
+    filename= '../results/learnTime30_'+graphName+"500iter_colored_changes_minAction0__queryLimit5_actionLimit3_agents"+str(numAgents)+".csv"
     for i in range(20):  
         systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
-        sim.runSimulation(filename,graphName, run = i)
+        sim.runSimulation(filename,graphName, run = i, learnTime = 50)
         sim.resetSystems(systemsBeforeRun)  
                     
                         
