@@ -35,7 +35,8 @@ class Mip:
 #            nodes = [i[0] for i in nodesToShare]
 #        else: #choosing only of changed objects
         if node is None:
-            rankedObjects = self.rankChangesForUser(user, startRev)
+#            rankedObjects = self.rankChangesForUser(user, startRev)
+            rankedObjects = self.rankChangesForUserLastKnown(user, startRev)
         else:
             rankedObjects = self.rankAllGivenUserFocus(user, node, startRev)
         if node is None:

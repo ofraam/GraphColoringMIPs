@@ -16,8 +16,7 @@ from Utils import Result
 from Utils import Session
 import csv
 import Baselines
-from Baselines import RandomSystem, MostChangedSystem,\
-    MostChangedInIntervalSystem, LatestChangedSystem
+from Baselines import RandomSystem, MostChangedSystem, MostChangedInIntervalSystem, LatestChangedSystem
 
 
 '''
@@ -185,18 +184,19 @@ class Simulation:
                     nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
                     if self.setting == "all":
                         nodesToShare = system.query(agent.id, self.queryLimit, nodesToChange[0]) #get nodes info to share with agent. nodesToShare is list of nodes
+#                        nodesToShare = system.query(agent.id, self.queryLimit)
                     else: #only ranking changes, need to send first rev to consider
 #                        nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0])
                         if self.numIterations<learnTime:
                             if system == self.systems[0]:
                                 nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0])
+#                                nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1)
                                 sharedByRandSys[self.numIterations] = copy.deepcopy(nodesToShare)
                             else:
-                                if self.numIterations not in sharedByRandSys:
-                                    print 'woopsy'
                                 nodesToShare = copy.deepcopy(sharedByRandSys[self.numIterations])
                         else:
                             nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0]) #assume random system is always first!
+#                            nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1)
                     relevance = self.relevanceMetric(nodesToChange, nodesToShare)
                     relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
                     info = {} #dict holding nodes and their colors (to share with agent)
@@ -314,7 +314,10 @@ if __name__ == '__main__':
     pWithin = 0.25
     pBetween = 0.08
     graphName = 'clustered_'+str(nodesPerCluster)+"_"+str(pWithin)+"_"+str(pBetween)
-    numAgents = 3
+    numAgents = 5
+    queryLimit = 3
+    actionLimit = 3
+    maxIterations = 300
     systems = []
     randSys = RandomSystem(setting = "all")
     mostChanged = MostChangedInIntervalSystem(500) #essentially all revisions...
@@ -325,19 +328,19 @@ if __name__ == '__main__':
     mip2 = Mip(alpha = 0.3, beta = 0.6, gamma = 0.1)
     mip = Mip()
     
-#    systems.append(randSys)
-#    systems.append(mostChanged)
-#    
-#    
-#    systems.append(mostChangeInt)
-#    systems.append(latestSys)  
+    systems.append(randSys)
+    systems.append(mostChanged)
+    
+    
+    systems.append(mostChangeInt)
+    systems.append(latestSys)  
     systems.append(mip)   
 #    systems.append(mip1) 
 #    systems.append(mip2)             
-    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = 500, actionLimit = 3, queryLimit = 3, weightInc = 1.0, setting = "changes")
+    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "changes")
     systemsBeforeRun = copy.deepcopy(systems)
-    filename= '../results/drawMIP_learnTime0_'+graphName+"500iter_colored_changes_queryLimit3_actionLimit3_agents"+str(numAgents)+".csv"
-    for i in range(20):  
+    filename= '../results/0802_NoFocus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
+    for i in range(10):  
         systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
         sim.runSimulation(filename,graphName, run = i, learnTime = 0)
         sim.resetSystems(systemsBeforeRun)  
