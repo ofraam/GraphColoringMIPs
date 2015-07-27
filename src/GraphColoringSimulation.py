@@ -277,6 +277,7 @@ class Simulation:
             self.instance = initialProblem
             self.numIterations = 0     
             print 'finished running algorithm: '+str(system)
+                   
             
         #save results to file
         with open(outputFilename, 'ab') as csvfile:
