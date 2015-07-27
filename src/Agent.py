@@ -154,7 +154,33 @@ class Agent:
 #        except:
 #            return self.chooseNodesByDistribution()
             
-    
+
+    #chooses the color changes made by the agent.
+    #limit is the maximum number of nodes that the agent is allowed to change in one round
+    #this version does not update the agent's belief (for simply querying)
+    def chooseActionsDonotApply(self, revision, minActions = 0):
+        
+        self.lastRevision = revision
+        initialSolution = {}
+        initialSolution['actionSet'] = []
+        initialSolution['conflicts'] = 1000000
+        initialSolution['unknown'] = 0
+        initialSolution['notConflicts'] = 0
+        
+        initialBestSolution = {}
+        initialBestSolution['actionSet'] = []
+        initialBestSolution['conflicts'] = 1000000
+        initialBestSolution['unknown'] = 0
+        initialBestSolution['notConflicts'] = 0        
+        
+        if len(self.nodesToChange)>0: #need to choose colors for *given* nodes
+            bestSolution = self.chooseActionsRecurNodeSetGiven(initialSolution,0,initialBestSolution, minActions)
+        else: #choose best actions given knowledge
+            bestSolution = self.chooseActionsRecur(initialSolution,0,initialBestSolution, minActions)
+                    
+        #return chosen solution
+        return bestSolution['actionSet'];
+        
     #chooses the color changes made by the agent.
     #limit is the maximum number of nodes that the agent is allowed to change in one round
     def chooseActions(self, revision, minActions = 0):

@@ -182,6 +182,11 @@ class Simulation:
                     if self.numIterations == 50:
                         a = 0
                     nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
+                    
+                    #check what agent would have done without new info
+                    actionsWithoutKnowledge = agent.chooseActionsDonotApply(self.numIterations,minActions = 0)
+                    
+                    #query system
                     if self.setting == "all":
                         nodesToShare = system.query(agent.id, self.queryLimit, nodesToChange[0]) #get nodes info to share with agent. nodesToShare is list of nodes
 #                        nodesToShare = system.query(agent.id, self.queryLimit)
@@ -206,6 +211,9 @@ class Simulation:
                     
                     
                     actions = agent.chooseActions(self.numIterations,minActions = 0) #query agent for actions
+                    
+                    
+                    
 #                    print actions
                     #send update to system
                     actionObjs = []
@@ -220,18 +228,40 @@ class Simulation:
                     res['graphName'] = graphName
                     res['algorithm'] = system
                     res['iteration'] = self.numIterations
+                    
+                    #compute effect metric
+                    diff = 0
+                    for act1 in actions:
+                            if act1 not in actionsWithoutKnowledge:
+                                diff = 1
+                                break
+                            
+                    #check constraints with and without sharing the info
+                    self.instance.updateGraph(actionsWithoutKnowledge)
+                    stateWithout = self.instance.getGraphState() #TODO: if not forcing agent to choose specific nodes, can't do this!
+                    
+                    #send real update to GraphProblem
+                    self.instance.updateGraph(actions)
+                    
                     state = self.instance.getGraphState()
-                    res['conflicts'] = state['conflicts']
+                    
+                    confDiff =  state['conflicts']-stateWithout['conflicts'] #positive is good!
+                        
                     res['relevance'] = relevance
-                    res['relevanceBinary'] = relevanceBinary
+                    res['relevanceBinary'] = relevanceBinary                   
+                    
+                    res['conflicts'] = state['conflicts']
                     res['unknown'] = state['unknown']
                     res['notConflicts'] = state['notConflicts']
+
+                    res['effect']=  diff                 
+                    res['confDiff']=confDiff
+                    
                     res['percentColored'] = self.instance.getPercentColored()
                     res['run'] = run
                     
                     results.append(res)
-                    #send update to GraphProblem
-                    self.instance.updateGraph(actions)
+                    
                     filename = "../graphPlots1/"+str(system)+"_"+str(self.numIterations)+".png"
                     if self.numIterations == 0:
                         self.instance.drawGraph(filename)
@@ -250,7 +280,7 @@ class Simulation:
             
         #save results to file
         with open(outputFilename, 'ab') as csvfile:
-            fieldnames = ['graphName', 'algorithm', 'iteration', 'conflicts','relevance','relevanceBinary','unknown','notConflicts','percentColored','run']
+            fieldnames = ['graphName', 'algorithm', 'iteration', 'relevance','relevanceBinary','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
             if run == 0:
@@ -339,7 +369,7 @@ if __name__ == '__main__':
 #    systems.append(mip2)             
     sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "changes")
     systemsBeforeRun = copy.deepcopy(systems)
-    filename= '../results/0802_NoFocus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
+    filename= '../results/testingEffectMetrics_NoFocus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
     for i in range(10):  
         systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
         sim.runSimulation(filename,graphName, run = i, learnTime = 0)
