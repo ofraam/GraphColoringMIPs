@@ -44,8 +44,24 @@ class RandomSystem:
             nodesToShare = np.random.choice(relevantNodes,size = min(infoLimit,len(relevantNodes)), replace = False)
         return nodesToShare
     
+    
+    def queryList(self, agent, infoLimit, startRev = 0, node = None):
+        nodesToShare = []
+        if self.setting == "all":
+            if len(self.nodes)>0:
+                nodesToShare = self.nodes.shuffle
+                 
+        else:
+            relevantNodes = []
+            for i in range(startRev,len(self.nodes)):
+                for node in self.nodes[i]:
+                    if node not in relevantNodes:
+                        relevantNodes.append(node)
+            nodesToShare = relevantNodes.shuffle()
+        return nodesToShare
+    
     def __str__(self):
-        return "Random"
+        return "Random"    
 
 #depricated       
 class MostChangedSystem:
@@ -66,6 +82,12 @@ class MostChangedSystem:
         rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
         nodesToShare = rankedNodes[:infoLimit]
         return nodesToShare 
+
+    def queryList(self, agent, infoLimit, node = None):
+        sorted_dict = sorted(self.nodeChangeCounts.items(), key=operator.itemgetter(1), reverse = True)
+        rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
+        nodesToShare = rankedNodes
+        return nodesToShare     
 
     def __str__(self):
         return "MostChanged"
@@ -117,7 +139,23 @@ class MostChangedInIntervalSystem:
             rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
             nodesToShare = rankedNodes[:infoLimit]            
             
-        return nodesToShare     
+        return nodesToShare  
+    
+    def queryList(self, agent, infoLimit, startRev = 0, node = None):
+        if startRev == 0:
+            sorted_dict = sorted(self.nodeChangeCount.items(), key=operator.itemgetter(1), reverse = True)
+            rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
+            nodesToShare = rankedNodes
+        else:
+            relevantNodeChangeCounts = {}
+            for node,changeTimes in self.nodeChangetimes.items():
+                if changeTimes[len(changeTimes)-1] >= startRev:
+                    relevantNodeChangeCounts[node] = self.nodeChangeCount[node]
+            sorted_dict = sorted(relevantNodeChangeCounts.items(), key=operator.itemgetter(1), reverse = True)
+            rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
+            nodesToShare = rankedNodes           
+            
+        return nodesToShare
     
     def __str__(self):
         return "MostChangedInterval ("+str(self.window)+")"    
@@ -134,7 +172,13 @@ class LatestChangedSystem:
         sorted_dict = sorted(self.nodeChangetimes.items(), key=operator.itemgetter(1), reverse = True)
         rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
         nodesToShare = rankedNodes[:infoLimit]
-        return nodesToShare          
+        return nodesToShare    
+
+    def queryList(self, agent, infoLimit, startRev = 0, node = None):
+        sorted_dict = sorted(self.nodeChangetimes.items(), key=operator.itemgetter(1), reverse = True)
+        rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
+        nodesToShare = rankedNodes
+        return nodesToShare            
 
     def __str__(self):
         return "RecentChanges"     

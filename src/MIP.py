@@ -29,11 +29,6 @@ class Mip:
         self.updateMIP(session)
         
     def query(self, user, infoLimit, startRev = 0, node = None): #to fit System API
-#        if startRev == 0: #choosing of all objects
-#            rankedObjects = self.rankObjectsForUser(user)
-#            nodesToShare = rankedObjects[:infoLimit]
-#            nodes = [i[0] for i in nodesToShare]
-#        else: #choosing only of changed objects
         if node is None:
 #            rankedObjects = self.rankChangesForUser(user, startRev)
             rankedObjects = self.rankChangesForUserLastKnown(user, startRev)
@@ -52,6 +47,22 @@ class Mip:
                 self.addUser(user)
             self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
         return nodes
+    
+    def queryList(self, user, infoLimit, startRev = 0, node = None): #to fit System API
+        if node is None:
+#            rankedObjects = self.rankChangesForUser(user, startRev)
+            rankedObjects = self.rankChangesForUserLastKnown(user, startRev)
+        else:
+            rankedObjects = self.rankAllGivenUserFocus(user, node, startRev)
+            nodesToShare = rankedObjects[:infoLimit]
+       
+        nodes = [i[0] for i in nodesToShare]            
+        
+        for node in nodes:
+            if user not in self.users.keys():
+                self.addUser(user)
+            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
+        return nodes    
                     
     def updateMIP(self, session):
         if self.iteration>100:
