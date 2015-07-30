@@ -64,10 +64,6 @@ class Mip:
         return nodes    
                     
     def updateMIP(self, session):
-        if self.iteration>100:
-            self.drawMIP('../mipPlots/mip100.png')
-            self.drawMipObjects('../mipPlots/mipObjs100.png')
-            a = 1
         #initialize 'updated' attribute of all edges to false
         for edge in self.mip.edges_iter(data=True):
             edge[2]['updated']=0
