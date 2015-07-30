@@ -422,7 +422,8 @@ class Mip:
             focus_ao = self.objects[focus_obj]
             for ao in aoList:
                 changeExtentSinceLastKnown = self.changeExtent(user, ao)
-                if ((changeExtentSinceLastKnown != 0) & (ao!=focus_ao)): #consider object only if it has changed at least once since agent last known about it            
+#                if ((changeExtentSinceLastKnown != 0) & (ao!=focus_ao)): #consider object only if it has changed at least once since agent last known about it            
+                if (ao!=focus_ao): #consider object only if it has changed at least once since agent last known about it
                     doi = self.DegreeOfInterestMIPsFocus(user, ao, focus_ao)  
                     
                     if len(notificationsList)==0:

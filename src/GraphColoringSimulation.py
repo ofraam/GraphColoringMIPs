@@ -157,11 +157,55 @@ class Simulation:
         if opportunity == 0:
             return 0
         else:
-            if relevanceCount/opportunity ==0.833333333:
-                print 'what'
             return relevanceCount/opportunity        
         
+    def relevanceRecall(self, actionNodes, sharedNodes):
+        relevantNodes = []
+        for actNode in actionNodes:
+            for neighbor in nx.neighbors(self.graph, actNode):
+                if neighbor not in actionNodes:
+                    relevantNodes.append(neighbor)
+                    
+        shared = 0.0
+        for sharedNode in sharedNodes:
+            if sharedNode in relevantNodes:
+                shared = shared+1
+        if len(relevantNodes)==0:
+            print 'nothing'
+            return 0
+        recall = shared/len(relevantNodes)
+        return recall
     
+    def relevancePrecision(self, actionNodes, sharedNodes):
+        relevantNodes = []
+        for actNode in actionNodes:
+            for neighbor in nx.neighbors(self.graph, actNode):
+                if neighbor not in actionNodes:
+                    relevantNodes.append(neighbor)
+
+
+                    
+        shared = 0.0
+        for sharedNode in sharedNodes:
+            if sharedNode in relevantNodes:
+                shared = shared+1
+        if len(relevantNodes)==0:
+            print 'nothing'
+            return 0
+        prec = shared/self.queryLimit
+        return prec    
+        
+    def distanceFromFocusMetric(self, focusNode, sharedNodes):
+        totalDist = 0.0
+        for node in sharedNodes:
+            totalDist = totalDist + len(nx.shortest_path(self.graph, focusNode, node))
+        if len(sharedNodes)>0:
+            averageDistance = totalDist/len(sharedNodes)
+        else:
+            return 0
+        return averageDistance
+        
+        
     def runSimulation(self, outputFilename, graphName, run = 0, learnTime = -1):
         #store results
         results = []
@@ -188,7 +232,8 @@ class Simulation:
                     
                     #query system
                     if self.setting == "all":
-                        nodesToShare = system.query(agent.id, self.queryLimit, nodesToChange[0]) #get nodes info to share with agent. nodesToShare is list of nodes
+                        nodesToShare = system.query(agent.id, self.queryLimit, startRev=0, node = nodesToChange[0]) #get nodes info to share with agent. nodesToShare is list of nodes
+                    
 #                        nodesToShare = system.query(agent.id, self.queryLimit)
                     else: #only ranking changes, need to send first rev to consider
 #                        nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0])
@@ -202,8 +247,16 @@ class Simulation:
                         else:
                             nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0]) #assume random system is always first!
 #                            nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1)
+                    
+                    if len(nodesToShare)>self.queryLimit:
+                        print 'problem'
+                    
                     relevance = self.relevanceMetric(nodesToChange, nodesToShare)
                     relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
+                    relevanceRecall = self.relevanceRecall(nodesToChange, nodesToShare)
+                    precision = self.relevancePrecision(nodesToChange, nodesToShare)
+                    distFromFocus = self.distanceFromFocusMetric(nodesToChange[0], nodesToShare)
+                    
                     info = {} #dict holding nodes and their colors (to share with agent)
                     for node in nodesToShare:
                         info[node] = self.instance.getColor(node)
@@ -248,7 +301,10 @@ class Simulation:
                     confDiff =  state['conflicts']-stateWithout['conflicts'] #positive is good!
                         
                     res['relevance'] = relevance
-                    res['relevanceBinary'] = relevanceBinary                   
+                    res['relevanceBinary'] = relevanceBinary 
+                    res['recall'] = relevanceRecall      
+                    res['precision'] =  precision          
+                    res['AverageDistance'] = distFromFocus 
                     
                     res['conflicts'] = state['conflicts']
                     res['unknown'] = state['unknown']
@@ -281,7 +337,7 @@ class Simulation:
             
         #save results to file
         with open(outputFilename, 'ab') as csvfile:
-            fieldnames = ['graphName', 'algorithm', 'iteration', 'relevance','relevanceBinary','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
+            fieldnames = ['graphName', 'algorithm', 'iteration', 'relevance','relevanceBinary','recall', 'precision','AverageDistance','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
             if run == 0:
@@ -342,7 +398,7 @@ def frange(start,stop, step=1.0):
     
 if __name__ == '__main__':
     nodesPerCluster = 8
-    pWithin = 0.25
+    pWithin = 0.4
     pBetween = 0.08
     graphName = 'clustered_'+str(nodesPerCluster)+"_"+str(pWithin)+"_"+str(pBetween)
     numAgents = 5
@@ -355,9 +411,11 @@ if __name__ == '__main__':
     mostChangeInt = MostChangedInIntervalSystem(5)
     latestSys = LatestChangedSystem()
     
-    mip1 = Mip(alpha = 0.1, beta = 0.8, gamma = 0.1)
-    mip2 = Mip(alpha = 0.3, beta = 0.6, gamma = 0.1)
-    mip = Mip()
+    mipAlpha= Mip(alpha = 1.0, beta = 0.0, gamma = 0.0)
+    mipBeta= Mip(alpha = 0.0, beta = 1.0, gamma = 0.0)
+    mipGamma= Mip(alpha = 0.0, beta = 0.0, gamma = 1.0)
+    mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
+    mip2 = Mip(alpha = 0.5, beta = 0.5, gamma = 0.0)
     
     systems.append(randSys)
     systems.append(mostChanged)
@@ -365,21 +423,25 @@ if __name__ == '__main__':
     
     systems.append(mostChangeInt)
     systems.append(latestSys)  
-    systems.append(mip)   
-#    systems.append(mip1) 
+      
+    systems.append(mipAlpha) 
+    systems.append(mipBeta) 
+    systems.append(mipGamma) 
+    systems.append(mip)
 #    systems.append(mip2)             
-    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "changes")
+    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
     systemsBeforeRun = copy.deepcopy(systems)
-    filename= '../results/testingEffectMetrics_NoFocus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
-    for i in range(10):  
-        systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
-        sim.runSimulation(filename,graphName, run = i, learnTime = 0)
-        sim.resetSystems(systemsBeforeRun)  
-                    
+    
+    for numAgents in range(3,6):
+        for queryLimit in range(3,6):
+            filename= '../results/0730/focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
+            for i in range(5):  
+                systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
+                sim.runSimulation(filename,graphName, run = i, learnTime = 0)
+                sim.resetSystems(systemsBeforeRun)  
                         
-    numNodes = 20
-    numAgents = 2
-    p = 0.1
+                        
+
     
 #    for numNodes in range(20,51,5):
 #        for p in frange(0.05,0.3,0.05):

@@ -41,7 +41,13 @@ class RandomSystem:
                 for node in self.nodes[i]:
                     if node not in relevantNodes:
                         relevantNodes.append(node)
+            
             nodesToShare = np.random.choice(relevantNodes,size = min(infoLimit,len(relevantNodes)), replace = False)
+            if node is not None:
+                tries = 0
+                while ((node in nodesToShare) & (tries<100)):
+                    nodesToShare = np.random.choice(relevantNodes,size = min(infoLimit,len(relevantNodes)), replace = False)
+                    tries = tries + 1
         return nodesToShare
     
     
@@ -80,7 +86,17 @@ class MostChangedSystem:
     def query(self, agent, infoLimit, node = None):
         sorted_dict = sorted(self.nodeChangeCounts.items(), key=operator.itemgetter(1), reverse = True)
         rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
-        nodesToShare = rankedNodes[:infoLimit]
+        addedCounter=0
+        counter = 0
+        nodesToShare = []
+        if node is not None:
+            while ((addedCounter<infoLimit) & (counter<len(rankedNodes))):
+                if rankedNodes[counter]!=node:
+                    nodesToShare.append()
+                    counter = counter+1
+                    addedCounter = addedCounter + 1
+        else:
+            nodesToShare = rankedNodes[:infoLimit]
         return nodesToShare 
 
     def queryList(self, agent, infoLimit, node = None):
@@ -137,6 +153,20 @@ class MostChangedInIntervalSystem:
                     relevantNodeChangeCounts[node] = self.nodeChangeCount[node]
             sorted_dict = sorted(relevantNodeChangeCounts.items(), key=operator.itemgetter(1), reverse = True)
             rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
+
+            addedCounter=0
+            counter = 0
+            nodesToShare = []
+            if node is not None:
+                while ((addedCounter<infoLimit) & (counter<len(rankedNodes))):
+                    if rankedNodes[counter]!=node:
+                        nodesToShare.append()
+                        counter = counter+1
+                        addedCounter = addedCounter + 1
+            else:
+                nodesToShare = rankedNodes[:infoLimit]            
+            
+            
             nodesToShare = rankedNodes[:infoLimit]            
             
         return nodesToShare  
@@ -177,7 +207,20 @@ class LatestChangedSystem:
     def queryList(self, agent, infoLimit, startRev = 0, node = None):
         sorted_dict = sorted(self.nodeChangetimes.items(), key=operator.itemgetter(1), reverse = True)
         rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
-        nodesToShare = rankedNodes
+        
+        addedCounter=0
+        counter = 0
+        nodesToShare = []
+        if node is not None:
+            while ((addedCounter<infoLimit) & (counter<len(rankedNodes))):
+                if rankedNodes[counter]!=node:
+                    nodesToShare.append()
+                    counter = counter+1
+                    addedCounter = addedCounter + 1
+        else:
+            nodesToShare = rankedNodes[:infoLimit]
+                    
+        
         return nodesToShare            
 
     def __str__(self):
