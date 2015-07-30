@@ -199,7 +199,7 @@ class Simulation:
         totalDist = 0.0
         for node in sharedNodes:
             try:
-                totalDist = totalDist + len(nx.shortest_path(self.graph, focusNode, node))
+                totalDist = totalDist + 1/(len(nx.shortest_path(self.graph, focusNode, node)))
             except:
                 totalDist = totalDist
         if len(sharedNodes)>0:
