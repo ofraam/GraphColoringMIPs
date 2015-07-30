@@ -199,7 +199,7 @@ class Simulation:
         totalDist = 0.0
         for node in sharedNodes:
             try:
-                totalDist = totalDist + 1/(len(nx.shortest_path(self.graph, focusNode, node)))
+                totalDist = totalDist + 1.0/(len(nx.shortest_path(self.graph, focusNode, node))-1)
             except:
                 totalDist = totalDist
         if len(sharedNodes)>0:
@@ -420,12 +420,12 @@ if __name__ == '__main__':
     mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
     mip2 = Mip(alpha = 0.5, beta = 0.5, gamma = 0.0)
     
-    systems.append(randSys)
-    systems.append(mostChanged)
-    
-    
-    systems.append(mostChangeInt)
-    systems.append(latestSys)  
+#    systems.append(randSys)
+#    systems.append(mostChanged)
+#    
+#    
+#    systems.append(mostChangeInt)
+#    systems.append(latestSys)  
       
     systems.append(mipAlpha) 
     systems.append(mipBeta) 
