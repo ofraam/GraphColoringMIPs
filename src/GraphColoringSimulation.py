@@ -319,8 +319,8 @@ class Simulation:
                     results.append(res)
                     
                     filename = "../graphPlots1/"+str(system)+"_"+str(self.numIterations)+".png"
-                    if self.numIterations == 0:
-                        self.instance.drawGraph(filename)
+#                    if self.numIterations == 0:
+#                        self.instance.drawGraph(filename)
                     
                     #increment num of iterations
                     self.numIterations = self.numIterations + 1
