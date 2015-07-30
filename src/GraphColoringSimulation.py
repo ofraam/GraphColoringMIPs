@@ -198,7 +198,10 @@ class Simulation:
     def distanceFromFocusMetric(self, focusNode, sharedNodes):
         totalDist = 0.0
         for node in sharedNodes:
-            totalDist = totalDist + len(nx.shortest_path(self.graph, focusNode, node))
+            try:
+                totalDist = totalDist + 1/(len(nx.shortest_path(self.graph, focusNode, node)))
+            except:
+                totalDist = totalDist
         if len(sharedNodes)>0:
             averageDistance = totalDist/len(sharedNodes)
         else:
