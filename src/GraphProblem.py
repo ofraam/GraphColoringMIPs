@@ -6,7 +6,6 @@ Created on Jun 7, 2015
 
 import networkx as nx
 import math
-import matplotlib.pyplot as plt
 
 
 class GraphProblem:
@@ -88,31 +87,31 @@ class GraphProblem:
             self.nodesByColor[data['color']].append(node) 
             self.nodeLabels[node] = node
             
-    def drawGraph(self, filename):
-        self.indexNodesByColor()
-        G = self.graph
-        if self.drawn == False:
-            pos = nx.spring_layout(G)
-            self.pos = pos
-            self.drawn = True
-        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodesByColor[0],node_size=300,node_color='blue')
-        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodesByColor[1],node_size=300,node_color='red')
-        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodesByColor[2],node_size=300,node_color='green')
-        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodesByColor[-1],node_size=300,node_color='black')
-    #    nx.draw_networkx_nodes(mip.mip,pos,nodelist=parNodes,node_size=300,node_color='blue')
-    #    nx.draw_networkx_nodes(mip.mip,pos,nodelist=parDeletedNodes, node_size=300,node_color='black')
-        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
-        nx.draw_networkx_labels(G,self.pos,labels = self.nodeLabels, font_color = "white")
-    #    print 'clustering'
-    #    print(nx.average_clustering(mip.mip, weight = "weight"))
-    #    #    G=nx.dodecahedral_graph()
-    ##    nx.draw(mip.mip)
-
-        plt.draw()
-        plt.savefig(filename)
-        plt.clf()
-        plt.close()
-        
+#    def drawGraph(self, filename):
+#        self.indexNodesByColor()
+#        G = self.graph
+#        if self.drawn == False:
+#            pos = nx.spring_layout(G)
+#            self.pos = pos
+#            self.drawn = True
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodesByColor[0],node_size=300,node_color='blue')
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodesByColor[1],node_size=300,node_color='red')
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodesByColor[2],node_size=300,node_color='green')
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodesByColor[-1],node_size=300,node_color='black')
+#    #    nx.draw_networkx_nodes(mip.mip,pos,nodelist=parNodes,node_size=300,node_color='blue')
+#    #    nx.draw_networkx_nodes(mip.mip,pos,nodelist=parDeletedNodes, node_size=300,node_color='black')
+#        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
+#        nx.draw_networkx_labels(G,self.pos,labels = self.nodeLabels, font_color = "white")
+#    #    print 'clustering'
+#    #    print(nx.average_clustering(mip.mip, weight = "weight"))
+#    #    #    G=nx.dodecahedral_graph()
+#    ##    nx.draw(mip.mip)
+#
+#        plt.draw()
+#        plt.savefig(filename)
+#        plt.clf()
+#        plt.close()
+#        
         
 #        plt.show()        
     

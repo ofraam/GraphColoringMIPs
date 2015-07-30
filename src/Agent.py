@@ -7,7 +7,6 @@ import networkx as nx
 import math
 import copy
 import random
-import matplotlib.pyplot as plt
 from random import shuffle
 
 class Agent:
@@ -471,21 +470,10 @@ if __name__ == '__main__':
 #    
 #    agt.updateBelief(newKnownNodes) 
     
-    pos = nx.spring_layout(G)
-    nx.draw_networkx_nodes(G,pos,nodelist=blueNodes,node_size=300,node_color='blue')
-    nx.draw_networkx_nodes(G,pos,nodelist=redNodes,node_size=300,node_color='red')
-    nx.draw_networkx_nodes(G,pos,nodelist=greenNodes,node_size=300,node_color='green')
-    nx.draw_networkx_nodes(G,pos,nodelist=unknownNodes,node_size=300,node_color='black')
-#    nx.draw_networkx_nodes(mip.mip,pos,nodelist=parNodes,node_size=300,node_color='blue')
-#    nx.draw_networkx_nodes(mip.mip,pos,nodelist=parDeletedNodes, node_size=300,node_color='black')
-    nx.draw_networkx_edges(G,pos,edgelist=G.edges())
-    nx.draw_networkx_labels(G,pos,labels = nodeLabels, font_color = "white")
+
 #    print 'clustering'
 #    print(nx.average_clustering(mip.mip, weight = "weight"))
 #    #    G=nx.dodecahedral_graph()
-##    nx.draw(mip.mip)
-    plt.draw()
-##    plt.savefig('ego_graph50.png')
-    plt.show()
+
     
     

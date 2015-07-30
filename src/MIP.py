@@ -5,7 +5,6 @@ Created on Jun 7, 2015
 '''
 import networkx as nx
 import math
-import matplotlib.pyplot as plt
 
 class Mip:
     def __init__(self, alpha = 0.2, beta = 0.6, gamma = 0.2, similarityMetric = "simple"):
@@ -539,75 +538,75 @@ class Mip:
                     labels[edge] = data['weight']
         return labels
             
-    def drawMIP(self, filename):
-        
-        G = self.mip
-        
-        pos = nx.spring_layout(G)
-        self.pos = pos
-        self.drawn = True
-        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToObjectsIds.keys(),node_size=300,font_size = 9, node_color='blue')
-        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToUsersIds.keys(),node_size=300,font_size = 9,node_color='black')
-
-        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
-        
-        nodeLabels = self.createNodeLabels()
-        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
-        
-        edgeLabels = self.createEdgeLabels()
-        nx.draw_networkx_edge_labels(G, pos, edgeLabels)
-
-
-        plt.draw()
-        plt.savefig(filename)
-        plt.clf()
-        plt.close()
-        
-    def drawMipObjects(self, filename):
-        G = self.mip
-        
-        pos = nx.spring_layout(G)
-        self.pos = pos
-        self.drawn = True
-        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToObjectsIds.keys(),node_size=300,font_size = 9, node_color='blue')
-
-        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
-        
-        nodeLabels = self.createNodeLabels(nodeTypes = 'object')
-        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
-        
-        edgeLabels = self.createEdgeLabels(nodeLabels.keys())
-        nx.draw_networkx_edge_labels(G, pos, edgeLabels,font_size = 7)
-
-
-        plt.draw()
-        plt.savefig(filename)
-        plt.clf()
-        plt.close()  
-        
-    def drawMipForUser(self, filename, user):
-        G = self.mip
-        
-        pos = nx.spring_layout(G)
-        self.pos = pos
-        self.drawn = True
-        nodesToDraw = nx.neighbors(G, self.users[user])
-        nodesToDraw.append(self.users[user])
-        nx.draw_networkx_nodes(G,self.pos,nodelist=nodesToDraw,node_size=300,font_size = 9, node_color='blue')
-
-        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
-        
-        nodeLabels = self.createNodeLabels(nodeTypes = 'both')
-        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
-        
-        edgeLabels = self.createEdgeLabels(nodeLabels.keys())
-        nx.draw_networkx_edge_labels(G, pos, edgeLabels,font_size = 7)
-
-
-        plt.draw()
-        plt.savefig(filename)
-        plt.clf()
-        plt.close()          
+#    def drawMIP(self, filename):
+#        
+#        G = self.mip
+#        
+#        pos = nx.spring_layout(G)
+#        self.pos = pos
+#        self.drawn = True
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToObjectsIds.keys(),node_size=300,font_size = 9, node_color='blue')
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToUsersIds.keys(),node_size=300,font_size = 9,node_color='black')
+#
+#        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
+#        
+#        nodeLabels = self.createNodeLabels()
+#        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
+#        
+#        edgeLabels = self.createEdgeLabels()
+#        nx.draw_networkx_edge_labels(G, pos, edgeLabels)
+#
+#
+#        plt.draw()
+#        plt.savefig(filename)
+#        plt.clf()
+#        plt.close()
+#        
+#    def drawMipObjects(self, filename):
+#        G = self.mip
+#        
+#        pos = nx.spring_layout(G)
+#        self.pos = pos
+#        self.drawn = True
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToObjectsIds.keys(),node_size=300,font_size = 9, node_color='blue')
+#
+#        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
+#        
+#        nodeLabels = self.createNodeLabels(nodeTypes = 'object')
+#        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
+#        
+#        edgeLabels = self.createEdgeLabels(nodeLabels.keys())
+#        nx.draw_networkx_edge_labels(G, pos, edgeLabels,font_size = 7)
+#
+#
+#        plt.draw()
+#        plt.savefig(filename)
+#        plt.clf()
+#        plt.close()  
+#        
+#    def drawMipForUser(self, filename, user):
+#        G = self.mip
+#        
+#        pos = nx.spring_layout(G)
+#        self.pos = pos
+#        self.drawn = True
+#        nodesToDraw = nx.neighbors(G, self.users[user])
+#        nodesToDraw.append(self.users[user])
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=nodesToDraw,node_size=300,font_size = 9, node_color='blue')
+#
+#        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
+#        
+#        nodeLabels = self.createNodeLabels(nodeTypes = 'both')
+#        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
+#        
+#        edgeLabels = self.createEdgeLabels(nodeLabels.keys())
+#        nx.draw_networkx_edge_labels(G, pos, edgeLabels,font_size = 7)
+#
+#
+#        plt.draw()
+#        plt.savefig(filename)
+#        plt.clf()
+#        plt.close()          
               
 if __name__ == '__main__':
     pass
