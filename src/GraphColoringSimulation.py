@@ -401,13 +401,13 @@ def frange(start,stop, step=1.0):
     
 if __name__ == '__main__':
     nodesPerCluster = 8
-    pWithin = 0.4
+    pWithin = 0.2
     pBetween = 0.08
     graphName = 'clustered_'+str(nodesPerCluster)+"_"+str(pWithin)+"_"+str(pBetween)
     numAgents = 5
     queryLimit = 3
     actionLimit = 3
-    maxIterations = 300
+    maxIterations =600 
     systems = []
     randSys = RandomSystem(setting = "all")
     mostChanged = MostChangedInIntervalSystem(500) #essentially all revisions...
@@ -418,7 +418,7 @@ if __name__ == '__main__':
     mipBeta= Mip(alpha = 0.0, beta = 1.0, gamma = 0.0)
     mipGamma= Mip(alpha = 0.0, beta = 0.0, gamma = 1.0)
     mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
-    mip2 = Mip(alpha = 0.5, beta = 0.5, gamma = 0.0)
+    mip2 = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2)
     
     systems.append(randSys)
     systems.append(mostChanged)
@@ -431,7 +431,7 @@ if __name__ == '__main__':
     systems.append(mipBeta) 
     systems.append(mipGamma) 
     systems.append(mip)
-#    systems.append(mip2)             
+    systems.append(mip2)             
     sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
     systemsBeforeRun = copy.deepcopy(systems)
     
