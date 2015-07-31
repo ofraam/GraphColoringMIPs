@@ -48,7 +48,7 @@ class RandomSystem:
                 while ((node in nodesToShare) & (tries<100)):
                     nodesToShare = np.random.choice(relevantNodes,size = min(infoLimit,len(relevantNodes)), replace = False)
                     tries = tries + 1
-        return nodesToShare
+        return list(nodesToShare)
     
     
     def queryList(self, agent, infoLimit, startRev = 0, node = None):

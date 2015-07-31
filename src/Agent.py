@@ -76,10 +76,16 @@ class Agent:
                 self.knownGraph.node[node]['uptoDate'] = True
         else:
             for node,color in nodesColorsList.iteritems():
-                self.knownGraph.node[node]['color'] = color
+                
+                changed = 0
+                if self.knownGraph.node[node]['color'] != color:
+                    changed = 1  
+                changedBelief.append(changed)
+                self.knownGraph.node[node]['color'] = color              
                 self.knownGraph.node[node]['uptoDate'] = True            
             
         self.countNumConflicts() #update conflict counts
+
         return changedBelief
     
     def checkRep(self):

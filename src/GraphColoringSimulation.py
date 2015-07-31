@@ -25,7 +25,7 @@ Class that runs the simulation
 @systems is a list of system objects (i.e., algorithms to compare)
 '''
 class Simulation:
-    def __init__(self, numAgents, numColors, systems,numNodesPerCluster,pWithin,pBetween,outputFile,fromScratch = False,focus = True, probPrimary = 0.8, overlap = 1, maxIterations = 1000, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "all"):
+    def __init__(self, numAgents, numColors, systems,numNodesPerCluster,pWithin,pBetween,outputFile,fromScratch = False, focus = True, probPrimary = 0.8, overlap = 1, maxIterations = 1000, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "all"):
 
        
         self.numAgents = numAgents
@@ -309,8 +309,6 @@ class Simulation:
                         else:    
                             nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = None)
                     
-                    if len(nodesToShare)>self.queryLimit:
-                        print 'problem'
                     
                     #compute metrics
                     relevance = self.relevanceMetric(nodesToChange, nodesToShare)
@@ -325,7 +323,8 @@ class Simulation:
                         info[node] = self.instance.getColor(node)
                     
                     changedBelief = agent.updateBelief(info) #update agents knowledge
-                    
+                    if len(changedBelief)!=len(nodesToShare):
+                        print 'problem'
                     precisionChangedNodes = self.relevancePrecisionChanged(nodesToChange, nodesToShare, changedBelief)
                     
                     actions = agent.chooseActions(self.numIterations,minActions = 0) #query agent for actions
@@ -501,16 +500,17 @@ if __name__ == '__main__':
     systems.append(mipBeta) 
     systems.append(mipGamma) 
     systems.append(mip)
-    systems.append(mip2)             
-    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
+    systems.append(mip2)           
+    outputFile =   '../results/0730/test.csv'
+    sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = False, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
     systemsBeforeRun = copy.deepcopy(systems)
     
     for numAgents in range(3,6):
         for queryLimit in range(3,6):
-            filename= '../results/0730/focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
+#            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
             for i in range(5):  
                 systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
-                sim.runSimulation(filename,graphName, run = i, learnTime = 0)
+                sim.runSimulation(graphName, run = i, learnTime = 0)
                 sim.resetSystems(systemsBeforeRun)  
                         
                         
