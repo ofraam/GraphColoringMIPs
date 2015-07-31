@@ -349,7 +349,7 @@ class Simulation:
                     res['queryLimit']=self.queryLimit
                     res['actionLimit']=self.actionLimit
                     res['numAgents']=self.numAgents
-                    res['graphSize']=nx.number_of_nodes(self.graph)
+                    res['numNodes']=nx.number_of_nodes(self.graph)
                     res['numEdges']=nx.number_of_edges(self.graph)
                     res['pWithin']=self.pWithin
                     res['pBetween']=self.pBetween
@@ -470,13 +470,13 @@ def frange(start,stop, step=1.0):
     
 if __name__ == '__main__':
     nodesPerCluster = 8
-    pWithin = 0.2
+    pWithin = 0.3
     pBetween = 0.08
     graphName = 'clustered_'+str(nodesPerCluster)+"_"+str(pWithin)+"_"+str(pBetween)
     numAgents = 5
     queryLimit = 3
     actionLimit = 3
-    maxIterations =600 
+    maxIterations =100 
     systems = []
     randSys = RandomSystem(setting = "all")
     mostChanged = MostChangedInIntervalSystem(500) #essentially all revisions...
@@ -501,14 +501,14 @@ if __name__ == '__main__':
     systems.append(mipGamma) 
     systems.append(mip)
     systems.append(mip2)           
-    outputFile =   '../results/0730/test.csv'
+    outputFile =   '../results/0730/oneFileTry.csv'
     sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = False, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
     systemsBeforeRun = copy.deepcopy(systems)
     
-    for numAgents in range(3,6):
-        for queryLimit in range(3,6):
+    for numAgents in range(3,4):
+        for queryLimit in range(3,5):
 #            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
-            for i in range(5):  
+            for i in range(1):  
                 systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
                 sim.runSimulation(graphName, run = i, learnTime = 0)
                 sim.resetSystems(systemsBeforeRun)  
