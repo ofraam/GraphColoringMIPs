@@ -25,7 +25,7 @@ Class that runs the simulation
 @systems is a list of system objects (i.e., algorithms to compare)
 '''
 class Simulation:
-    def __init__(self, numAgents, numColors, systems,numNodesPerCluster,pWithin,pBetween,focus = True, overlap = 1, maxIterations = 1000, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "all"):
+    def __init__(self, numAgents, numColors, systems,numNodesPerCluster,pWithin,pBetween,outputFile,fromScratch = False,focus = True, probPrimary = 0.8, overlap = 1, maxIterations = 1000, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "all"):
 
        
         self.numAgents = numAgents
@@ -46,6 +46,8 @@ class Simulation:
         self.pBetween = pBetween
         self.graph = self.generateClusteredGraph(numAgents, numNodesPerCluster, pWithin, pBetween)  
         self.focus = focus
+        self.probPrimay = probPrimary
+        self.fromScratch = fromScratch
         #generate graph structure
         
         #assign random colors
@@ -55,9 +57,9 @@ class Simulation:
         #create graphProblem object
         self.colors = [i for i in xrange(numColors)]
         problemGraph = copy.deepcopy(self.graph)
-        self.instance = GraphProblem(problemGraph, self.colors)                
+        self.instance = GraphProblem(problemGraph, self.colors,self.fromScratch)                
         #assign nodes to agents
-        agentAssignments = self.assignAgentsDistriburtions()
+        agentAssignments = self.assignAgentsDistriburtions(self.probPrimay)
 #        agentAssignments = {0: [2, 5, 6, 7, 8, 9, 10, 11, 14, 16, 19, 21, 22, 25, 27, 29], 1: [0, 1, 3, 4, 5, 6, 8, 11, 14, 15, 20, 22, 23, 24, 26, 29], 2: [1, 3, 8, 9, 10, 12, 13, 15, 17, 18, 19, 22, 24, 28]}
 #        agentAssignments = {0: [0, 1, 3, 5, 6, 7, 16, 18, 19, 20, 22, 23, 25, 26, 28, 29, 33, 36, 38, 39, 41, 43, 45, 46, 47], 1: [7, 9, 10, 11, 12, 13, 15, 16, 20, 21, 22, 24, 27, 28, 31, 32, 33, 34, 35, 37, 38, 39, 40, 41, 43, 44, 45, 46, 49], 2: [1, 2, 4, 7, 8, 11, 13, 14, 15, 17, 23, 24, 26, 28, 30, 32, 35, 36, 38, 42, 48]}
 
@@ -68,7 +70,12 @@ class Simulation:
 #        agentAssignments[2] = [1,2,3,4,9]
         print agentAssignments
         self.agentAssignments = agentAssignments
-
+        self.outputFile = outputFile
+        #write header row in file:
+        with open(self.outputFile, 'ab') as csvfile:
+            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
             
         return
     
@@ -187,14 +194,14 @@ class Simulation:
             return relevanceCount/opportunity        
 
     '''
-    checks what proportion of all relevant nodes were retreived (shared)
+    checks what proportion of all relevant nodes were retrieved (shared)
     '''         
     def relevanceRecall(self, actionNodes, sharedNodes):
         relevantNodes = []
         for actNode in actionNodes:
             for neighbor in nx.neighbors(self.graph, actNode):
-                if neighbor not in actionNodes:
-                    relevantNodes.append(neighbor)
+#                if neighbor not in actionNodes: #not sure this is correct
+                relevantNodes.append(neighbor)
                     
         shared = 0.0
         for sharedNode in sharedNodes:
@@ -205,18 +212,17 @@ class Simulation:
             return 0
         recall = shared/len(relevantNodes)
         return recall
+    
 
     '''
-    checks how many of the nodes that were shared were relevant and *not* in action set
+    checks how many of the nodes that were shared were relevant 
     '''    
     def relevancePrecision(self, actionNodes, sharedNodes):
         relevantNodes = []
         for actNode in actionNodes:
             for neighbor in nx.neighbors(self.graph, actNode):
-                if neighbor not in actionNodes:
-                    relevantNodes.append(neighbor)
-
-
+#                if neighbor not in actionNodes: #not sure this is correct
+                relevantNodes.append(neighbor)
                     
         shared = 0.0
         for sharedNode in sharedNodes:
@@ -228,6 +234,23 @@ class Simulation:
         prec = shared/self.queryLimit
         return prec    
 
+    def relevancePrecisionChanged(self, actionNodes, sharedNodes,changedBelief):
+        relevantNodes = []
+        for actNode in actionNodes:
+            for neighbor in nx.neighbors(self.graph, actNode):
+#                if neighbor not in actionNodes: #not sure this is correct
+                relevantNodes.append(neighbor)
+                    
+        shared = 0.0
+        for i in range(len(sharedNodes)):
+            if ((sharedNodes[i] in relevantNodes) & (changedBelief[i]==1)):
+                shared = shared+1
+        if len(relevantNodes)==0:
+            print 'nothing'
+            return 0
+        prec = shared/self.queryLimit
+        return prec 
+    
     '''
     a proximity metric: checks what was the distance between each of the shared nodes and the focus node. Returns the reciprocal to avoid inifinity distance when two nodes are not connected
     '''        
@@ -243,9 +266,14 @@ class Simulation:
         else:
             return 0
         return averageDistance
+    
+    def changedAgentBeliefRatio(self,changedBelief):
+        return sum(changedBelief/float(self.queryLimit))
+    
+    
         
         
-    def runSimulation(self, outputFilename, graphName, run = 0, learnTime = -1):
+    def runSimulation(self, graphName, run = 0, learnTime = -1):
         #store results
         results = []
         #save initial state to revert for each system
@@ -289,13 +317,16 @@ class Simulation:
                     relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
                     relevanceRecall = self.relevanceRecall(nodesToChange, nodesToShare)
                     precision = self.relevancePrecision(nodesToChange, nodesToShare)
+                    
                     distFromFocus = self.distanceFromFocusMetric(nodesToChange[0], nodesToShare)
                     
                     info = {} #dict holding nodes and their colors (to share with agent)
                     for node in nodesToShare:
                         info[node] = self.instance.getColor(node)
-                    agent.updateBelief(info) #update agents knowledge
                     
+                    changedBelief = agent.updateBelief(info) #update agents knowledge
+                    
+                    precisionChangedNodes = self.relevancePrecisionChanged(nodesToChange, nodesToShare, changedBelief)
                     
                     actions = agent.chooseActions(self.numIterations,minActions = 0) #query agent for actions
  
@@ -311,6 +342,7 @@ class Simulation:
                     #save status
                     res = {}
                     res['graphName'] = graphName
+                    res['fromScratch']=self.fromScratch
                     res['algorithm'] = system
                     res['iteration'] = self.numIterations
                     res['round'] = math.floor(float(self.numIterations)/self.numAgents)
@@ -322,6 +354,8 @@ class Simulation:
                     res['numEdges']=nx.number_of_edges(self.graph)
                     res['pWithin']=self.pWithin
                     res['pBetween']=self.pBetween
+                    res['probPrimaryCluster']= self.probPrimay
+                    
                     
                     #compute effect metric
                     diff = 0
@@ -344,7 +378,8 @@ class Simulation:
                     res['relevance'] = relevance
                     res['relevanceBinary'] = relevanceBinary 
                     res['recall'] = relevanceRecall      
-                    res['precision'] =  precision          
+                    res['precision'] =  precision        
+                    res['precisionChanged']=precisionChangedNodes  
                     res['AverageDistance'] = distFromFocus 
                     
                     res['conflicts'] = state['conflicts']
@@ -377,12 +412,10 @@ class Simulation:
                    
             
         #save results to file
-        with open(outputFilename, 'ab') as csvfile:
-            fieldnames = ['graphName', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','relevance','relevanceBinary','recall', 'precision','AverageDistance','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
+        with open(self.outputFile, 'ab') as csvfile:
+            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        
-            if run == 0:
-                writer.writeheader()
+
             for res in results:
                 writer.writerow(res)
             

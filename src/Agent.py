@@ -55,6 +55,8 @@ class Agent:
     #the function updates the agents' knowledge about the graph
     #nodesColorsList is a dict of node_id and current color
     def updateBelief(self, nodesColorsList):
+        changedBelief = []
+        
         #reset old stuff
         if self.reset == True:
             for node, data in self.knownGraph.nodes(data = True):
@@ -66,6 +68,10 @@ class Agent:
         #update new stuff
         if isinstance(nodesColorsList, list):
             for node,color in nodesColorsList:
+                changed = 0
+                if self.knownGraph.node[node]['color'] != color:
+                    changed = 1
+                changedBelief.append(changed)
                 self.knownGraph.node[node]['color'] = color
                 self.knownGraph.node[node]['uptoDate'] = True
         else:
@@ -74,7 +80,7 @@ class Agent:
                 self.knownGraph.node[node]['uptoDate'] = True            
             
         self.countNumConflicts() #update conflict counts
-        return 
+        return changedBelief
     
     def checkRep(self):
         for i in range(self.nodesToChange):

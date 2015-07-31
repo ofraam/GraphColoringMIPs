@@ -7,15 +7,15 @@ import networkx as nx
 import math
 
 class Mip:
-    def __init__(self, alpha = 0.2, beta = 0.6, gamma = 0.2, similarityMetric = "simple"):
+    def __init__(self, alpha = 0.2, beta = 0.6, gamma = 0.2, similarityMetric = "simple", decay = 0.1):
         self.mip = nx.Graph()
         self.users = {}
         self.objects  = {}
         self.iteration = 0
         self.lastID = -1
-        self.decay = 0.1
+        self.decay = decay
         self.objectsInc = 1.0
-        self.current_flow_betweeness = None #centrality values of all nodes
+        self.centrality = None #centrality values of all nodes
         self.log = [] #log holds all the session data 
         self.alpha = alpha
         self.beta = beta
@@ -33,18 +33,23 @@ class Mip:
             rankedObjects = self.rankChangesForUserLastKnown(user, startRev)
         else:
             rankedObjects = self.rankAllGivenUserFocus(user, node, startRev)
-        if node is None:
-            nodesToShare = rankedObjects[:infoLimit-1]
-            if len(rankedObjects)>0:
-                nodesToShare.append(rankedObjects[len(rankedObjects)-1])
-        else:
-            nodesToShare = rankedObjects[:infoLimit]
+
+#commented out section below is the inclusion of one node that is *far* from the agent. probably doesn't make sense for the simulation now.   
+#        if node is None:
+#            nodesToShare = rankedObjects[:infoLimit-1]
+#            if len(rankedObjects)>0:
+#                nodesToShare.append(rankedObjects[len(rankedObjects)-1])
+#        else:
+#            nodesToShare = rankedObjects[:infoLimit]
+        
+        nodesToShare = rankedObjects[:infoLimit]
         nodes = [i[0] for i in nodesToShare]            
         
         for node in nodes:
             if user not in self.users.keys():
                 self.addUser(user)
             self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
+        
         return nodes
     
     def queryList(self, user, infoLimit, startRev = 0, node = None): #to fit System API
@@ -93,7 +98,7 @@ class Mip:
                 if (ao_node1!=ao_node2):
                     self.updateEdge(ao_node1, ao_node2, 'ao-ao', self.objectsInc)
                 
-        #update weights between objects that user was informed about and objects that changed
+        #update weights between objects that user was informed about and objects that changed : this is relevant only if agent does not choose which nodes to change apriori
 #        for i in range(len(session.actions)-1):
 #            ao_node1 = self.objects[session.actions[i].ao]
 #            for j in range(0, len(session.info)):
@@ -101,23 +106,23 @@ class Mip:
 #                if (ao_node1!=ao_node2):
 #                    self.updateEdge(ao_node1, ao_node2, 'ao-ao', self.objectsInc)
                         
-        #TODO: think about adding decay here!
-        for edge in self.mip.edges_iter(data=True):
-            if edge[2]['updated']==0:
-                if edge[2]['edge_type']=='ao-ao':
-                    edge[2]['weight'] = max(edge[2]['weight']-self.decay,0)
-                elif edge[2]['edge_type']=='u-ao':
-                    if ((edge[0]==user_node) | (edge[1]==user_node)):
+        if self.decay>0:
+            for edge in self.mip.edges_iter(data=True):
+                if edge[2]['updated']==0:
+                    if edge[2]['edge_type']=='ao-ao':
                         edge[2]['weight'] = max(edge[2]['weight']-self.decay,0)
+                    elif edge[2]['edge_type']=='u-ao':
+                        if ((edge[0]==user_node) | (edge[1]==user_node)):
+                            edge[2]['weight'] = max(edge[2]['weight']-self.decay,0)
         self.currentSession=session
 #        print'updating'
 
-        self.current_flow_betweeness = nx.degree_centrality(self.mip) #TODO: apriori importance for now is simply degree, consider reverting to more complex option
+        self.centrality = nx.degree_centrality(self.mip) #TODO: apriori importance for now is simply degree, consider reverting to more complex option
         self.iteration = self.iteration+1
 #        try:
-#            self.current_flow_betweeness = nx.current_flow_betweenness_centrality(self.mip,True, weight = 'weight')
+#            self.centrality = nx.current_flow_betweenness_centrality(self.mip,True, weight = 'weight')
 #        except:
-#            self.current_flow_betweeness = nx.degree_centrality(self.mip)
+#            self.centrality = nx.degree_centrality(self.mip)
         
     def addUser(self,user_name):
         if (user_name in self.users):
@@ -129,7 +134,6 @@ class Mip:
             attr['node_type']='user'
             self.mip.add_node(self.lastID, attr)
             self.nodeIDsToUsersIds[self.lastID]=user_name
-#            self.nodeIdsToUsers[self.lastID]=user_name
         return self.users[user_name]
             
     
@@ -159,7 +163,6 @@ class Mip:
             attr['weight']=increment
             attr['lastKnown']=self.iteration #update last time user knew about object
             self.mip.add_edge(i1, i2, attr)
-#            print str(self.mip[i1][i2]['lastKnown'])
         if increment>0:
             self.mip[i1][i2]['updated']=1
         
@@ -183,7 +186,7 @@ class Mip:
     '''
     def DegreeOfInterestMIPs(self, user, obj):
      
-        api_obj = self.current_flow_betweeness[obj]  #node centrality (apriori component)
+        api_obj = self.centrality[obj]  #node centrality (apriori component)
        
         #compute proximity between user node and object node using Cycle-Free-Edge-Conductance from Koren et al. 2007 or Adamic/Adar
         proximity = 0.0
@@ -305,7 +308,7 @@ class Mip:
         aoList = self.getLiveAos() #gets the MIP NODES that represent live objects
         notificationsList = [] #will hold list of objects, eventually sorted by interest
         for ao in aoList:
-            doi = self.DegreeOfInterestMIPs(user, ao,self.current_flow_betweeness)  
+            doi = self.DegreeOfInterestMIPs(user, ao,self.centrality)  
             
             if len(notificationsList)==0:
                 toAdd = []
@@ -500,8 +503,7 @@ class Mip:
         
         
 
-    def __str__(self):
-        return "MIP_"+str(self.alpha)+"_"+str(self.beta)+"_"+str(self.gamma) 
+
                  
                 
     '''
@@ -509,7 +511,9 @@ class Mip:
     MIPs reasoning functions end
     -----------------------------------------------------------------------------
     '''
-    
+    def __str__(self):
+        return "MIP_"+str(self.alpha)+"_"+str(self.beta)+"_"+str(self.gamma)+"_"+str(self.decay)
+        
     def createNodeLabels(self, nodeTypes = 'both'):
         labels = {}
         for node,data in self.mip.nodes(data = True):
