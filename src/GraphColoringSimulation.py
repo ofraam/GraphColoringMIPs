@@ -25,7 +25,7 @@ Class that runs the simulation
 @systems is a list of system objects (i.e., algorithms to compare)
 '''
 class Simulation:
-    def __init__(self, numAgents, numColors, systems,numNodesPerCluster,pWithin,pBetween,overlap = 1, maxIterations = 1000, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "all"):
+    def __init__(self, numAgents, numColors, systems,numNodesPerCluster,pWithin,pBetween,focus = True, overlap = 1, maxIterations = 1000, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "all"):
 
        
         self.numAgents = numAgents
@@ -34,7 +34,7 @@ class Simulation:
         self.setting = setting
         self.solved = False #is the CSP problem solved (to terminate simulation)
         self.numIterations = 0 
-        self.maxIterations = maxIterations
+        self.maxIterations = maxIterations*numAgents #iterations = rounds in this case
         self.actionLimit = actionLimit
         self.queryLimit = queryLimit
         self.weightIncOfAction = weightInc
@@ -42,7 +42,10 @@ class Simulation:
         self.agents = []   
         self.clusters = {}
         self.nodeToClusterIndex = {}   
+        self.pWithin = pWithin
+        self.pBetween = pBetween
         self.graph = self.generateClusteredGraph(numAgents, numNodesPerCluster, pWithin, pBetween)  
+        self.focus = focus
         #generate graph structure
         
         #assign random colors
@@ -68,9 +71,14 @@ class Simulation:
 
             
         return
+    
+
     def resetSystems(self, newSystems):
         self.systems = newSystems
     
+    '''
+    assigns each agents with the nodes in one cluster (only those nodes)
+    '''
     def assignAgentsToClustersStrict(self):
         agentAssignments = {}
         
@@ -78,20 +86,27 @@ class Simulation:
             agentAssignments[i] = self.clusters[i]
         
         return agentAssignments
-    def assignAgentsDistriburtions(self):
+
+    '''
+    assigns each agents distribution over nodes: the sum of the probability for nodes in the agent's primary cluster is #primaryProb, the others get 1-primary prob
+    '''    
+    def assignAgentsDistriburtions(self, primaryProb):
         agentAssignments = {}
         for i in range(self.numAgents):
             agentAssignments[i] = []
             for c in range(len(self.clusters)):
                 if c == i:
                     for node in self.clusters[c]:
-                        agentAssignments[i].append((node, 0.8/len(self.clusters[c]))) #even distribution
+                        agentAssignments[i].append((node, primaryProb/len(self.clusters[c]))) #even distribution
                 else:
                     for node in self.clusters[c]:
-                        agentAssignments[i].append((node, (0.2/(len(self.clusters)-1))/len(self.clusters[c]))) #even distribution                    
+                        agentAssignments[i].append((node, ((1-primaryProb)/(len(self.clusters)-1))/len(self.clusters[c]))) #even distribution                    
             
         return agentAssignments
-     
+
+    '''
+    random assignment of nodes to agents. Each node has a number of agents assigned to it based on poisson distribution with mean self.overlap
+    '''     
     def assignAgents(self):
         agentAssignments = {}
         agentIds = []
@@ -107,7 +122,13 @@ class Simulation:
                 agentAssignments[a].append(i)
         
         return agentAssignments
-    
+
+    '''
+    generates a graph with clusters of nodes, where:
+    -number of nodes in each cluster is chosen from a poisson distribution with mean nodesPerCluster
+    -edges between nodes in the same cluster are added with probability pEdgeIn
+    -edges between nodes in different cluster are added with probability pEdgeBet
+    '''    
     def generateClusteredGraph(self,numClusters,nodesPerCluster,pEdgeIn,pEdgeBet):
         g = nx.Graph()
         totalNodeCount = 0
@@ -133,7 +154,10 @@ class Simulation:
                         g.add_edge(i, j)
                         
         return g
-            
+
+    '''
+    checks what proportion of the shared nodes are neighbors of nodes from the set actionNodes, divides by the total # of opportunities (sharedNodes*actionNodes)
+    '''            
     def relevanceMetric(self, actionNodes, sharedNodes):
         relevanceCount = 0.0
         for sharedNode in sharedNodes:
@@ -145,7 +169,10 @@ class Simulation:
             return 0
         else:
             return relevanceCount/opportunity
-        
+
+    '''
+    for each node in shared nodes, check whether it was relevant. returns the proportion of relevant nodes
+    '''          
     def relevanceMetricBinaryNodes(self, actionNodes, sharedNodes):
         relevanceCount = 0.0
         for sharedNode in sharedNodes:
@@ -158,7 +185,10 @@ class Simulation:
             return 0
         else:
             return relevanceCount/opportunity        
-        
+
+    '''
+    checks what proportion of all relevant nodes were retreived (shared)
+    '''         
     def relevanceRecall(self, actionNodes, sharedNodes):
         relevantNodes = []
         for actNode in actionNodes:
@@ -175,7 +205,10 @@ class Simulation:
             return 0
         recall = shared/len(relevantNodes)
         return recall
-    
+
+    '''
+    checks how many of the nodes that were shared were relevant and *not* in action set
+    '''    
     def relevancePrecision(self, actionNodes, sharedNodes):
         relevantNodes = []
         for actNode in actionNodes:
@@ -194,7 +227,10 @@ class Simulation:
             return 0
         prec = shared/self.queryLimit
         return prec    
-        
+
+    '''
+    a proximity metric: checks what was the distance between each of the shared nodes and the focus node. Returns the reciprocal to avoid inifinity distance when two nodes are not connected
+    '''        
     def distanceFromFocusMetric(self, focusNode, sharedNodes):
         totalDist = 0.0
         for node in sharedNodes:
@@ -226,8 +262,7 @@ class Simulation:
             print 'starting to run algorithm: '+str(system)
             while ((self.solved == False) & (self.numIterations<self.maxIterations)): 
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
-                    if self.numIterations == 50:
-                        a = 0
+
                     nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
                     
                     #check what agent would have done without new info
@@ -235,25 +270,21 @@ class Simulation:
                     
                     #query system
                     if self.setting == "all":
-                        nodesToShare = system.query(agent.id, self.queryLimit, startRev=0, node = nodesToChange[0]) #get nodes info to share with agent. nodesToShare is list of nodes
-                    
-#                        nodesToShare = system.query(agent.id, self.queryLimit)
-                    else: #only ranking changes, need to send first rev to consider
-#                        nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0])
-                        if self.numIterations<learnTime:
-                            if system == self.systems[0]:
-                                nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0])
-#                                nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1)
-                                sharedByRandSys[self.numIterations] = copy.deepcopy(nodesToShare)
-                            else:
-                                nodesToShare = copy.deepcopy(sharedByRandSys[self.numIterations])
+                        if self.focus:
+                            nodesToShare = system.query(agent.id, self.queryLimit, startRev=0, node = nodesToChange[0]) #get nodes info to share with agent. nodesToShare is list of nodes
                         else:
-                            nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0]) #assume random system is always first!
-#                            nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1)
+                            nodesToShare = system.query(agent.id, self.queryLimit, startRev=0, node = None)  
+                    
+                    else: #only ranking changes, need to send first rev to consider
+                        if self.focus:
+                            nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0]) 
+                        else:    
+                            nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = None)
                     
                     if len(nodesToShare)>self.queryLimit:
                         print 'problem'
                     
+                    #compute metrics
                     relevance = self.relevanceMetric(nodesToChange, nodesToShare)
                     relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
                     relevanceRecall = self.relevanceRecall(nodesToChange, nodesToShare)
@@ -267,10 +298,8 @@ class Simulation:
                     
                     
                     actions = agent.chooseActions(self.numIterations,minActions = 0) #query agent for actions
+ 
                     
-                    
-                    
-#                    print actions
                     #send update to system
                     actionObjs = []
                     for node,col in actions:
@@ -284,6 +313,15 @@ class Simulation:
                     res['graphName'] = graphName
                     res['algorithm'] = system
                     res['iteration'] = self.numIterations
+                    res['round'] = math.floor(float(self.numIterations)/self.numAgents)
+                    res['focus'] = self.focus
+                    res['queryLimit']=self.queryLimit
+                    res['actionLimit']=self.actionLimit
+                    res['numAgents']=self.numAgents
+                    res['graphSize']=nx.number_of_nodes(self.graph)
+                    res['numEdges']=nx.number_of_edges(self.graph)
+                    res['pWithin']=self.pWithin
+                    res['pBetween']=self.pBetween
                     
                     #compute effect metric
                     diff = 0
@@ -316,12 +354,12 @@ class Simulation:
                     res['effect']=  diff                 
                     res['confDiff']=confDiff
                     
-                    res['percentColored'] = self.instance.getPercentColored()
+                    res['percentColored'] = self.instance.getPercentColored() #only relevant if we start from nothing colored
                     res['run'] = run
                     
                     results.append(res)
                     
-                    filename = "../graphPlots1/"+str(system)+"_"+str(self.numIterations)+".png"
+#                    filename = "../graphPlots1/"+str(system)+"_"+str(self.numIterations)+".png"
 #                    if self.numIterations == 0:
 #                        self.instance.drawGraph(filename)
                     
@@ -340,15 +378,14 @@ class Simulation:
             
         #save results to file
         with open(outputFilename, 'ab') as csvfile:
-            fieldnames = ['graphName', 'algorithm', 'iteration', 'relevance','relevanceBinary','recall', 'precision','AverageDistance','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
+            fieldnames = ['graphName', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','relevance','relevanceBinary','recall', 'precision','AverageDistance','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
             if run == 0:
                 writer.writeheader()
             for res in results:
                 writer.writerow(res)
-        
-          
+            
             
 def runGraph9nodes():
     systems = []
@@ -444,202 +481,3 @@ if __name__ == '__main__':
                 sim.resetSystems(systemsBeforeRun)  
                         
                         
-
-    
-#    for numNodes in range(20,51,5):
-#        for p in frange(0.05,0.3,0.05):
-#            graphName = 'random_'+str(numNodes)+"_"+str(p)
-#            for numAgents in range(2,6):                
-#                systems = []
-#                randSys = RandomSystem(setting = "changes")
-#                mostChanged = MostChangedInIntervalSystem(200) #essentially all revisions...
-#                mostChangeInt = MostChangedInIntervalSystem(5)
-#                latestSys = LatestChangedSystem()
-#                systems.append(randSys)
-#                systems.append(mostChanged)
-#                mip = Mip()
-#                systems.append(mip)
-#                systems.append(mostChangeInt)
-#                systems.append(latestSys)                  
-#                sim = Simulation(graph, numAgents, 3, systems, overlap = 2, maxIterations = 150, actionLimit = 5, queryLimit = 5, weightInc = 1.0, setting = "changes")
-#                systemsBeforeRun = copy.deepcopy(systems)
-#                filename= '../results/'+graphName+"onlyBetaMIP_200iter_colored_changes_minAction3__queryLimit5_actionLimit5_agents"+str(numAgents)+"_overlap2.csv"
-#                for i in range(5):            
-#                    sim.runSimulation(filename,graphName, run = i)
-#                    sim.resetSystems(systemsBeforeRun)    
-#
-##    graph = nx.fast_gnp_random_graph(20, 0.6)
-#    print 'done'
-#
-#    a = 1/0         
-#    graph = nx.fast_gnp_random_graph(30, 0.1)
-##    graph = nx.watts_strogatz_graph(20, 5, 0.7)
-#    graphName = 'random_30_01'
-#    filename= '../results/'+graphName+"onlyBetaMIP_150iter_colored_changes_minAction0__queryLimit5_actionLimit3_agents3_overlap2.csv"
-#    for i in range(5):     
-#        systems = []
-#        randSys = RandomSystem(setting = "changes")
-#        mostChanged = MostChangedInIntervalSystem(200) #essentially all revisions...
-#        mostChangeInt = MostChangedInIntervalSystem(5)
-#        latestSys = LatestChangedSystem()
-#        systems.append(randSys)
-##        systems.append(mostChanged)
-#        mip = Mip()
-#        systems.append(mip)
-##        systems.append(mostChangeInt)
-##        systems.append(latestSys)      
-#        graphName = graphName+"_"+str(i)
-#        sim = Simulation(graph, 3, 3, systems, overlap = 2, maxIterations = 150, actionLimit = 3, queryLimit = 5, weightInc = 1.0, setting = "changes")
-#        sim.runSimulation(filename,graphName, run = i)    
-#
-##    graph = nx.fast_gnp_random_graph(20, 0.6)
-#    print 'done'
-#
-# 
-##    return
-#
-#    graphName = 'watts_strogatz_graph_20_5_05'
-#    filename= '../results/'+graphName+"__all2_actionMin0_queryLimit5_actionLimit5_agents5_overlap2.csv"
-#    for i in range(1):  
-#        systems = []
-#        randSys = RandomSystem(setting = "all")
-#        mostChanged = MostChangedInIntervalSystem(200)
-#        mostChangeInt = MostChangedInIntervalSystem(5)
-#        latestSys = LatestChangedSystem()
-#        systems.append(randSys)
-#        systems.append(mostChanged)
-#        mip = Mip()
-#        systems.append(mip)
-#        systems.append(mostChangeInt)
-#        systems.append(latestSys)
-#        graph = nx.watts_strogatz_graph(20, 5, 0.5)   
-#        graphName = graphName+"_"+str(i)
-#        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 5, queryLimit = 5, weightInc = 1.0, setting = "all")
-#        sim.runSimulation(filename,graphName)       
-#
-#    a = 1/0 
-#   
-#    systems = []
-#    randSys = RandomSystem()
-#    mostChanged = MostChangedSystem()
-#    mostChangeInt = MostChangedInIntervalSystem(5)
-#    latestSys = LatestChangedSystem()
-#    systems.append(randSys)
-#    systems.append(mostChanged)
-#    mip = Mip()
-#    systems.append(mip)
-#    systems.append(mostChangeInt)
-#    systems.append(latestSys)
-#            
-#    graph = nx.watts_strogatz_graph(30, 7, 0.5)
-#    graphName = 'watts_strogatz_graph_30_7_05'
-#    filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
-#    for i in range(10):     
-#        systems = []
-#        randSys = RandomSystem()
-#        mostChanged = MostChangedSystem()
-#        mostChangeInt = MostChangedInIntervalSystem(5)
-#        latestSys = LatestChangedSystem()
-#        systems.append(randSys)
-#        systems.append(mostChanged)
-#        mip = Mip()
-#        systems.append(mip)
-#        systems.append(mostChangeInt)
-#        systems.append(latestSys)        
-#        graphName = graphName+"_"+str(i)
-#        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
-#        sim.runSimulation(filename,graphName)    
-#
-#    systems = []
-#    randSys = RandomSystem()
-#    mostChanged = MostChangedSystem()
-#    mostChangeInt = MostChangedInIntervalSystem(5)
-#    latestSys = LatestChangedSystem()
-#    systems.append(randSys)
-#    systems.append(mostChanged)
-#    mip = Mip()
-#    systems.append(mip)
-#    systems.append(mostChangeInt)
-#    systems.append(latestSys)
-#            
-#    graph = nx.watts_strogatz_graph(40, 7, 0.5)
-#    graphName = 'watts_strogatz_graph_40_7_05'
-#    filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
-#    for i in range(10): 
-#        systems = []
-#        randSys = RandomSystem()
-#        mostChanged = MostChangedSystem()
-#        mostChangeInt = MostChangedInIntervalSystem(5)
-#        latestSys = LatestChangedSystem()
-#        systems.append(randSys)
-#        systems.append(mostChanged)
-#        mip = Mip()
-#        systems.append(mip)
-#        systems.append(mostChangeInt)
-#        systems.append(latestSys)            
-#        graphName = graphName+"_"+str(i)
-#        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
-#        sim.runSimulation(filename,graphName)  
-#
-#    systems = []
-#    randSys = RandomSystem()
-#    mostChanged = MostChangedSystem()
-#    mostChangeInt = MostChangedInIntervalSystem(5)
-#    latestSys = LatestChangedSystem()
-#    systems.append(randSys)
-#    systems.append(mostChanged)
-#    mip = Mip()
-#    systems.append(mip)
-#    systems.append(mostChangeInt)
-#    systems.append(latestSys)
-#            
-#    graph = nx.binomial_graph(20, 0.5)
-#    graphName = 'binomial_20_05'
-#    filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
-#    for i in range(10):   
-#        systems = []
-#        randSys = RandomSystem()
-#        mostChanged = MostChangedSystem()
-#        mostChangeInt = MostChangedInIntervalSystem(5)
-#        latestSys = LatestChangedSystem()
-#        systems.append(randSys)
-#        systems.append(mostChanged)
-#        mip = Mip()
-#        systems.append(mip)
-#        systems.append(mostChangeInt)
-#        systems.append(latestSys)          
-#        graphName = graphName+"_"+str(i)
-#        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
-#        sim.runSimulation(filename,graphName)                           
-#
-#    systems = []
-#    randSys = RandomSystem()
-#    mostChanged = MostChangedSystem()
-#    mostChangeInt = MostChangedInIntervalSystem(5)
-#    latestSys = LatestChangedSystem()
-#    systems.append(randSys)
-#    systems.append(mostChanged)
-#    mip = Mip()
-#    systems.append(mip)
-#    systems.append(mostChangeInt)
-#    systems.append(latestSys)
-#        
-#    graph = nx.binomial_graph(30, 0.5)
-#    graphName = 'binomial_30_05'
-#    filename= '../results/'+graphName+"__queryLimit3_agents5_overlap2.csv"
-#    for i in range(10):  
-#        systems = []
-#        randSys = RandomSystem()
-#        mostChanged = MostChangedSystem()
-#        mostChangeInt = MostChangedInIntervalSystem(5)
-#        latestSys = LatestChangedSystem()
-#        systems.append(randSys)
-#        systems.append(mostChanged)
-#        mip = Mip()
-#        systems.append(mip)
-#        systems.append(mostChangeInt)
-#        systems.append(latestSys)           
-#        graphName = graphName+"_"+str(i)
-#        sim = Simulation(graph, 5, 3, systems, overlap = 2, maxIterations = 200, actionLimit = 3, queryLimit = 3, weightInc = 1.0)
-#        sim.runSimulation(filename,graphName)     
-    
