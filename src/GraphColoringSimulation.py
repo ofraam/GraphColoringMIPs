@@ -497,7 +497,7 @@ if __name__ == '__main__':
     systems.append(mipGamma) 
     systems.append(mip)
     systems.append(mip2)           
-    outputFile =   '../results/0730/oneFileTry2.csv'
+    outputFile =   '../results/results0731.csv'
     
     
 
@@ -507,9 +507,9 @@ if __name__ == '__main__':
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()    
         
-    for numAgents in range(3,11):
-        for queryLimit in range(1,6):
-            for nodesPerCluster in range(5,11):
+    for numAgents in (3,5,7,9):
+        for queryLimit in (1,3,5):
+            for nodesPerCluster in (5,7,9):
                 systems = []
                 randSys = RandomSystem(setting = "all")
                 mostChanged = MostChangedInIntervalSystem(500) #essentially all revisions...
