@@ -497,19 +497,10 @@ if __name__ == '__main__':
     systems.append(mipGamma) 
 #    systems.append(mip)
     systems.append(mip2)           
-    outputFile =   '../results/results0731.csv'
-    
-    
-
-        #write header row in file:
-    with open(outputFile, 'ab') as csvfile:
-        fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()    
-        
+     
     for numAgents in (3,5,7,9):
         for actionLimit in (3,5):
-            outputFile =   '../results/results0803_agents_'+numAgents+'actionLimit_'+actionLimit
+            outputFile =   '../results/results0803_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8.csv'
 
                 #write header row in file:
             with open(outputFile, 'ab') as csvfile:
@@ -518,7 +509,8 @@ if __name__ == '__main__':
                 writer.writeheader()         
         
             for queryLimit in (1,3,5):
-                for nodesPerCluster in (8):
+                nodesP = [8]
+		for nodesPerCluster in (nodesP):
                     for pWithin in (0.3,0.4,0.5):
                         for pBetween in (0.05,0.1,0.2):
                             systems = []
@@ -545,7 +537,7 @@ if __name__ == '__main__':
                             systems.append(mipGamma) 
     #                        systems.append(mip)
                             systems.append(mip2)
-                            sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = False, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
+                            sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = False, focus = True, probPrimary = 0.7, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
                             systemsBeforeRun = copy.deepcopy(systems)
                 #            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
                             for i in range(5):  
