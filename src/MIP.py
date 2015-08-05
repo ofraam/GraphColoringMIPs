@@ -386,29 +386,29 @@ class Mip:
         notificationsList = [] #will hold list of objects, eventually sorted by interest
         for ao in aoList:
             changeExtentSinceLastKnown = self.changeExtent(user, ao)
-            if changeExtentSinceLastKnown != 0: #consider object only if it has changed at least once since agent last known about it
-                doi = self.DegreeOfInterestMIPs(user, ao)  
-                
-                if len(notificationsList)==0:
-                    toAdd = []
-                    toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
-                    toAdd.append(doi)
-                    notificationsList.append(toAdd)
-                else:
-                    j = 0
-                    while ((doi<notificationsList[j][1])):
-                        if j<len(notificationsList)-1:
-                            j = j+1
-                        else:
-                            j=j+1
-                            break
-                    toAdd = []
-                    toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
-                    toAdd.append(doi)                  
-                    if (j<len(notificationsList)):
-                        notificationsList.insert(j, toAdd)
+#            if changeExtentSinceLastKnown != 0: #consider object only if it has changed at least once since agent last known about it
+            doi = self.DegreeOfInterestMIPs(user, ao)  
+            
+            if len(notificationsList)==0:
+                toAdd = []
+                toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
+                toAdd.append(doi)
+                notificationsList.append(toAdd)
+            else:
+                j = 0
+                while ((doi<notificationsList[j][1])):
+                    if j<len(notificationsList)-1:
+                        j = j+1
                     else:
-                        notificationsList.append(toAdd)  
+                        j=j+1
+                        break
+                toAdd = []
+                toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
+                toAdd.append(doi)                  
+                if (j<len(notificationsList)):
+                    notificationsList.insert(j, toAdd)
+                else:
+                    notificationsList.append(toAdd)  
 #        print 'notification list size = '+str(len(notificationsList))        
         return notificationsList   
     
