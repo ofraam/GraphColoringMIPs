@@ -498,7 +498,7 @@ if __name__ == '__main__':
 #    systems.append(mip)
     systems.append(mip2)           
      
-    for numAgents in (3,5,7,9):
+    for numAgents in (3,5):
         for actionLimit in (3,5):
             outputFile =   '../results/results0803_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_FocusGiven.csv'
 
@@ -511,8 +511,8 @@ if __name__ == '__main__':
             for queryLimit in (1,3,5):
                 nodesP = [8]
                 for nodesPerCluster in (nodesP):
-                    for pWithin in (0.3,0.4,0.5):
-                        for pBetween in (0.05,0.1,0.2):
+                    for pWithin in (0.3,0.4):
+                        for pBetween in (0.05,0.1):
                             systems = []
                             randSys = RandomSystem(setting = "all")
                             mostChanged = MostChangedInIntervalSystem(500) #essentially all revisions...
@@ -525,19 +525,31 @@ if __name__ == '__main__':
     #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
                             mip2 = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2)
                             
-#                            systems.append(randSys)
- #                           systems.append(mostChanged)
+                            mipAlphaND= Mip(alpha = 1.0, beta = 0.0, gamma = 0.0, decay = 0.0)
+                            mipBetaND= Mip(alpha = 0.0, beta = 1.0, gamma = 0.0, decay = 0.0)
+                            mipGammaND= Mip(alpha = 0.0, beta = 0.0, gamma = 1.0, decay = 0.0)
+    #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
+                            mip2ND = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2, decay = 0.0)
+                            systems.append(randSys)
+                            systems.append(mostChanged)
                             
                             
   #                          systems.append(mostChangeInt)
-   #                         systems.append(latestSys)  
+                            systems.append(latestSys)  
                               
                             systems.append(mipAlpha) 
                             systems.append(mipBeta) 
                             systems.append(mipGamma) 
     #                        systems.append(mip)
                             systems.append(mip2)
-                            sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = False, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
+                            
+                            systems.append(mipAlphaND) 
+                            systems.append(mipBetaND) 
+                            systems.append(mipGammaND) 
+    #                        systems.append(mip)
+                            systems.append(mip2ND)                            
+                             
+                            sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = False, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
                             systemsBeforeRun = copy.deepcopy(systems)
                 #            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
                             for i in range(5):  
