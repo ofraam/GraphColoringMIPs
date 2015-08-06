@@ -500,7 +500,7 @@ if __name__ == '__main__':
      
     for numAgents in (3,5,7,9):
         for actionLimit in (3,5):
-            outputFile =   '../results/results0803_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_noFocus.csv'
+            outputFile =   '../results/results0803_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_FocusGiven.csv'
 
                 #write header row in file:
             with open(outputFile, 'ab') as csvfile:
@@ -525,19 +525,19 @@ if __name__ == '__main__':
     #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
                             mip2 = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2)
                             
-                            systems.append(randSys)
-                            systems.append(mostChanged)
+#                            systems.append(randSys)
+ #                           systems.append(mostChanged)
                             
                             
-                            systems.append(mostChangeInt)
-                            systems.append(latestSys)  
+  #                          systems.append(mostChangeInt)
+   #                         systems.append(latestSys)  
                               
                             systems.append(mipAlpha) 
                             systems.append(mipBeta) 
                             systems.append(mipGamma) 
     #                        systems.append(mip)
                             systems.append(mip2)
-                            sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = False, focus = False, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
+                            sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = False, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
                             systemsBeforeRun = copy.deepcopy(systems)
                 #            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
                             for i in range(5):  
