@@ -500,7 +500,7 @@ if __name__ == '__main__':
      
     for numAgents in (3,5):
         for actionLimit in (3,5):
-            outputFile =   '../results/results0803_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_FocusGiven.csv'
+            outputFile =   '../results/NoDecayTest_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_FocusGiven.csv'
 
                 #write header row in file:
             with open(outputFile, 'ab') as csvfile:
