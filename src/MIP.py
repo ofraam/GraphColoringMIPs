@@ -7,7 +7,7 @@ import networkx as nx
 import math
 
 class Mip:
-    def __init__(self, alpha = 0.2, beta = 0.6, gamma = 0.2, similarityMetric = "simple", decay = 0.1):
+    def __init__(self, alpha = 0.2, beta1 = 0.6, beta2 = 0, gamma = 0.2, similarityMetric = "simple", decay = 0.1):
         self.mip = nx.Graph()
         self.users = {}
         self.objects  = {}
@@ -18,7 +18,8 @@ class Mip:
         self.centrality = None #centrality values of all nodes
         self.log = [] #log holds all the session data 
         self.alpha = alpha
-        self.beta = beta
+        self.beta1 = beta1
+        self.beta2 = beta2
         self.gamma = gamma
         self.similarityMetric = similarityMetric
         self.nodeIDsToObjectsIds = {}
@@ -190,7 +191,7 @@ class Mip:
        
         #compute proximity between user node and object node using Cycle-Free-Edge-Conductance from Koren et al. 2007 or Adamic/Adar
         proximity = 0.0
-        if ((user in self.users) & (self.beta>0)): #no point to compute proximity if beta is 0... (no weight)
+        if ((user in self.users) & (self.beta1>0)): #no point to compute proximity if beta1 is 0... (no weight)
             userNodeID = self.users[user]
             if self.similarityMetric == "adamic":
                 proximity = self.adamicAdarProximity(userNodeID,obj) #Adamic/Adar proximity
@@ -203,17 +204,20 @@ class Mip:
             changeExtent = self.changeExtent(user, obj)
 
 
-        return self.alpha*api_obj+self.beta*proximity+self.gamma*changeExtent  #TODO: check that scales work out, otherwise need some normalization
+        return self.alpha*api_obj+self.beta1*proximity+self.gamma*changeExtent  #TODO: check that scales work out, otherwise need some normalization
 
     def DegreeOfInterestMIPsFocus(self, user, obj, focus_obj):
+        
+        api_obj = self.centrality[obj]
+        
         try:
-            api_obj = self.simpleProximity(obj,focus_obj)  #node centrality (apriori component)
+            focus_proximity = self.simpleProximity(obj,focus_obj)  #node centrality (apriori component)
         except:
             print 'here'
        
         #compute proximity between user node and object node using Cycle-Free-Edge-Conductance from Koren et al. 2007 or Adamic/Adar
         proximity = 0.0
-        if ((user in self.users) & (self.beta>0)): #no point to compute proximity if beta is 0... (no weight)
+        if ((user in self.users) & (self.beta1>0)): #no point to compute proximity if beta1 is 0... (no weight)
             userNodeID = self.users[user]
             if self.similarityMetric == "adamic":
                 proximity = self.adamicAdarProximity(userNodeID,obj) #Adamic/Adar proximity
@@ -226,7 +230,7 @@ class Mip:
             changeExtent = self.changeExtent(user, obj)
 
 
-        return self.alpha*api_obj+self.beta*proximity+self.gamma*changeExtent  #TODO: check that scales work out, otherwise need some normalization
+        return self.alpha*api_obj+self.beta1*proximity+self.beta2*focus_proximity+self.gamma*changeExtent  #TODO: check that scales work out, otherwise need some normalization
 
 
     '''
@@ -512,7 +516,7 @@ class Mip:
     -----------------------------------------------------------------------------
     '''
     def __str__(self):
-        return "MIP_"+str(self.alpha)+"_"+str(self.beta)+"_"+str(self.gamma)+"_"+str(self.decay)
+        return "MIP_"+str(self.alpha)+"_"+str(self.beta1)+"_"+str(self.gamma)+"_"+str(self.decay)
         
     def createNodeLabels(self, nodeTypes = 'both'):
         labels = {}
