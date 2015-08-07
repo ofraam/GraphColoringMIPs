@@ -511,25 +511,29 @@ if __name__ == '__main__':
             for queryLimit in (1,3,5):
                 nodesP = [8]
                 for nodesPerCluster in (nodesP):
-                    for pWithin in (0.3,0.4):
-                        for pBetween in (0.05,0.1):
+                    pw = [0.3]
+                    for pWithin in pw:
+                        for pBetween in (0.05,0.15):
                             systems = []
                             randSys = RandomSystem(setting = "all")
                             mostChanged = MostChangedInIntervalSystem(500) #essentially all revisions...
                             mostChangeInt = MostChangedInIntervalSystem(5)
                             latestSys = LatestChangedSystem()
                             
-                            mipAlpha= Mip(alpha = 1.0, beta = 0.0, gamma = 0.0)
-                            mipBeta= Mip(alpha = 0.0, beta = 1.0, gamma = 0.0)
-                            mipGamma= Mip(alpha = 0.0, beta = 0.0, gamma = 1.0)
+                            mipAlpha= Mip(alpha = 1.0, beta1 = 0.0, beta2 = 0.0, gamma = 0.0, decay = 0.0)
+                            mipBeta1= Mip(alpha = 0.0, beta1 = 1.0, beta2 = 0.0, gamma = 0.0, decay = 0.0)
+                            mipBeta2= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 1.0, gamma = 0.0, decay = 0.0)
+                            mipGamma= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 0.0, gamma = 1.0, decay = 0.0)
     #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
-                            mip2 = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2)
-                            
-                            mipAlphaND= Mip(alpha = 1.0, beta = 0.0, gamma = 0.0, decay = 0.0)
-                            mipBetaND= Mip(alpha = 0.0, beta = 1.0, gamma = 0.0, decay = 0.0)
-                            mipGammaND= Mip(alpha = 0.0, beta = 0.0, gamma = 1.0, decay = 0.0)
-    #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
-                            mip2ND = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2, decay = 0.0)
+                            mip1 = Mip(alpha = 0.2, beta1 = 0.3, beta2 = 0.3, gamma = 0.2, decay = 0.0)
+                            mip2 = Mip(alpha = 0.1, beta1 = 0.4, beta2 = 0.4, gamma = 0.1, decay = 0.0)
+                            mip3 = Mip(alpha = 0.1, beta1 = 0.5, beta2 = 0.3, gamma = 0.1, decay = 0.0)
+                            mip4 = Mip(alpha = 0.0, beta1 = 0.5, beta2 = 0.4, gamma = 0.1, decay = 0.0)
+#                            mipAlphaND= Mip(alpha = 1.0, beta = 0.0, gamma = 0.0, decay = 0.0)
+#                            mipBetaND= Mip(alpha = 0.0, beta = 1.0, gamma = 0.0, decay = 0.0)
+#                            mipGammaND= Mip(alpha = 0.0, beta = 0.0, gamma = 1.0, decay = 0.0)
+#    #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
+#                            mip2ND = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2, decay = 0.0)
                             systems.append(randSys)
                             systems.append(mostChanged)
                             
@@ -541,13 +545,13 @@ if __name__ == '__main__':
                             systems.append(mipBeta) 
                             systems.append(mipGamma) 
     #                        systems.append(mip)
-                            systems.append(mip2)
+#                            systems.append(mip2)
                             
-                            systems.append(mipAlphaND) 
-                            systems.append(mipBetaND) 
-                            systems.append(mipGammaND) 
-    #                        systems.append(mip)
-                            systems.append(mip2ND)                            
+                            systems.append(mip1) 
+                            systems.append(mip2) 
+                            systems.append(mip3) 
+                            systems.append(mip4)
+#                            systems.append(mip2ND)                            
                              
                             sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = False, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
                             systemsBeforeRun = copy.deepcopy(systems)
