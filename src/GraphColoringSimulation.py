@@ -210,7 +210,28 @@ class Simulation:
             return 0
         recall = shared/len(relevantNodes)
         return recall
-    
+
+    '''
+    checks what proportion of all relevant nodes were retrieved (shared)
+    '''         
+    def relevanceRecallChanged(self, actionNodes, sharedNodes, agent):
+        relevantNodes = []
+        for actNode in actionNodes:
+            for neighbor in nx.neighbors(self.graph, actNode):
+#                if neighbor not in actionNodes: #not sure this is correct
+                if neighbor in self.lastChangedBy.keys():
+                    if self.lastChangedBy[neighbor]!=agent:
+                        relevantNodes.append(neighbor)
+                        
+                    
+        shared = 0.0
+        for sharedNode in sharedNodes:
+            if sharedNode in relevantNodes:
+                shared = shared+1
+        if len(relevantNodes)==0:
+            return 0
+        recall = shared/len(relevantNodes)
+        return recall    
 
     '''
     checks how many of the nodes that were shared were relevant 
@@ -254,14 +275,14 @@ class Simulation:
         for actNode in actionNodes:
             for neighbor in nx.neighbors(self.graph, actNode):
 #                if neighbor not in actionNodes: #not sure this is correct
-                relevantNodes.append(neighbor)
+                if neighbor in self.lastChangedBy.keys():
+                    if self.lastChangedBy[neighbor]!=agent:
+                        relevantNodes.append(neighbor)
                     
         shared = 0.0
         for i in range(len(sharedNodes)):
             if sharedNodes[i] in relevantNodes:
-                if sharedNodes[i] in self.lastChangedBy.keys():
-                    if self.lastChangedBy[sharedNodes[i]]!=agent:
-                        shared = shared+1
+                shared = shared+1
         if len(relevantNodes)==0:
 #            print 'nothing'
             return 0
@@ -332,6 +353,7 @@ class Simulation:
                     relevance = self.relevanceMetric(nodesToChange, nodesToShare)
                     relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
                     relevanceRecall = self.relevanceRecall(nodesToChange, nodesToShare)
+                    recallChange = self.relevanceRecallChanged(nodesToChange, nodesToShare, agent)
                     precision = self.relevancePrecision(nodesToChange, nodesToShare)
                     
                     
@@ -400,7 +422,7 @@ class Simulation:
                         
                     res['relevance'] = relevance
                     res['relevanceBinary'] = relevanceBinary 
-                    res['recall'] = relevanceRecall      
+                    res['recall'] = recallChange      
                     res['precision'] =  precision        
                     res['precisionChanged']=precisionChangedByOther  
                     res['AverageDistance'] = distFromFocus 
