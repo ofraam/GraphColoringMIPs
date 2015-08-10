@@ -133,20 +133,7 @@ class MostChangedInIntervalSystem:
                 self.nodeChangeCount[act.ao] = 1
             self.lastChangedBy[act.ao] = session.user   
             
-        for node in self.nodeChangetimes:
-            timeList = self.nodeChangetimes[node]
-            lastRevToConsider = max(0,session.time-self.window)
-            i = 0
-            while ((i<len(timeList)) & (timeList[i]< lastRevToConsider)):
-                i = i+1
-                if i>=len(timeList)-1:
-                    break;
-            if i<len(timeList):
-                timeList = timeList[i:]     
-            else:
-                timeList = []
-            self.nodeChangeCount[node] = len(timeList)                    
-
+           
             
     def query(self, agent, infoLimit, startRev = 0, node = None, onlyChanged = True):
 
@@ -165,9 +152,10 @@ class MostChangedInIntervalSystem:
         if node is not None:
             while ((addedCounter<infoLimit) & (counter<len(rankedNodes))):
                 if rankedNodes[counter]!=node:
-                    nodesToShare.append(rankedNodes[counter])
-                    counter = counter+1
-                    addedCounter = addedCounter + 1
+                    if ((self.lastChangedBy[rankedNodes[counter]]!=agent) | (onlyChanged==False)):
+                        nodesToShare.append(rankedNodes[counter])
+                        counter = counter+1
+                        addedCounter = addedCounter + 1
 #                    print counter
         else:
             nodesToShare = rankedNodes[:infoLimit]            
