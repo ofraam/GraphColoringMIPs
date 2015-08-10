@@ -516,7 +516,7 @@ class Mip:
     -----------------------------------------------------------------------------
     '''
     def __str__(self):
-        return "MIP_"+str(self.alpha)+"_"+str(self.beta1)+"_"+str(self.gamma)+"_"+str(self.decay)
+        return "MIP_"+str(self.alpha)+"_"+str(self.beta1)+"_"+str(self.beta2)+"_"+str(self.gamma)+"_"+str(self.decay)
         
     def createNodeLabels(self, nodeTypes = 'both'):
         labels = {}
