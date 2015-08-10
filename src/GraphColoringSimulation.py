@@ -515,7 +515,7 @@ if __name__ == '__main__':
                     for pWithin in pw:
                         for pBetween in (0.05,0.15):
                             systems = []
-                            randSys = RandomSystem(setting = "all")
+                            randSys = RandomSystem()
                             mostChanged = MostChangedInIntervalSystem(500) #essentially all revisions...
                             mostChangeInt = MostChangedInIntervalSystem(5)
                             latestSys = LatestChangedSystem()

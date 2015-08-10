@@ -28,12 +28,12 @@ class Mip:
     def update(self, session): #to fit System API
         self.updateMIP(session)
         
-    def query(self, user, infoLimit, startRev = 0, node = None): #to fit System API
+    def query(self, user, infoLimit, startRev = 0, node = None, onlyChanged = True): #to fit System API
         if node is None:
 #            rankedObjects = self.rankChangesForUser(user, startRev)
-            rankedObjects = self.rankChangesForUserLastKnown(user, startRev)
+            rankedObjects = self.rankChangesForUserLastKnown(user, startRev, onlyChanged = onlyChanged)
         else:
-            rankedObjects = self.rankAllGivenUserFocus(user, node, startRev)
+            rankedObjects = self.rankAllGivenUserFocus(user, node, startRev, onlyChanged = onlyChanged)
 
 #commented out section below is the inclusion of one node that is *far* from the agent. probably doesn't make sense for the simulation now.   
 #        if node is None:
@@ -385,69 +385,69 @@ class Mip:
                             notificationsList.append(toAdd)                        
         return notificationsList
     
-    def rankChangesForUserLastKnown(self,user,time, onlySig = True):
+    def rankChangesForUserLastKnown(self,user,time, onlyChanged = True, onlySig = True):
         aoList = self.getLiveAos() #gets the MIP NODES that represent live objects
         notificationsList = [] #will hold list of objects, eventually sorted by interest
         for ao in aoList:
             changeExtentSinceLastKnown = self.changeExtent(user, ao)
-#            if changeExtentSinceLastKnown != 0: #consider object only if it has changed at least once since agent last known about it
-            doi = self.DegreeOfInterestMIPs(user, ao)  
-            
-            if len(notificationsList)==0:
-                toAdd = []
-                toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
-                toAdd.append(doi)
-                notificationsList.append(toAdd)
-            else:
-                j = 0
-                while ((doi<notificationsList[j][1])):
-                    if j<len(notificationsList)-1:
-                        j = j+1
-                    else:
-                        j=j+1
-                        break
-                toAdd = []
-                toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
-                toAdd.append(doi)                  
-                if (j<len(notificationsList)):
-                    notificationsList.insert(j, toAdd)
+            if ((changeExtentSinceLastKnown != 0) | (onlyChanged==False)): #consider object only if it has changed at least once since agent last known about it
+                doi = self.DegreeOfInterestMIPs(user, ao)  
+                
+                if len(notificationsList)==0:
+                    toAdd = []
+                    toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
+                    toAdd.append(doi)
+                    notificationsList.append(toAdd)
                 else:
-                    notificationsList.append(toAdd)  
+                    j = 0
+                    while ((doi<notificationsList[j][1])):
+                        if j<len(notificationsList)-1:
+                            j = j+1
+                        else:
+                            j=j+1
+                            break
+                    toAdd = []
+                    toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
+                    toAdd.append(doi)                  
+                    if (j<len(notificationsList)):
+                        notificationsList.insert(j, toAdd)
+                    else:
+                        notificationsList.append(toAdd)  
 #        print 'notification list size = '+str(len(notificationsList))        
         return notificationsList   
     
     
-    def rankAllGivenUserFocus(self,user,focus_obj, time): #TODO: check correctness and try at some point
+    def rankAllGivenUserFocus(self,user,focus_obj, time, onlyChanged = True): #TODO: check correctness and try at some point
         aoList = self.getLiveAos() #gets the MIP NODES that represent live objects
         notificationsList = [] #will hold list of objects, eventually sorted by interest
         if focus_obj in self.objects.keys():
             focus_ao = self.objects[focus_obj]
             for ao in aoList:
                 changeExtentSinceLastKnown = self.changeExtent(user, ao)
-#                if ((changeExtentSinceLastKnown != 0) & (ao!=focus_ao)): #consider object only if it has changed at least once since agent last known about it            
-                if (ao!=focus_ao): #consider object only if it has changed at least once since agent last known about it
-                    doi = self.DegreeOfInterestMIPsFocus(user, ao, focus_ao)  
-                    
-                    if len(notificationsList)==0:
-                        toAdd = []
-                        toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
-                        toAdd.append(doi)
-                        notificationsList.append(toAdd)
-                    else:
-                        j = 0
-                        while ((doi<notificationsList[j][1])):
-                            if j<len(notificationsList)-1:
-                                j = j+1
-                            else:
-                                j=j+1
-                                break
-                        toAdd = []
-                        toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
-                        toAdd.append(doi)                  
-                        if (j<len(notificationsList)):
-                            notificationsList.insert(j, toAdd)
+                if ((changeExtentSinceLastKnown != 0) | (onlyChanged==False)): #consider object only if it has changed at least once since agent last known about it            
+                    if (ao!=focus_ao): #consider object only if it has changed at least once since agent last known about it
+                        doi = self.DegreeOfInterestMIPsFocus(user, ao, focus_ao)  
+                        
+                        if len(notificationsList)==0:
+                            toAdd = []
+                            toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
+                            toAdd.append(doi)
+                            notificationsList.append(toAdd)
                         else:
-                            notificationsList.append(toAdd) 
+                            j = 0
+                            while ((doi<notificationsList[j][1])):
+                                if j<len(notificationsList)-1:
+                                    j = j+1
+                                else:
+                                    j=j+1
+                                    break
+                            toAdd = []
+                            toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
+                            toAdd.append(doi)                  
+                            if (j<len(notificationsList)):
+                                notificationsList.insert(j, toAdd)
+                            else:
+                                notificationsList.append(toAdd) 
  
             return notificationsList
                     
