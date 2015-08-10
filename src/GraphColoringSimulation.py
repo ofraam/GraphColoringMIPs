@@ -562,23 +562,23 @@ if __name__ == '__main__':
 #                            mipGammaND= Mip(alpha = 0.0, beta = 0.0, gamma = 1.0, decay = 0.0)
 #    #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
 #                            mip2ND = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2, decay = 0.0)
-#                            systems.append(randSys)
-#                            systems.append(mostChanged)
+                            systems.append(randSys)
+                            systems.append(mostChanged)
 #                            
 #                            
 #  #                          systems.append(mostChangeInt)
 #                            systems.append(latestSys)  
 #                              
-#                            systems.append(mipAlpha) 
-#                            systems.append(mipBeta1) 
-#                            systems.append(mipBeta2) 
-#                            systems.append(mipGamma)
-##                            systems.append(mip2)
+                            systems.append(mipAlpha) 
+                            systems.append(mipBeta1) 
+                            systems.append(mipBeta2) 
+                            systems.append(mipGamma)
+#                            systems.append(mip2)
                             
                             systems.append(mip1) 
-#                            systems.append(mip2) 
-#                            systems.append(mip3) 
-#                            systems.append(mip4)
+                            systems.append(mip2) 
+                            systems.append(mip3) 
+                            systems.append(mip4)
 #                            systems.append(mip2ND)                            
                              
                             sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
