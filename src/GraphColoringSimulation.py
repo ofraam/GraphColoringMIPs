@@ -48,6 +48,7 @@ class Simulation:
         self.focus = focus
         self.probPrimay = probPrimary
         self.fromScratch = fromScratch
+        self.lastChangedBy = {} #last changed by
         #generate graph structure
         
         #assign random colors
@@ -78,6 +79,7 @@ class Simulation:
 
     def resetSystems(self, newSystems):
         self.systems = newSystems
+        self.lastChangedBy = {}
     
     '''
     assigns each agents with the nodes in one cluster (only those nodes)
@@ -247,6 +249,24 @@ class Simulation:
         prec = shared/self.queryLimit
         return prec 
     
+    def precisionChangedByOtherAgent(self, actionNodes, sharedNodes, agent):
+        relevantNodes = []
+        for actNode in actionNodes:
+            for neighbor in nx.neighbors(self.graph, actNode):
+#                if neighbor not in actionNodes: #not sure this is correct
+                relevantNodes.append(neighbor)
+                    
+        shared = 0.0
+        for i in range(len(sharedNodes)):
+            if sharedNodes[i] in relevantNodes:
+                if sharedNodes[i] in self.lastChangedBy.keys():
+                    if self.lastChangedBy[sharedNodes[i]]==agent:
+                        shared = shared+1
+        if len(relevantNodes)==0:
+#            print 'nothing'
+            return 0
+        prec = shared/self.queryLimit
+        return prec         
     '''
     a proximity metric: checks what was the distance between each of the shared nodes and the focus node. Returns the reciprocal to avoid inifinity distance when two nodes are not connected
     '''        
@@ -270,6 +290,7 @@ class Simulation:
         
         
     def runSimulation(self, graphName, run = 0, learnTime = -1):
+
         #store results
         results = []
         #save initial state to revert for each system
@@ -288,6 +309,7 @@ class Simulation:
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
 
                     nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
+
                     
                     #check what agent would have done without new info
                     actionsWithoutKnowledge = agent.chooseActionsDonotApply(self.numIterations,minActions = 0)
@@ -312,6 +334,8 @@ class Simulation:
                     relevanceRecall = self.relevanceRecall(nodesToChange, nodesToShare)
                     precision = self.relevancePrecision(nodesToChange, nodesToShare)
                     
+                    
+                    
                     distFromFocus = self.distanceFromFocusMetric(nodesToChange[0], nodesToShare)
                     
                     info = {} #dict holding nodes and their colors (to share with agent)
@@ -322,7 +346,7 @@ class Simulation:
                     if len(changedBelief)!=len(nodesToShare):
                         print 'problem'
                     precisionChangedNodes = self.relevancePrecisionChanged(nodesToChange, nodesToShare, changedBelief)
-                    
+                    precisionChangedByOther = self.precisionChangedByOtherAgent(nodesToChange, nodesToShare, agent)
                     actions = agent.chooseActions(self.numIterations,minActions = 0) #query agent for actions
  
                     
@@ -333,6 +357,10 @@ class Simulation:
                         actionObjs.append(actionObj)
                     session = Session(agent.id, actionObjs, self.numIterations, nodesToShare)
                     system.update(session) #send info back to system
+                    
+                                        #update last changed by
+                    for n in nodesToChange:
+                        self.lastChangedBy[n] = agent
                     
                     #save status
                     res = {}
@@ -374,7 +402,7 @@ class Simulation:
                     res['relevanceBinary'] = relevanceBinary 
                     res['recall'] = relevanceRecall      
                     res['precision'] =  precision        
-                    res['precisionChanged']=precisionChangedNodes  
+                    res['precisionChanged']=precisionChangedByOther  
                     res['AverageDistance'] = distFromFocus 
                     
                     res['conflicts'] = state['conflicts']
@@ -472,7 +500,7 @@ if __name__ == '__main__':
     maxIterations = 100
     for numAgents in (3,5):
         for actionLimit in (3,5):
-            outputFile =   '../results/0807_NoDecay_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_NoFocus.csv'
+            outputFile =   '../results/0810_NoDecay_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_NoFocus.csv'
 
                 #write header row in file:
             with open(outputFile, 'ab') as csvfile:
