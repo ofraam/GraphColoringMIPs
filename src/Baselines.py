@@ -96,7 +96,6 @@ class MostChangedSystem:
         counter = 0
         nodesToShare = []
         if node is not None:
-x
             while ((addedCounter<infoLimit) & (counter<len(rankedNodes))):
                 if rankedNodes[counter]!=node:
                     nodesToShare.append()
