@@ -260,7 +260,7 @@ class Simulation:
         for i in range(len(sharedNodes)):
             if sharedNodes[i] in relevantNodes:
                 if sharedNodes[i] in self.lastChangedBy.keys():
-                    if self.lastChangedBy[sharedNodes[i]]==agent:
+                    if self.lastChangedBy[sharedNodes[i]]!=agent:
                         shared = shared+1
         if len(relevantNodes)==0:
 #            print 'nothing'
@@ -500,7 +500,7 @@ if __name__ == '__main__':
     maxIterations = 100
     for numAgents in (3,5):
         for actionLimit in (3,5):
-            outputFile =   '../results/0810_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged.csv'
+            outputFile =   '../results/test_0810_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged.csv'
 
                 #write header row in file:
             with open(outputFile, 'ab') as csvfile:
