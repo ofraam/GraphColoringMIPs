@@ -123,10 +123,13 @@ class Agent:
             neighborsNeighbors = []
             for i in range(1,len(self.nodesToChange)):
                 neighborsNeighbors.extend(nx.neighbors(self.knownGraph, self.nodesToChange[i]))
-            moreNodes = random.sample(neighborsNeighbors,min(self.actionLimit-len(self.nodesToChange),len(neighborsNeighbors)))
+            extensionList = [x for x in neighborsNeighbors if x not in self.nodesToChange]
+            moreNodes = random.sample(extensionList,min(self.actionLimit-len(self.nodesToChange),len(extensionList)))
             self.nodesToChange.extend(moreNodes)
         
-                              
+        for node in self.nodesToChange:
+            if self.nodesToChange.count(node)>1:
+                print "why?"                   
        
         return self.nodesToChange
     

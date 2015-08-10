@@ -45,11 +45,11 @@ class Mip:
         
         nodesToShare = rankedObjects[:infoLimit]
         nodes = [i[0] for i in nodesToShare]            
-        
-        for node in nodes:
-            if user not in self.users.keys():
-                self.addUser(user)
-            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
+#        
+#        for node in nodes:
+#            if user not in self.users.keys():
+#                self.addUser(user)
+#            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
         
         return nodes
     
@@ -63,10 +63,10 @@ class Mip:
        
         nodes = [i[0] for i in nodesToShare]            
         
-        for node in nodes:
-            if user not in self.users.keys():
-                self.addUser(user)
-            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
+#        for node in nodes:
+#            if user not in self.users.keys():
+#                self.addUser(user)
+#            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
         return nodes    
                     
     def updateMIP(self, session):
@@ -86,7 +86,10 @@ class Mip:
                 nodeIdInMip = self.addObject(ao)
                 act.updateMipNodeID(nodeIdInMip)
             ao_node = self.objects[ao]
-            self.mip.node[ao_node]['revisions'].append(self.iteration) #add revision
+            if self.iteration not in self.mip.node[ao_node]['revisions']:
+                self.mip.node[ao_node]['revisions'].append(self.iteration) #add revision
+            else:
+                print 'interesting'
             self.updateEdge(user_node, ao_node, 'u-ao', act.weightInc)
             #label deleted objects as deleted
             if act.actType == 'delete':
@@ -300,8 +303,11 @@ class Mip:
                 break;
         
     
-        if i<len(revs):
-            return (len(revs)-i)/float((self.iteration-fromRevision))
+        if i<len(revs)-1:
+            res =  (len(revs)-1-i)/float((self.iteration-fromRevision))
+            if fromRevision==revs[len(revs)-1]:
+                print 'hold on'
+            return res
         else:
             return 0
     '''

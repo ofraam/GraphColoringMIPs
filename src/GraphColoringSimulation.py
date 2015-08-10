@@ -274,15 +274,21 @@ class Simulation:
         relevantNodes = []
         for actNode in actionNodes:
             for neighbor in nx.neighbors(self.graph, actNode):
+                relevantNodes.append(neighbor)
 #                if neighbor not in actionNodes: #not sure this is correct
-                if neighbor in self.lastChangedBy.keys():
-                    if self.lastChangedBy[neighbor]!=agent:
-                        relevantNodes.append(neighbor)
+#                if neighbor in self.lastChangedBy.keys():
+#                    if self.lastChangedBy[neighbor]!=agent:
+#                        relevantNodes.append(neighbor)
+
                     
         shared = 0.0
         for i in range(len(sharedNodes)):
             if sharedNodes[i] in relevantNodes:
-                shared = shared+1
+                if sharedNodes[i] in self.lastChangedBy.keys():
+                    if self.lastChangedBy[sharedNodes[i]]!=agent:
+                        shared = shared+1
+                    else:
+                        print 'here'
         if len(relevantNodes)==0:
 #            print 'nothing'
             return 0
@@ -522,7 +528,7 @@ if __name__ == '__main__':
     maxIterations = 100
     for numAgents in (3,5):
         for actionLimit in (3,5):
-            outputFile =   '../results/test_0810_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged.csv'
+            outputFile =   '../results/test2_0810_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged.csv'
 
                 #write header row in file:
             with open(outputFile, 'ab') as csvfile:
@@ -556,23 +562,23 @@ if __name__ == '__main__':
 #                            mipGammaND= Mip(alpha = 0.0, beta = 0.0, gamma = 1.0, decay = 0.0)
 #    #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
 #                            mip2ND = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2, decay = 0.0)
-                            systems.append(randSys)
-                            systems.append(mostChanged)
-                            
-                            
-  #                          systems.append(mostChangeInt)
-                            systems.append(latestSys)  
-                              
-                            systems.append(mipAlpha) 
-                            systems.append(mipBeta1) 
-                            systems.append(mipBeta2) 
-	                    systems.append(mipGamma)
-#                            systems.append(mip2)
+#                            systems.append(randSys)
+#                            systems.append(mostChanged)
+#                            
+#                            
+#  #                          systems.append(mostChangeInt)
+#                            systems.append(latestSys)  
+#                              
+#                            systems.append(mipAlpha) 
+#                            systems.append(mipBeta1) 
+#                            systems.append(mipBeta2) 
+#                            systems.append(mipGamma)
+##                            systems.append(mip2)
                             
                             systems.append(mip1) 
-                            systems.append(mip2) 
-                            systems.append(mip3) 
-                            systems.append(mip4)
+#                            systems.append(mip2) 
+#                            systems.append(mip3) 
+#                            systems.append(mip4)
 #                            systems.append(mip2ND)                            
                              
                             sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
