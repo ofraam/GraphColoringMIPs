@@ -150,12 +150,12 @@ class MostChangedInIntervalSystem:
         counter = 0
         nodesToShare = []
         if node is not None:
-            while ((addedCounter<infoLimit) | (counter<len(rankedNodes))):
+            while ((addedCounter<infoLimit) & (counter<len(rankedNodes))):
                 if rankedNodes[counter]!=node:
                     if ((self.lastChangedBy[rankedNodes[counter]]!=agent) | (onlyChanged==False)):
                         nodesToShare.append(rankedNodes[counter])
-                        counter = counter+1
-                        addedCounter = addedCounter + 1
+                counter = counter+1
+                addedCounter = addedCounter + 1
 #                    print counter
         else:
             nodesToShare = rankedNodes[:infoLimit]            
@@ -201,12 +201,12 @@ class LatestChangedSystem:
         counter = 0
         nodesToShare = []
         if node is not None:
-            while ((addedCounter<infoLimit) | (counter<len(rankedNodes))):
+            while ((addedCounter<infoLimit) & (counter<len(rankedNodes))):
                 if rankedNodes[counter]!=node:
                     if ((self.lastChangedBy[rankedNodes[counter]]!=agent) | (onlyChanged == False)):
                         nodesToShare.append()
-                        counter = counter+1
-                        addedCounter = addedCounter + 1
+                counter = counter+1
+                addedCounter = addedCounter + 1
         else:
             nodesToShare = rankedNodes[:infoLimit]
                     
