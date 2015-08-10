@@ -500,7 +500,7 @@ if __name__ == '__main__':
     maxIterations = 100
     for numAgents in (3,5):
         for actionLimit in (3,5):
-            outputFile =   '../results/0810_NoDecay_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_NoFocus.csv'
+            outputFile =   '../results/0810_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus.csv'
 
                 #write header row in file:
             with open(outputFile, 'ab') as csvfile:
@@ -553,7 +553,7 @@ if __name__ == '__main__':
                             systems.append(mip4)
 #                            systems.append(mip2ND)                            
                              
-                            sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = False, focus = False, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
+                            sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = False, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
                             systemsBeforeRun = copy.deepcopy(systems)
                 #            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
                             for i in range(5):  
