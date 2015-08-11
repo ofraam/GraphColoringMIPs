@@ -528,7 +528,7 @@ if __name__ == '__main__':
     maxIterations = 100
     for numAgents in (3,5):
         for actionLimit in (3,5):
-            outputFile =   '../results/test2_0810_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged.csv'
+            outputFile =   '../results/0811/0811_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged.csv'
 
                 #write header row in file:
             with open(outputFile, 'ab') as csvfile:
@@ -539,7 +539,7 @@ if __name__ == '__main__':
             for queryLimit in (1,3,5):
                 nodesP = [8]
                 for nodesPerCluster in (nodesP):
-                    pw = [0.3]
+                    pw = [0.3,0.4]
                     for pWithin in pw:
                         for pBetween in (0.05,0.15):
                             systems = []
@@ -567,7 +567,7 @@ if __name__ == '__main__':
 #                            
 #                            
 #  #                          systems.append(mostChangeInt)
-#                            systems.append(latestSys)  
+                            systems.append(latestSys)  
 #                              
                             systems.append(mipAlpha) 
                             systems.append(mipBeta1) 

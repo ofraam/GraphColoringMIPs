@@ -204,7 +204,7 @@ class LatestChangedSystem:
             while ((addedCounter<infoLimit) & (counter<len(rankedNodes))):
                 if rankedNodes[counter]!=node:
                     if ((self.lastChangedBy[rankedNodes[counter]]!=agent) | (onlyChanged == False)):
-                        nodesToShare.append()
+                        nodesToShare.append(rankedNodes[counter])
                 counter = counter+1
                 addedCounter = addedCounter + 1
         else:
