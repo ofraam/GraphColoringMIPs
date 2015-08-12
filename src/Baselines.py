@@ -41,10 +41,10 @@ class RandomSystem:
         else:
             relevantNodes = []
             for i in range(startRev,len(self.nodes)):
-                for node in self.nodes[i]:
-                    if node not in relevantNodes:
-                        if ((self.lastChangedBy[node]!=agent) | (onlyChanged==False)):
-                            relevantNodes.append(node)
+                for n in self.nodes[i]:
+                    if n not in relevantNodes:
+                        if ((self.lastChangedBy[n]!=agent) | (onlyChanged==False)):
+                            relevantNodes.append(n)
             if len(self.nodes)>0:
                 nodesToShare = np.random.choice(relevantNodes,size = min(infoLimit,len(relevantNodes)), replace = False)
             if node is not None:
@@ -55,20 +55,25 @@ class RandomSystem:
         return list(nodesToShare)
     
     
-    def queryList(self, agent, infoLimit, startRev = 0, node = None):
+    def queryList(self, agent, infoLimit, startRev = 0, node = None, onlyChanged = True):
         nodesToShare = []
         if self.setting == "all":
             if len(self.nodes)>0:
-                nodesToShare = self.nodes.shuffle
-                 
+                nodesToShare = np.random.choice(self.nodes,size = min(infoLimit,len(self.nodes)), replace = False)
+#            nodesToShare = random.sample(self.nodes,min(infoLimit,len(self.nodes)))
         else:
             relevantNodes = []
             for i in range(startRev,len(self.nodes)):
-                for node in self.nodes[i]:
-                    if node not in relevantNodes:
-                        relevantNodes.append(node)
-            nodesToShare = relevantNodes.shuffle()
-        return nodesToShare
+                for n in self.nodes[i]:
+                    if n not in relevantNodes:
+                        if ((self.lastChangedBy[n]!=agent) | (onlyChanged==False)):
+                            relevantNodes.append(n)
+            if len(self.nodes)>0:
+                nodesToShare = relevantNodes
+            if node is not None:
+                if node in nodesToShare:
+                    nodesToShare.remove(node)
+        return list(nodesToShare)
     
     def __str__(self):
         return "Random"    
@@ -138,10 +143,10 @@ class MostChangedInIntervalSystem:
     def query(self, agent, infoLimit, startRev = 0, node = None, onlyChanged = True):
 
         relevantNodeChangeCounts = {}
-        for node,changeTimes in self.nodeChangetimes.items():
+        for n,changeTimes in self.nodeChangetimes.items():
             if changeTimes[len(changeTimes)-1] >= startRev:
-                if ((self.lastChangedBy[node]!=agent) |(onlyChanged==False)):
-                    relevantNodeChangeCounts[node] = self.nodeChangeCount[node]
+                if ((self.lastChangedBy[n]!=agent) |(onlyChanged==False)):
+                    relevantNodeChangeCounts[n] = self.nodeChangeCount[n]
 
         sorted_dict = sorted(relevantNodeChangeCounts.items(), key=operator.itemgetter(1), reverse = True)
         rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
@@ -160,26 +165,36 @@ class MostChangedInIntervalSystem:
         else:
             nodesToShare = rankedNodes[:infoLimit]            
         
-        
-        nodesToShare = rankedNodes[:infoLimit]            
-            
+                    
         return nodesToShare  
     
-    def queryList(self, agent, infoLimit, startRev = 0, node = None):
-        if startRev == 0:
-            sorted_dict = sorted(self.nodeChangeCount.items(), key=operator.itemgetter(1), reverse = True)
-            rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
-            nodesToShare = rankedNodes
+    def queryList(self, agent, infoLimit, startRev = 0, node = None, onlyChanged = True):
+        relevantNodeChangeCounts = {}
+        for n,changeTimes in self.nodeChangetimes.items():
+            if changeTimes[len(changeTimes)-1] >= startRev:
+                if ((self.lastChangedBy[n]!=agent) |(onlyChanged==False)):
+                    relevantNodeChangeCounts[n] = self.nodeChangeCount[n]
+
+        sorted_dict = sorted(relevantNodeChangeCounts.items(), key=operator.itemgetter(1), reverse = True)
+        rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
+
+        addedCounter=0
+        counter = 0
+        nodesToShare = []
+        if node is not None:
+            while counter<len(rankedNodes):
+                if rankedNodes[counter]!=node:
+                    if ((self.lastChangedBy[rankedNodes[counter]]!=agent) | (onlyChanged==False)):
+                        nodesToShare.append(rankedNodes[counter])
+                counter = counter+1
+                addedCounter = addedCounter + 1
+#                    print counter
         else:
-            relevantNodeChangeCounts = {}
-            for node,changeTimes in self.nodeChangetimes.items():
-                if changeTimes[len(changeTimes)-1] >= startRev:
-                    relevantNodeChangeCounts[node] = self.nodeChangeCount[node]
-            sorted_dict = sorted(relevantNodeChangeCounts.items(), key=operator.itemgetter(1), reverse = True)
-            rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
-            nodesToShare = rankedNodes           
-            
-        return nodesToShare
+            nodesToShare = rankedNodes          
+        
+                    
+        return nodesToShare  
+    
     
     def __str__(self):
         return "MostChangedInterval ("+str(self.window)+")"    
@@ -213,7 +228,7 @@ class LatestChangedSystem:
         
         return nodesToShare
 
-    def queryList(self, agent, infoLimit, startRev = 0, node = None):
+    def queryList(self, agent, infoLimit, startRev = 0, node = None, onlyChanged = True):
         sorted_dict = sorted(self.nodeChangetimes.items(), key=operator.itemgetter(1), reverse = True)
         rankedNodes = [sorted_dict[i][0] for i in range(len(sorted_dict))]
         
@@ -221,16 +236,17 @@ class LatestChangedSystem:
         counter = 0
         nodesToShare = []
         if node is not None:
-            while ((addedCounter<infoLimit) & (counter<len(rankedNodes))):
+            while counter<len(rankedNodes):
                 if rankedNodes[counter]!=node:
-                    nodesToShare.append()
-                    counter = counter+1
-                    addedCounter = addedCounter + 1
+                    if ((self.lastChangedBy[rankedNodes[counter]]!=agent) | (onlyChanged == False)):
+                        nodesToShare.append(rankedNodes[counter])
+                counter = counter+1
+                addedCounter = addedCounter + 1
         else:
             nodesToShare = rankedNodes
                     
         
-        return nodesToShare            
+        return nodesToShare          
 
     def __str__(self):
         return "RecentChanges"     

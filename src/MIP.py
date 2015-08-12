@@ -53,21 +53,30 @@ class Mip:
         
         return nodes
     
-    def queryList(self, user, infoLimit, startRev = 0, node = None): #to fit System API
+    def queryList(self, user, infoLimit, startRev = 0, node = None, onlyChanged = True): #to fit System API
         if node is None:
 #            rankedObjects = self.rankChangesForUser(user, startRev)
-            rankedObjects = self.rankChangesForUserLastKnown(user, startRev)
+            rankedObjects = self.rankChangesForUserLastKnown(user, startRev, onlyChanged = onlyChanged)
         else:
-            rankedObjects = self.rankAllGivenUserFocus(user, node, startRev)
-            nodesToShare = rankedObjects[:infoLimit]
-       
-        nodes = [i[0] for i in nodesToShare]            
+            rankedObjects = self.rankAllGivenUserFocus(user, node, startRev, onlyChanged = onlyChanged)
+
+#commented out section below is the inclusion of one node that is *far* from the agent. probably doesn't make sense for the simulation now.   
+#        if node is None:
+#            nodesToShare = rankedObjects[:infoLimit-1]
+#            if len(rankedObjects)>0:
+#                nodesToShare.append(rankedObjects[len(rankedObjects)-1])
+#        else:
+#            nodesToShare = rankedObjects[:infoLimit]
         
+        nodesToShare = rankedObjects
+        nodes = [i[0] for i in nodesToShare]            
+#        
 #        for node in nodes:
 #            if user not in self.users.keys():
 #                self.addUser(user)
 #            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
-        return nodes    
+        
+        return nodes
                     
     def updateMIP(self, session):
         #initialize 'updated' attribute of all edges to false
