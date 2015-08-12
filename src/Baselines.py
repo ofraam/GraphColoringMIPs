@@ -57,22 +57,18 @@ class RandomSystem:
     
     def queryList(self, agent, infoLimit, startRev = 0, node = None, onlyChanged = True):
         nodesToShare = []
-        if self.setting == "all":
-            if len(self.nodes)>0:
-                nodesToShare = np.random.choice(self.nodes,size = min(infoLimit,len(self.nodes)), replace = False)
-#            nodesToShare = random.sample(self.nodes,min(infoLimit,len(self.nodes)))
-        else:
-            relevantNodes = []
-            for i in range(startRev,len(self.nodes)):
-                for n in self.nodes[i]:
-                    if n not in relevantNodes:
-                        if ((self.lastChangedBy[n]!=agent) | (onlyChanged==False)):
-                            relevantNodes.append(n)
-            if len(self.nodes)>0:
-                nodesToShare = relevantNodes
-            if node is not None:
-                if node in nodesToShare:
-                    nodesToShare.remove(node)
+
+        relevantNodes = []
+        for i in range(startRev,len(self.nodes)):
+            for n in self.nodes[i]:
+                if n not in relevantNodes:
+                    if ((self.lastChangedBy[n]!=agent) | (onlyChanged==False)):
+                        relevantNodes.append(n)
+        if len(self.nodes)>0:
+            nodesToShare = relevantNodes
+        if node is not None:
+            if node in nodesToShare:
+                nodesToShare.remove(node)
         return list(nodesToShare)
     
     def __str__(self):
