@@ -5,21 +5,21 @@ Created on Jun 7, 2015
 '''
 import networkx as nx
 import math
-import matplotlib.pyplot as plt
 
 class Mip:
-    def __init__(self, alpha = 0.2, beta = 0.6, gamma = 0.2, similarityMetric = "simple"):
+    def __init__(self, alpha = 0.2, beta1 = 0.6, beta2 = 0, gamma = 0.2, similarityMetric = "simple", decay = 0.1):
         self.mip = nx.Graph()
         self.users = {}
         self.objects  = {}
         self.iteration = 0
         self.lastID = -1
-        self.decay = 0.1
+        self.decay = decay
         self.objectsInc = 1.0
-        self.current_flow_betweeness = None #centrality values of all nodes
+        self.centrality = None #centrality values of all nodes
         self.log = [] #log holds all the session data 
         self.alpha = alpha
-        self.beta = beta
+        self.beta1 = beta1
+        self.beta2 = beta2
         self.gamma = gamma
         self.similarityMetric = similarityMetric
         self.nodeIDsToObjectsIds = {}
@@ -28,47 +28,57 @@ class Mip:
     def update(self, session): #to fit System API
         self.updateMIP(session)
         
-    def query(self, user, infoLimit, startRev = 0, node = None): #to fit System API
+    def query(self, user, infoLimit, startRev = 0, node = None, onlyChanged = True): #to fit System API
         if node is None:
 #            rankedObjects = self.rankChangesForUser(user, startRev)
-            rankedObjects = self.rankChangesForUserLastKnown(user, startRev)
+            rankedObjects = self.rankChangesForUserLastKnown(user, startRev, onlyChanged = onlyChanged)
         else:
-            rankedObjects = self.rankAllGivenUserFocus(user, node, startRev)
-        if node is None:
-            nodesToShare = rankedObjects[:infoLimit-1]
-            if len(rankedObjects)>0:
-                nodesToShare.append(rankedObjects[len(rankedObjects)-1])
-        else:
-            nodesToShare = rankedObjects[:infoLimit]
-        nodes = [i[0] for i in nodesToShare]            
+            rankedObjects = self.rankAllGivenUserFocus(user, node, startRev, onlyChanged = onlyChanged)
+
+#commented out section below is the inclusion of one node that is *far* from the agent. probably doesn't make sense for the simulation now.   
+#        if node is None:
+#            nodesToShare = rankedObjects[:infoLimit-1]
+#            if len(rankedObjects)>0:
+#                nodesToShare.append(rankedObjects[len(rankedObjects)-1])
+#        else:
+#            nodesToShare = rankedObjects[:infoLimit]
         
-        for node in nodes:
-            if user not in self.users.keys():
-                self.addUser(user)
-            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
+        nodesToShare = rankedObjects[:infoLimit]
+        nodes = [i[0] for i in nodesToShare]            
+#        
+#        for node in nodes:
+#            if user not in self.users.keys():
+#                self.addUser(user)
+#            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
+        
         return nodes
     
-    def queryList(self, user, infoLimit, startRev = 0, node = None): #to fit System API
+    def queryList(self, user, infoLimit, startRev = 0, node = None, onlyChanged = True): #to fit System API
         if node is None:
 #            rankedObjects = self.rankChangesForUser(user, startRev)
-            rankedObjects = self.rankChangesForUserLastKnown(user, startRev)
+            rankedObjects = self.rankChangesForUserLastKnown(user, startRev, onlyChanged = onlyChanged)
         else:
-            rankedObjects = self.rankAllGivenUserFocus(user, node, startRev)
-            nodesToShare = rankedObjects[:infoLimit]
-       
-        nodes = [i[0] for i in nodesToShare]            
+            rankedObjects = self.rankAllGivenUserFocus(user, node, startRev, onlyChanged = onlyChanged)
+
+#commented out section below is the inclusion of one node that is *far* from the agent. probably doesn't make sense for the simulation now.   
+#        if node is None:
+#            nodesToShare = rankedObjects[:infoLimit-1]
+#            if len(rankedObjects)>0:
+#                nodesToShare.append(rankedObjects[len(rankedObjects)-1])
+#        else:
+#            nodesToShare = rankedObjects[:infoLimit]
         
-        for node in nodes:
-            if user not in self.users.keys():
-                self.addUser(user)
-            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
-        return nodes    
+        nodesToShare = rankedObjects
+        nodes = [i[0] for i in nodesToShare]            
+#        
+#        for node in nodes:
+#            if user not in self.users.keys():
+#                self.addUser(user)
+#            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
+        
+        return nodes
                     
     def updateMIP(self, session):
-        if self.iteration>100:
-            self.drawMIP('../mipPlots/mip100.png')
-            self.drawMipObjects('../mipPlots/mipObjs100.png')
-            a = 1
         #initialize 'updated' attribute of all edges to false
         for edge in self.mip.edges_iter(data=True):
             edge[2]['updated']=0
@@ -85,7 +95,10 @@ class Mip:
                 nodeIdInMip = self.addObject(ao)
                 act.updateMipNodeID(nodeIdInMip)
             ao_node = self.objects[ao]
-            self.mip.node[ao_node]['revisions'].append(self.iteration) #add revision
+            if self.iteration not in self.mip.node[ao_node]['revisions']:
+                self.mip.node[ao_node]['revisions'].append(self.iteration) #add revision
+            else:
+                print 'interesting'
             self.updateEdge(user_node, ao_node, 'u-ao', act.weightInc)
             #label deleted objects as deleted
             if act.actType == 'delete':
@@ -98,7 +111,7 @@ class Mip:
                 if (ao_node1!=ao_node2):
                     self.updateEdge(ao_node1, ao_node2, 'ao-ao', self.objectsInc)
                 
-        #update weights between objects that user was informed about and objects that changed
+        #update weights between objects that user was informed about and objects that changed : this is relevant only if agent does not choose which nodes to change apriori
 #        for i in range(len(session.actions)-1):
 #            ao_node1 = self.objects[session.actions[i].ao]
 #            for j in range(0, len(session.info)):
@@ -106,23 +119,23 @@ class Mip:
 #                if (ao_node1!=ao_node2):
 #                    self.updateEdge(ao_node1, ao_node2, 'ao-ao', self.objectsInc)
                         
-        #TODO: think about adding decay here!
-        for edge in self.mip.edges_iter(data=True):
-            if edge[2]['updated']==0:
-                if edge[2]['edge_type']=='ao-ao':
-                    edge[2]['weight'] = max(edge[2]['weight']-self.decay,0)
-                elif edge[2]['edge_type']=='u-ao':
-                    if ((edge[0]==user_node) | (edge[1]==user_node)):
+        if self.decay>0:
+            for edge in self.mip.edges_iter(data=True):
+                if edge[2]['updated']==0:
+                    if edge[2]['edge_type']=='ao-ao':
                         edge[2]['weight'] = max(edge[2]['weight']-self.decay,0)
+                    elif edge[2]['edge_type']=='u-ao':
+                        if ((edge[0]==user_node) | (edge[1]==user_node)):
+                            edge[2]['weight'] = max(edge[2]['weight']-self.decay,0)
         self.currentSession=session
 #        print'updating'
 
-        self.current_flow_betweeness = nx.degree_centrality(self.mip) #TODO: apriori importance for now is simply degree, consider reverting to more complex option
+        self.centrality = nx.degree_centrality(self.mip) #TODO: apriori importance for now is simply degree, consider reverting to more complex option
         self.iteration = self.iteration+1
 #        try:
-#            self.current_flow_betweeness = nx.current_flow_betweenness_centrality(self.mip,True, weight = 'weight')
+#            self.centrality = nx.current_flow_betweenness_centrality(self.mip,True, weight = 'weight')
 #        except:
-#            self.current_flow_betweeness = nx.degree_centrality(self.mip)
+#            self.centrality = nx.degree_centrality(self.mip)
         
     def addUser(self,user_name):
         if (user_name in self.users):
@@ -134,7 +147,6 @@ class Mip:
             attr['node_type']='user'
             self.mip.add_node(self.lastID, attr)
             self.nodeIDsToUsersIds[self.lastID]=user_name
-#            self.nodeIdsToUsers[self.lastID]=user_name
         return self.users[user_name]
             
     
@@ -164,7 +176,6 @@ class Mip:
             attr['weight']=increment
             attr['lastKnown']=self.iteration #update last time user knew about object
             self.mip.add_edge(i1, i2, attr)
-#            print str(self.mip[i1][i2]['lastKnown'])
         if increment>0:
             self.mip[i1][i2]['updated']=1
         
@@ -188,11 +199,11 @@ class Mip:
     '''
     def DegreeOfInterestMIPs(self, user, obj):
      
-        api_obj = self.current_flow_betweeness[obj]  #node centrality (apriori component)
+        api_obj = self.centrality[obj]  #node centrality (apriori component)
        
         #compute proximity between user node and object node using Cycle-Free-Edge-Conductance from Koren et al. 2007 or Adamic/Adar
         proximity = 0.0
-        if ((user in self.users) & (self.beta>0)): #no point to compute proximity if beta is 0... (no weight)
+        if ((user in self.users) & (self.beta1>0)): #no point to compute proximity if beta1 is 0... (no weight)
             userNodeID = self.users[user]
             if self.similarityMetric == "adamic":
                 proximity = self.adamicAdarProximity(userNodeID,obj) #Adamic/Adar proximity
@@ -205,17 +216,20 @@ class Mip:
             changeExtent = self.changeExtent(user, obj)
 
 
-        return self.alpha*api_obj+self.beta*proximity+self.gamma*changeExtent  #TODO: check that scales work out, otherwise need some normalization
+        return self.alpha*api_obj+self.beta1*proximity+self.gamma*changeExtent  #TODO: check that scales work out, otherwise need some normalization
 
     def DegreeOfInterestMIPsFocus(self, user, obj, focus_obj):
+        
+        api_obj = self.centrality[obj]
+        
         try:
-            api_obj = self.simpleProximity(obj,focus_obj)  #node centrality (apriori component)
+            focus_proximity = self.simpleProximity(obj,focus_obj)  #node centrality (apriori component)
         except:
             print 'here'
        
         #compute proximity between user node and object node using Cycle-Free-Edge-Conductance from Koren et al. 2007 or Adamic/Adar
         proximity = 0.0
-        if ((user in self.users) & (self.beta>0)): #no point to compute proximity if beta is 0... (no weight)
+        if ((user in self.users) & (self.beta1>0)): #no point to compute proximity if beta1 is 0... (no weight)
             userNodeID = self.users[user]
             if self.similarityMetric == "adamic":
                 proximity = self.adamicAdarProximity(userNodeID,obj) #Adamic/Adar proximity
@@ -228,7 +242,7 @@ class Mip:
             changeExtent = self.changeExtent(user, obj)
 
 
-        return self.alpha*api_obj+self.beta*proximity+self.gamma*changeExtent  #TODO: check that scales work out, otherwise need some normalization
+        return self.alpha*api_obj+self.beta1*proximity+self.beta2*focus_proximity+self.gamma*changeExtent  #TODO: check that scales work out, otherwise need some normalization
 
 
     '''
@@ -298,8 +312,11 @@ class Mip:
                 break;
         
     
-        if i<len(revs):
-            return (len(revs)-i)/float((self.iteration-fromRevision))
+        if i<len(revs)-1:
+            res =  (len(revs)-1-i)/float((self.iteration-fromRevision))
+            if fromRevision==revs[len(revs)-1]:
+                print 'hold on'
+            return res
         else:
             return 0
     '''
@@ -310,7 +327,7 @@ class Mip:
         aoList = self.getLiveAos() #gets the MIP NODES that represent live objects
         notificationsList = [] #will hold list of objects, eventually sorted by interest
         for ao in aoList:
-            doi = self.DegreeOfInterestMIPs(user, ao,self.current_flow_betweeness)  
+            doi = self.DegreeOfInterestMIPs(user, ao,self.centrality)  
             
             if len(notificationsList)==0:
                 toAdd = []
@@ -383,12 +400,12 @@ class Mip:
                             notificationsList.append(toAdd)                        
         return notificationsList
     
-    def rankChangesForUserLastKnown(self,user,time, onlySig = True):
+    def rankChangesForUserLastKnown(self,user,time, onlyChanged = True, onlySig = True):
         aoList = self.getLiveAos() #gets the MIP NODES that represent live objects
         notificationsList = [] #will hold list of objects, eventually sorted by interest
         for ao in aoList:
             changeExtentSinceLastKnown = self.changeExtent(user, ao)
-            if changeExtentSinceLastKnown != 0: #consider object only if it has changed at least once since agent last known about it
+            if ((changeExtentSinceLastKnown != 0) | (onlyChanged==False)): #consider object only if it has changed at least once since agent last known about it
                 doi = self.DegreeOfInterestMIPs(user, ao)  
                 
                 if len(notificationsList)==0:
@@ -415,37 +432,37 @@ class Mip:
         return notificationsList   
     
     
-    def rankAllGivenUserFocus(self,user,focus_obj, time): #TODO: check correctness and try at some point
+    def rankAllGivenUserFocus(self,user,focus_obj, time, onlyChanged = True): #TODO: check correctness and try at some point
         aoList = self.getLiveAos() #gets the MIP NODES that represent live objects
         notificationsList = [] #will hold list of objects, eventually sorted by interest
         if focus_obj in self.objects.keys():
             focus_ao = self.objects[focus_obj]
             for ao in aoList:
                 changeExtentSinceLastKnown = self.changeExtent(user, ao)
-#                if ((changeExtentSinceLastKnown != 0) & (ao!=focus_ao)): #consider object only if it has changed at least once since agent last known about it            
-                if (ao!=focus_ao): #consider object only if it has changed at least once since agent last known about it
-                    doi = self.DegreeOfInterestMIPsFocus(user, ao, focus_ao)  
-                    
-                    if len(notificationsList)==0:
-                        toAdd = []
-                        toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
-                        toAdd.append(doi)
-                        notificationsList.append(toAdd)
-                    else:
-                        j = 0
-                        while ((doi<notificationsList[j][1])):
-                            if j<len(notificationsList)-1:
-                                j = j+1
-                            else:
-                                j=j+1
-                                break
-                        toAdd = []
-                        toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
-                        toAdd.append(doi)                  
-                        if (j<len(notificationsList)):
-                            notificationsList.insert(j, toAdd)
+                if ((changeExtentSinceLastKnown != 0) | (onlyChanged==False)): #consider object only if it has changed at least once since agent last known about it            
+                    if (ao!=focus_ao): #consider object only if it has changed at least once since agent last known about it
+                        doi = self.DegreeOfInterestMIPsFocus(user, ao, focus_ao)  
+                        
+                        if len(notificationsList)==0:
+                            toAdd = []
+                            toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
+                            toAdd.append(doi)
+                            notificationsList.append(toAdd)
                         else:
-                            notificationsList.append(toAdd) 
+                            j = 0
+                            while ((doi<notificationsList[j][1])):
+                                if j<len(notificationsList)-1:
+                                    j = j+1
+                                else:
+                                    j=j+1
+                                    break
+                            toAdd = []
+                            toAdd.append(self.nodeIDsToObjectsIds[ao]) #need to get the true object id to return (external to mip)
+                            toAdd.append(doi)                  
+                            if (j<len(notificationsList)):
+                                notificationsList.insert(j, toAdd)
+                            else:
+                                notificationsList.append(toAdd) 
  
             return notificationsList
                     
@@ -505,8 +522,7 @@ class Mip:
         
         
 
-    def __str__(self):
-        return "MIP_"+str(self.alpha)+"_"+str(self.beta)+"_"+str(self.gamma) 
+
                  
                 
     '''
@@ -514,7 +530,9 @@ class Mip:
     MIPs reasoning functions end
     -----------------------------------------------------------------------------
     '''
-    
+    def __str__(self):
+        return "MIP_"+str(self.alpha)+"_"+str(self.beta1)+"_"+str(self.beta2)+"_"+str(self.gamma)+"_"+str(self.decay)
+        
     def createNodeLabels(self, nodeTypes = 'both'):
         labels = {}
         for node,data in self.mip.nodes(data = True):
@@ -539,75 +557,75 @@ class Mip:
                     labels[edge] = data['weight']
         return labels
             
-    def drawMIP(self, filename):
-        
-        G = self.mip
-        
-        pos = nx.spring_layout(G)
-        self.pos = pos
-        self.drawn = True
-        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToObjectsIds.keys(),node_size=300,font_size = 9, node_color='blue')
-        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToUsersIds.keys(),node_size=300,font_size = 9,node_color='black')
-
-        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
-        
-        nodeLabels = self.createNodeLabels()
-        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
-        
-        edgeLabels = self.createEdgeLabels()
-        nx.draw_networkx_edge_labels(G, pos, edgeLabels)
-
-
-        plt.draw()
-        plt.savefig(filename)
-        plt.clf()
-        plt.close()
-        
-    def drawMipObjects(self, filename):
-        G = self.mip
-        
-        pos = nx.spring_layout(G)
-        self.pos = pos
-        self.drawn = True
-        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToObjectsIds.keys(),node_size=300,font_size = 9, node_color='blue')
-
-        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
-        
-        nodeLabels = self.createNodeLabels(nodeTypes = 'object')
-        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
-        
-        edgeLabels = self.createEdgeLabels(nodeLabels.keys())
-        nx.draw_networkx_edge_labels(G, pos, edgeLabels,font_size = 7)
-
-
-        plt.draw()
-        plt.savefig(filename)
-        plt.clf()
-        plt.close()  
-        
-    def drawMipForUser(self, filename, user):
-        G = self.mip
-        
-        pos = nx.spring_layout(G)
-        self.pos = pos
-        self.drawn = True
-        nodesToDraw = nx.neighbors(G, self.users[user])
-        nodesToDraw.append(self.users[user])
-        nx.draw_networkx_nodes(G,self.pos,nodelist=nodesToDraw,node_size=300,font_size = 9, node_color='blue')
-
-        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
-        
-        nodeLabels = self.createNodeLabels(nodeTypes = 'both')
-        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
-        
-        edgeLabels = self.createEdgeLabels(nodeLabels.keys())
-        nx.draw_networkx_edge_labels(G, pos, edgeLabels,font_size = 7)
-
-
-        plt.draw()
-        plt.savefig(filename)
-        plt.clf()
-        plt.close()          
+#    def drawMIP(self, filename):
+#        
+#        G = self.mip
+#        
+#        pos = nx.spring_layout(G)
+#        self.pos = pos
+#        self.drawn = True
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToObjectsIds.keys(),node_size=300,font_size = 9, node_color='blue')
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToUsersIds.keys(),node_size=300,font_size = 9,node_color='black')
+#
+#        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
+#        
+#        nodeLabels = self.createNodeLabels()
+#        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
+#        
+#        edgeLabels = self.createEdgeLabels()
+#        nx.draw_networkx_edge_labels(G, pos, edgeLabels)
+#
+#
+#        plt.draw()
+#        plt.savefig(filename)
+#        plt.clf()
+#        plt.close()
+#        
+#    def drawMipObjects(self, filename):
+#        G = self.mip
+#        
+#        pos = nx.spring_layout(G)
+#        self.pos = pos
+#        self.drawn = True
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=self.nodeIDsToObjectsIds.keys(),node_size=300,font_size = 9, node_color='blue')
+#
+#        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
+#        
+#        nodeLabels = self.createNodeLabels(nodeTypes = 'object')
+#        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
+#        
+#        edgeLabels = self.createEdgeLabels(nodeLabels.keys())
+#        nx.draw_networkx_edge_labels(G, pos, edgeLabels,font_size = 7)
+#
+#
+#        plt.draw()
+#        plt.savefig(filename)
+#        plt.clf()
+#        plt.close()  
+#        
+#    def drawMipForUser(self, filename, user):
+#        G = self.mip
+#        
+#        pos = nx.spring_layout(G)
+#        self.pos = pos
+#        self.drawn = True
+#        nodesToDraw = nx.neighbors(G, self.users[user])
+#        nodesToDraw.append(self.users[user])
+#        nx.draw_networkx_nodes(G,self.pos,nodelist=nodesToDraw,node_size=300,font_size = 9, node_color='blue')
+#
+#        nx.draw_networkx_edges(G,self.pos,edgelist=G.edges())
+#        
+#        nodeLabels = self.createNodeLabels(nodeTypes = 'both')
+#        nx.draw_networkx_labels(G,self.pos,labels = nodeLabels, font_color = "white")
+#        
+#        edgeLabels = self.createEdgeLabels(nodeLabels.keys())
+#        nx.draw_networkx_edge_labels(G, pos, edgeLabels,font_size = 7)
+#
+#
+#        plt.draw()
+#        plt.savefig(filename)
+#        plt.clf()
+#        plt.close()          
               
 if __name__ == '__main__':
     pass

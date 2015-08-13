@@ -7,7 +7,6 @@ import networkx as nx
 import math
 import copy
 import random
-import matplotlib.pyplot as plt
 from random import shuffle
 
 class Agent:
@@ -56,6 +55,8 @@ class Agent:
     #the function updates the agents' knowledge about the graph
     #nodesColorsList is a dict of node_id and current color
     def updateBelief(self, nodesColorsList):
+        changedBelief = []
+        
         #reset old stuff
         if self.reset == True:
             for node, data in self.knownGraph.nodes(data = True):
@@ -67,15 +68,25 @@ class Agent:
         #update new stuff
         if isinstance(nodesColorsList, list):
             for node,color in nodesColorsList:
+                changed = 0
+                if self.knownGraph.node[node]['color'] != color:
+                    changed = 1
+                changedBelief.append(changed)
                 self.knownGraph.node[node]['color'] = color
                 self.knownGraph.node[node]['uptoDate'] = True
         else:
             for node,color in nodesColorsList.iteritems():
-                self.knownGraph.node[node]['color'] = color
+                
+                changed = 0
+                if self.knownGraph.node[node]['color'] != color:
+                    changed = 1  
+                changedBelief.append(changed)
+                self.knownGraph.node[node]['color'] = color              
                 self.knownGraph.node[node]['uptoDate'] = True            
             
         self.countNumConflicts() #update conflict counts
-        return 
+
+        return changedBelief
     
     def checkRep(self):
         for i in range(self.nodesToChange):
@@ -112,10 +123,13 @@ class Agent:
             neighborsNeighbors = []
             for i in range(1,len(self.nodesToChange)):
                 neighborsNeighbors.extend(nx.neighbors(self.knownGraph, self.nodesToChange[i]))
-            moreNodes = random.sample(neighborsNeighbors,min(self.actionLimit-len(self.nodesToChange),len(neighborsNeighbors)))
+            extensionList = [x for x in neighborsNeighbors if x not in self.nodesToChange]
+            moreNodes = random.sample(extensionList,min(self.actionLimit-len(self.nodesToChange),len(extensionList)))
             self.nodesToChange.extend(moreNodes)
         
-                              
+        for node in self.nodesToChange:
+            if self.nodesToChange.count(node)>1:
+                print "why?"                   
        
         return self.nodesToChange
     
@@ -471,21 +485,10 @@ if __name__ == '__main__':
 #    
 #    agt.updateBelief(newKnownNodes) 
     
-    pos = nx.spring_layout(G)
-    nx.draw_networkx_nodes(G,pos,nodelist=blueNodes,node_size=300,node_color='blue')
-    nx.draw_networkx_nodes(G,pos,nodelist=redNodes,node_size=300,node_color='red')
-    nx.draw_networkx_nodes(G,pos,nodelist=greenNodes,node_size=300,node_color='green')
-    nx.draw_networkx_nodes(G,pos,nodelist=unknownNodes,node_size=300,node_color='black')
-#    nx.draw_networkx_nodes(mip.mip,pos,nodelist=parNodes,node_size=300,node_color='blue')
-#    nx.draw_networkx_nodes(mip.mip,pos,nodelist=parDeletedNodes, node_size=300,node_color='black')
-    nx.draw_networkx_edges(G,pos,edgelist=G.edges())
-    nx.draw_networkx_labels(G,pos,labels = nodeLabels, font_color = "white")
+
 #    print 'clustering'
 #    print(nx.average_clustering(mip.mip, weight = "weight"))
 #    #    G=nx.dodecahedral_graph()
-##    nx.draw(mip.mip)
-    plt.draw()
-##    plt.savefig('ego_graph50.png')
-    plt.show()
+
     
     
