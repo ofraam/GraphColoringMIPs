@@ -10,9 +10,9 @@ import random
 from random import shuffle
 
 class Agent:
-    def __init__(self, id, clusters, knownGraph, colors, actionLimit, reset, seed = 10):
+    def __init__(self, id, subgraph, knownGraph, colors, actionLimit, reset, seed = 10):
         self.id = id
-        self.controlledNodes = clusters
+        self.controlledNodes = subgraph
         self.knownGraph = knownGraph
         self.actionLimit = actionLimit #number of change color actions allowed per round
         self.colors = colors #possible colors
@@ -105,49 +105,6 @@ class Agent:
                 if i == j:
                     print 'problem'
         return 1
-
-
-    '''
-    chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more nodes that are on a path (without repeating any node)
-    '''
-    def chooseNodesByDistributionDynamic(self):
-#        try:
-        self.nodesToChange = [] #reset from previous turns 
-        #choose first node based on distribution
-        
-        rand = random.random()
-        cumProb = 0.0
-        currIndex = 0
-        currNode = self.controlledNodes[currIndex]
-        cumProb = cumProb+currNode[1]
-        while rand>cumProb:
-            currIndex = currIndex+1
-            currNode = self.controlledNodes[currIndex]
-            cumProb = cumProb+currNode[1]
-        chosenNode = copy.deepcopy(currNode[0])
-        currNode = chosenNode
-        self.nodesToChange.append(chosenNode)
-        #get remaining nodes from neighbors
-        neighbors = nx.neighbors(self.knownGraph, currNode)
-        additionalNodes = random.sample(neighbors,min(self.actionLimit-1,len(neighbors)))
-        self.nodesToChange.extend(additionalNodes)
-        
-        if len(self.nodesToChange)<self.actionLimit: #need to get more nodes
-            neighborsNeighbors = []
-            for i in range(1,len(self.nodesToChange)):
-                neighborsNeighbors.extend(nx.neighbors(self.knownGraph, self.nodesToChange[i]))
-            extensionList = [x for x in neighborsNeighbors if x not in self.nodesToChange]
-            moreNodes = random.sample(extensionList,min(self.actionLimit-len(self.nodesToChange),len(extensionList)))
-            self.nodesToChange.extend(moreNodes)
-        
-        for node in self.nodesToChange:
-            if self.nodesToChange.count(node)>1:
-                print "why?" 
-                
-        list(set(self.nodesToChange))     #in case we somehow have duplicates              
-       
-        return self.nodesToChange
-        
     '''
     chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more nodes that are on a path (without repeating any node)
     '''
@@ -208,8 +165,8 @@ class Agent:
                 
         return self.actionTypes
                 
-    def addObject(self, fromObject, nextID):
-        newObjectID = nextID
+    def addObject(self, fromObject, lastID):
+        newObjectID = lastID+1
         attr = {}
         attr['color']=-1
         self.knownGraph.add_node(newObjectID,attr)
@@ -286,7 +243,7 @@ class Agent:
         
     #chooses the color changes made by the agent.
     #limit is the maximum number of nodes that the agent is allowed to change in one round
-    def chooseActions(self, revision, minActions = 0, nextID = 0):
+    def chooseActions(self, revision, minActions = 0, lastID = 0):
         
         self.lastRevision = revision
         initialSolution = {}
@@ -307,7 +264,7 @@ class Agent:
                     if act==-1:
                         self.removeObject(obj)
                     elif act==1:
-                        self.addObject(obj, nextID)
+                        self.addObject(obj, lastID)
             bestSolution = self.chooseActionsRecurNodeSetGiven(initialSolution,0,initialBestSolution, minActions)
         else: #choose best actions given knowledge
             bestSolution = self.chooseActionsRecur(initialSolution,0,initialBestSolution, minActions)

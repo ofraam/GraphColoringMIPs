@@ -49,6 +49,7 @@ class Simulation:
         self.probPrimay = probPrimary
         self.fromScratch = fromScratch
         self.lastChangedBy = {} #last changed by
+        self.nextNodeID = 0
         #generate graph structure
         
         #assign random colors
@@ -157,9 +158,29 @@ class Simulation:
                 else:
                     if np.random.rand()<pEdgeBet:
                         g.add_edge(i, j)
-                        
+        
+        self.nextNodeID =  totalNodeCount               
         return g
 
+    def objExists(self,nodeID): #TODO: implement
+        nodeCluster = self.nodeToClusterIndex[nodeID]
+        if nodeID in self.clusters[nodeCluster]:
+            return True
+        return False
+    
+    def connectNewNode(self,nodeID):
+        nodeCluster = self.nodeToClusterIndex[nodeID]
+        for i in range(self.nextNodeID):
+            if ((self.objExists(i)==True) & (i!=nodeID)):
+                if  self.nodeToClusterIndex[i]==nodeCluster:
+                    if np.random.rand()<self.pWithin:
+                        self.instance.graph.add_edge(i,nodeID)
+                else:
+                    if np.random.rand()<self.pBetween:
+                        self.instance.graph.add_edge(i,nodeID)
+                
+                
+            
     '''
     checks what proportion of the shared nodes are neighbors of nodes from the set actionNodes, divides by the total # of opportunities (sharedNodes*actionNodes)
     '''            
@@ -315,6 +336,186 @@ class Simulation:
     def changedAgentBeliefRatio(self,changedBelief):
         return sum(changedBelief/float(self.queryLimit))
     
+
+    def runSimulationDynamic(self, graphName, run = 0, learnTime = -1):
+
+        #store results
+        results = []
+        #save initial state to revert for each system
+        seed = np.random.randint(2)
+        #run each system  
+        for system in self.systems:
+            initialProblem = copy.deepcopy(self.instance)
+            self.agents = [] #reset agents
+            
+            for agent,nodes in self.agentAssignments.iteritems():
+                newAgent = Agent(agent,self.clusters,copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed)
+                self.agents.append(newAgent)            
+            print 'starting to run algorithm: '+str(system)
+            while self.numIterations<self.maxIterations: 
+                for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
+
+                    nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
+                    actionTypes = agent.chooseActionTypes() #agent chooses whether to modify/add/remove for each object
+                    
+                   
+                    #query system
+                    if self.setting == "all":
+                        if self.focus:
+                            nodesToShare = system.query(agent.id, self.queryLimit, startRev=0, node = nodesToChange[0]) #get nodes info to share with agent. nodesToShare is list of nodes
+                        else:
+                            nodesToShare = system.query(agent.id, self.queryLimit, startRev=0, node = None)  
+                    
+                    else: #only ranking changes, need to send first rev to consider
+                        if self.focus:
+                            nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0]) 
+                        else:    
+                            nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = None)
+                    
+                    
+                    #compute metrics
+                    relevance = self.relevanceMetric(nodesToChange, nodesToShare)
+                    relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
+                    relevanceRecall = self.relevanceRecall(nodesToChange, nodesToShare)
+                    recallChange = self.relevanceRecallChanged(nodesToChange, nodesToShare, agent)
+                    precision = self.relevancePrecision(nodesToChange, nodesToShare)
+                    
+                    
+                    
+                    distFromFocus = self.distanceFromFocusMetric(nodesToChange[0], nodesToShare)
+                    
+                    info = {} #dict holding nodes and their colors (to share with agent)
+                    for node in nodesToShare:
+                        if node in self.instance.graph.nodes():
+                            info[node] = self.instance.getColor(node)
+                        else:
+                            info[node]=-2 #-2 = removed!
+                    
+                    changedBelief = agent.updateBelief(info,self.instance.graph) #update agents knowledge, also sending the graph so they know neighbors for added objects
+                    if len(changedBelief)!=len(nodesToShare):
+                        print 'problem'
+
+                    precisionChangedByOther = self.precisionChangedByOtherAgent(nodesToChange, nodesToShare, agent)
+                    actions = agent.chooseActions(self.numIterations,minActions = 0, lastID = self.nextNodeID) #query agent for actions
+                    
+                    
+                    stateWithout = self.instance.getGraphState() #TODO: if not forcing agent to choose specific nodes, can't do this!
+                    
+                    #send update to system; update problem instance and clusters
+                    actionObjs = []
+                    index = 0
+                    for node,col in actions:
+                        if col == -2: #removing existing obj
+                            #new action object to send to systems
+                            actionObj = Action(agent.id, node, 'remove', col, self.weightIncOfAction, 1.0)
+                            actionObjs.append(actionObj)
+                            #remove object from graph
+                            self.instance.graph.remove_node(node)
+                            #remove object from clusters
+                            clusterNum = self.nodeToClusterIndex[node]
+                            self.clusters[clusterNum].remove(node)
+                            #TODO: think about whether to also remove from index [probably NOT]
+                            for a in self.agents:
+                                a.removeNodeFromCluster(node,clusterNum)                            
+                        elif col == -3: #adding new obj
+                            #new action object to send to systems
+                            actionObj = Action(agent.id, node, 'add', col, self.weightIncOfAction, 1.0)
+                            actionObjs.append(actionObj) 
+                            #add object to graph
+                            attr = {}
+                            attr['color']=-1
+                            self.instance.graph.add_node(node,attr)
+                            self.nextNodeID= self.nextNodeID+1
+                            self.instance.graph.add_edge(node,nodesToChange[index]) #adding the edge between the object to which the new object was connected
+                            newNodeCluster = self.nodeToClusterIndex[nodesToChange[index]]
+                            self.clusters[newNodeCluster].append(node) #adding the new node to the cluster
+                            self.nodeToClusterIndex[node]=newNodeCluster #adding the new node to index of clusters by nodes
+                            #add new edges based on distributions
+                            self.connectNewNode(node) 
+                            
+                        else:
+                            actionObj = Action(agent.id, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
+                            actionObjs.append(actionObj)     
+                            #send real update to GraphProblem
+                            self.instance.updateGraph({node,col})                                                                                  
+                            
+                        index  = index+1
+                    session = Session(agent.id, actionObjs, self.numIterations, nodesToShare)
+                    system.update(session) #send info back to system
+                    
+                    #update last changed by
+                    for n in nodesToChange:
+                        self.lastChangedBy[n] = agent
+                    
+                    #save status
+                    res = {}
+                    res['graphName'] = graphName
+                    res['fromScratch']=self.fromScratch
+                    res['algorithm'] = system
+                    res['iteration'] = self.numIterations
+                    res['round'] = math.floor(float(self.numIterations)/self.numAgents)
+                    res['focus'] = self.focus
+                    res['queryLimit']=self.queryLimit
+                    res['actionLimit']=self.actionLimit
+                    res['numAgents']=self.numAgents
+                    res['numNodes']=nx.number_of_nodes(self.graph)
+                    res['numEdges']=nx.number_of_edges(self.graph)
+                    res['pWithin']=self.pWithin
+                    res['pBetween']=self.pBetween
+                    res['probPrimaryCluster']= self.probPrimay
+                    
+                    
+
+                    
+                    
+
+                    
+                    state = self.instance.getGraphState()
+                    
+                    confDiff =  state['conflicts']-stateWithout['conflicts'] #positive is good!
+                        
+                    res['relevance'] = relevance
+                    res['relevanceBinary'] = relevanceBinary 
+                    res['recall'] = recallChange      
+                    res['precision'] =  precision        
+                    res['precisionChanged']=precisionChangedByOther  
+                    res['AverageDistance'] = distFromFocus 
+                    
+                    res['conflicts'] = state['conflicts']
+                    res['unknown'] = state['unknown']
+                    res['notConflicts'] = state['notConflicts']
+
+                    res['confDiff']=confDiff
+                    
+                    res['percentColored'] = self.instance.getPercentColored() #only relevant if we start from nothing colored
+                    res['run'] = run
+                    
+                    results.append(res)
+                    
+#                    filename = "../graphPlots1/"+str(system)+"_"+str(self.numIterations)+".png"
+#                    if self.numIterations == 0:
+#                        self.instance.drawGraph(filename)
+                    
+                    #increment num of iterations
+                    self.numIterations = self.numIterations + 1
+                    
+            
+            #save results
+#            res = Result(system, self.numIterations, self.instance.getGraphState(), self.instance.getPercentColored())
+#            results[system] = res
+            #revert graph and restart iterations counter
+            self.instance = initialProblem
+            self.numIterations = 0     
+            print 'finished running algorithm: '+str(system)
+                   
+            
+        #save results to file
+        with open(self.outputFile, 'ab') as csvfile:
+            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','confDiff','percentColored','run']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+            for res in results:
+                writer.writerow(res)
     
         
         
