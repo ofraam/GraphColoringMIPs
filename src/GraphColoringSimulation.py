@@ -349,7 +349,7 @@ class Simulation:
             self.agents = [] #reset agents
             
             for agent,nodes in self.agentAssignments.iteritems():
-                newAgent = Agent(agent,self.clusters,copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed)
+                newAgent = Agent(agent,self.clusters,copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed, pPrimary = self.probPrimay)
                 self.agents.append(newAgent)            
             print 'starting to run algorithm: '+str(system)
             while self.numIterations<self.maxIterations: 

@@ -10,7 +10,7 @@ import random
 from random import shuffle
 
 class Agent:
-    def __init__(self, id, clusters, knownGraph, colors, actionLimit, reset, seed = 10):
+    def __init__(self, id, clusters, knownGraph, colors, actionLimit, reset, seed = 10, pPrimary = 0.8):
         self.id = id
         self.controlledNodes = clusters
         self.knownGraph = knownGraph
@@ -27,6 +27,7 @@ class Agent:
         self.graphState = {}; #will hold current known numbers for 'conflicts' 'notConflicts' and 'unknown'
         self.countNumConflicts()
         self.nodesToChange = [] #will hold the nodes chosen for the round
+        self.probPrimary = pPrimary
         
     #count initial number of conflicts
     def countNumConflicts(self):
@@ -85,9 +86,8 @@ class Agent:
                     if color>-2:
                         self.knownGraph.node[node]['color'] = color 
                     elif color==-2: #add new vertex
-                        print 'not supposed to happen'
-                    elif color==-3:
-                        self.knownGraph.remove(node)    
+                        self.knownGraph.remove(node) 
+  
                     self.knownGraph.node[node]['uptoDate'] = True   
                 else: #learned about a new node, need to add it to the graph as well as all the edges
                     self.knownGraph.add_node(node)
@@ -118,13 +118,16 @@ class Agent:
         rand = random.random()
         cumProb = 0.0
         currIndex = 0
-        currNode = self.controlledNodes[currIndex]
-        cumProb = cumProb+currNode[1]
-        while rand>cumProb:
-            currIndex = currIndex+1
-            currNode = self.controlledNodes[currIndex]
-            cumProb = cumProb+currNode[1]
-        chosenNode = copy.deepcopy(currNode[0])
+        clustNum = -1
+        if rand<self.probPrimary: #choose object from primary cluster
+            clustNum = self.id
+        else:
+            while clustNum!=self.id: #choose object from a different cluster
+                clustNum = random.randint(0,len(self.controlledNodes)-1)
+        
+        objIndex = random.randint(0,len(self.controlledNodes[clustNum])-1)
+        chosenNode = copy.deepcopy(self.controlledNodes[clustNum][objIndex])
+            
         currNode = chosenNode
         self.nodesToChange.append(chosenNode)
         #get remaining nodes from neighbors
@@ -315,8 +318,17 @@ class Agent:
             #update belief (agent just changed the node so it knows its color
         self.updateBelief(bestSolution['actionSet'])
         
+        actionSet = []
+        for o,a in self.actionTypes:
+            if act==-1:
+                actionSet.append((o,-2))
+            elif act==1:
+                actionSet.append((o,-3))
+
+        for objAct in bestSolution['actionSet']:
+            actionSet.append(objAct)
         #return chosen solution
-        return bestSolution['actionSet'];
+        return actionSet;
     
 
     def chooseActionsRecurNodeSetGiven(self, currSolution, nodeCounter, bestSolution, minActions):
