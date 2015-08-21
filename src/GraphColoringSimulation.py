@@ -857,10 +857,10 @@ if __name__ == '__main__':
     graphName = 'clustered_'+str(nodesPerCluster)+"_"+str(pWithin)+"_"+str(pBetween)
     
     if simType == "dynamic":
-        maxIterations = 100
+        maxIterations = 200
         for numAgents in (3,5):
             for actionLimit in (3,5):
-                outputFile =   '../results/0820/0821_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_dynamicTestDecay3.csv'
+                outputFile =   '../results/0821/0821_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_dynamic.csv'
     
                     #write header row in file:
                 with open(outputFile, 'ab') as csvfile:
@@ -869,7 +869,7 @@ if __name__ == '__main__':
                     writer.writeheader()         
             
                 for queryLimit in (3,5):
-                    nodesP = [3]
+                    nodesP = [3,5]
                     for nodesPerCluster in (nodesP):
                         pw = [0.3]
                         for pWithin in pw:
@@ -898,22 +898,22 @@ if __name__ == '__main__':
     #    #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
     #                            mip2ND = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2, decay = 0.0)
                                 systems.append(randSys)
-#                                systems.append(mostChanged)
+                                systems.append(mostChanged)
 #    #                            
 #    #                            
 #    #  #                          systems.append(mostChangeInt)
-#                                systems.append(latestSys)  
+                                systems.append(latestSys)  
 #    #                              
-#                                systems.append(mipAlpha) 
-#                                systems.append(mipBeta1) 
-#                                systems.append(mipBeta2) 
-#                                systems.append(mipGamma)
+                                systems.append(mipAlpha) 
+                                systems.append(mipBeta1) 
+                                systems.append(mipBeta2) 
+                                systems.append(mipGamma)
     #                            systems.append(mip2)
 #                                
 #                                systems.append(mip1) 
                                 systems.append(mip2) 
-                                systems.append(mip22)
-                                systems.append(mip222)
+#                                systems.append(mip22)
+#                                systems.append(mip222)
 #                                systems.append(mip3) 
 #                                systems.append(mip4)
     #                            systems.append(mip2ND)                            
@@ -921,7 +921,7 @@ if __name__ == '__main__':
                                 sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
                                 systemsBeforeRun = copy.deepcopy(systems)
                     #            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
-                                for i in range(3):  
+                                for i in range(5):  
                                     systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
                                     sim.runSimulationDynamic(graphName, run = i, learnTime = 0)
                                     sim.resetSystems(systemsBeforeRun)          
