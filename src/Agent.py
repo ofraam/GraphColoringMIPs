@@ -36,9 +36,14 @@ class Agent:
         conf = 0
         nonConf = 0 
         for u,v in self.knownGraph.edges_iter():
-            print 'u = '+str(u) + ", v = "+str(v)
+#            print 'u = '+str(u) + ", v = "+str(v)
+            try:
+                colU = self.knownGraph.node[u]['color']
+                colV = self.knownGraph.node[v]['color']
+            except:
+                print 'u = '+str(u)+' v = '+str(v)
             colU = self.knownGraph.node[u]['color']
-            colV = self.knownGraph.node[v]['color']
+            colV = self.knownGraph.node[v]['color']                 
 #            print 'colU = '+ str(colU)+", colV = "+str(colV)
             if ((colU == -1) | (colV == -1)):
                 unknown = unknown + 1
@@ -97,7 +102,8 @@ class Agent:
                     print 'color of node: '+str(self.knownGraph.node[node]['color'])
                     neighbors = nx.neighbors(problemInstance, node)
                     for ne in neighbors:
-                        self.knownGraph.add_edge(node,ne)         
+                        if ne in self.knownGraph.nodes():
+                            self.knownGraph.add_edge(node,ne)         
             
         self.countNumConflicts() #update conflict counts
 
@@ -238,7 +244,7 @@ class Agent:
         return -1
     
     def removeObject(self, objectToRemove):
-        self.knownGraph.remove_node(objectToRemove)
+        self.knownGraph.node[objectToRemove]['color']=-2 #mark as removed
         self.nodesToChange.remove(objectToRemove)
         clust = self.getClusterForNode(objectToRemove)
         self.controlledNodes[clust].remove(objectToRemove)

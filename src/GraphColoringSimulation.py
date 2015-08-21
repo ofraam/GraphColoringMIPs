@@ -189,7 +189,7 @@ class Simulation:
         relevanceCount = 0.0
         for sharedNode in sharedNodes:
             for actNode in actionNodes:
-                if sharedNode in nx.neighbors(self.graph, actNode):
+                if sharedNode in nx.neighbors(self.instance.graph, actNode):
                     relevanceCount = relevanceCount + 1.0
         opportunity= len(sharedNodes)*len(actionNodes)
         if opportunity == 0:
@@ -204,7 +204,7 @@ class Simulation:
         relevanceCount = 0.0
         for sharedNode in sharedNodes:
             for actNode in actionNodes:
-                if sharedNode in nx.neighbors(self.graph, actNode):
+                if sharedNode in nx.neighbors(self.instance.graph, actNode):
                     relevanceCount = relevanceCount + 1.0
                     break;
         opportunity= len(sharedNodes)
@@ -219,7 +219,7 @@ class Simulation:
     def relevanceRecall(self, actionNodes, sharedNodes):
         relevantNodes = []
         for actNode in actionNodes:
-            for neighbor in nx.neighbors(self.graph, actNode):
+            for neighbor in nx.neighbors(self.instance.graph, actNode):
 #                if neighbor not in actionNodes: #not sure this is correct
                 relevantNodes.append(neighbor)
                     
@@ -239,7 +239,7 @@ class Simulation:
     def relevanceRecallChanged(self, actionNodes, sharedNodes, agent, focusObj):
         relevantNodes = []
         for actNode in actionNodes:
-            for neighbor in nx.neighbors(self.graph, actNode):
+            for neighbor in nx.neighbors(self.instance.graph, actNode):
                 if neighbor not in relevantNodes:
 #                if neighbor not in actionNodes: #not sure this is correct
                     if neighbor in self.lastChangedBy.keys():
@@ -263,7 +263,7 @@ class Simulation:
     def relevancePrecision(self, actionNodes, sharedNodes):
         relevantNodes = []
         for actNode in actionNodes:
-            for neighbor in nx.neighbors(self.graph, actNode):
+            for neighbor in nx.neighbors(self.instance.graph, actNode):
 #                if neighbor not in actionNodes: #not sure this is correct
                 relevantNodes.append(neighbor)
                     
@@ -280,7 +280,7 @@ class Simulation:
     def relevancePrecisionChanged(self, actionNodes, sharedNodes,changedBelief):
         relevantNodes = []
         for actNode in actionNodes:
-            for neighbor in nx.neighbors(self.graph, actNode):
+            for neighbor in nx.neighbors(self.instance.graph, actNode):
 #                if neighbor not in actionNodes: #not sure this is correct
                 relevantNodes.append(neighbor)
                     
@@ -297,7 +297,7 @@ class Simulation:
     def precisionChangedByOtherAgent(self, actionNodes, sharedNodes, agent):
         relevantNodes = []
         for actNode in actionNodes:
-            for neighbor in nx.neighbors(self.graph, actNode):
+            for neighbor in nx.neighbors(self.instance.graph, actNode):
                 relevantNodes.append(neighbor)
 #                if neighbor not in actionNodes: #not sure this is correct
 #                if neighbor in self.lastChangedBy.keys():
@@ -325,7 +325,7 @@ class Simulation:
         totalDist = 0.0
         for node in sharedNodes:
             try:
-                totalDist = totalDist + 1.0/(len(nx.shortest_path(self.graph, focusNode, node))-1)
+                totalDist = totalDist + 1.0/(len(nx.shortest_path(self.instance.graph, focusNode, node))-1)
             except:
                 totalDist = totalDist
         if len(sharedNodes)>0:
@@ -355,7 +355,7 @@ class Simulation:
             print 'starting to run algorithm: '+str(system)
             while self.numIterations<self.maxIterations: 
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
-
+                    print '----------agent = '+str(agent.id)+'-----------------'
                     nodesToChange = copy.deepcopy(agent.chooseNodesByDistributionDynamic()) #agent chooses the nodes to change TODO: later possibly inform system of this choice
                     actionTypes = agent.chooseActionTypes() #agent chooses whether to modify/add/remove for each object
                     
@@ -372,8 +372,10 @@ class Simulation:
                             nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = nodesToChange[0]) 
                         else:    
                             nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = None)
-                    
+                    print 'nodesToChange: '+str(nodesToChange)
+                    print 'nodesToShare: '+str(nodesToShare)
                     #compute metrics
+                    print 'graph nodes: '+str(self.instance.graph.nodes())
                     relevance = self.relevanceMetric(nodesToChange, nodesToShare)
                     relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
                     relevanceRecall = self.relevanceRecall(nodesToChange, nodesToShare)
@@ -417,7 +419,7 @@ class Simulation:
                             actionObj = Action(agent.id, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
                             actionObjs.append(actionObj)
                             #remove object from graph
-                            self.instance.graph.remove_node(node)
+                            self.instance.graph.node[node]['color']=-2 #mark as removed, but don't actually remove
                             #remove object from clusters
                             clusterNum = self.nodeToClusterIndex[node]
                             print 'clusterNum ='+str(clusterNum)
@@ -457,7 +459,6 @@ class Simulation:
                             change[node]=col
                             self.instance.updateGraph(change)                                                                                  
                             
-                        index  = index+1
                     session = Session(agent.id, actionObjs, self.numIterations, nodesToShare)
                     system.update(session) #send info back to system
                     
@@ -516,7 +517,7 @@ class Simulation:
                     
                     #increment num of iterations
                     self.numIterations = self.numIterations + 1
-                    
+                    print 'graph nodes :'+str(self.instance.graph.nodes())
             
             #save results
 #            res = Result(system, self.numIterations, self.instance.getGraphState(), self.instance.getPercentColored())
