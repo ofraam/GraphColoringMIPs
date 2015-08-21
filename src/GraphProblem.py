@@ -25,7 +25,7 @@ class GraphProblem:
                 data['color'] = -1
         
     def updateGraph(self, changes):
-        for node,col in changes:
+        for node,col in changes.iteritems():
             self.changeColor(node, col)
     
     def getColor(self, node):
@@ -66,6 +66,8 @@ class GraphProblem:
         nonConf = 0 
         for u,v in self.graph.edges_iter():
 #            print 'u = '+str(u) + ", v = "+str(v)
+#            print 'u = '+str(u)
+#            print 'v = '+str(v)
             colU = self.graph.node[u]['color']
             colV = self.graph.node[v]['color']
 #            print 'colU = '+ str(colU)+", colV = "+str(colV)

@@ -36,7 +36,7 @@ class Agent:
         conf = 0
         nonConf = 0 
         for u,v in self.knownGraph.edges_iter():
-#            print 'u = '+str(u) + ", v = "+str(v)
+            print 'u = '+str(u) + ", v = "+str(v)
             colU = self.knownGraph.node[u]['color']
             colV = self.knownGraph.node[v]['color']
 #            print 'colU = '+ str(colU)+", colV = "+str(colV)
@@ -77,7 +77,8 @@ class Agent:
                 self.knownGraph.node[node]['uptoDate'] = True
         else: #change of belief based on information from system [dict]
             for node,color in nodesColorsList.iteritems():
-                
+                print 'node = '+str(node)
+                print 'color ='+str(color)
                 changed = 0
                 if node in self.knownGraph.nodes():
                     if self.knownGraph.node[node]['color'] != color:
@@ -86,11 +87,14 @@ class Agent:
                     if color>-2:
                         self.knownGraph.node[node]['color'] = color 
                     elif color==-2: #add new vertex
-                        self.knownGraph.remove(node) 
+                        self.knownGraph.remove_node(node) 
   
-                    self.knownGraph.node[node]['uptoDate'] = True   
+#                    self.knownGraph.node[node]['uptoDate'] = True   
                 else: #learned about a new node, need to add it to the graph as well as all the edges
-                    self.knownGraph.add_node(node)
+                    attr = {}
+                    attr['color']=color
+                    self.knownGraph.add_node(node,attr)
+                    print 'color of node: '+str(self.knownGraph.node[node]['color'])
                     neighbors = nx.neighbors(problemInstance, node)
                     for ne in neighbors:
                         self.knownGraph.add_edge(node,ne)         
@@ -193,7 +197,12 @@ class Agent:
         return self.nodesToChange
     
     def removeNodeFromCluster(self, node,cluster):
-        self.clusters[cluster].remove(node)
+        if node in self.controlledNodes[cluster]:
+            self.controlledNodes[cluster].remove(node)
+            print 'removed'
+        else:
+            'did not know about'
+        
     
     '''
     choose what to do with each object (add neighbor, remove object, modify color)
@@ -202,9 +211,10 @@ class Agent:
         self.actionTypes = {} #remove = -1, add = 1, modify = 0
         for n in self.nodesToChange:
             rand = random.random()
-            if rand<0.6:
+            print 'rand = '+str(rand)
+            if rand<0.2:
                 self.actionTypes[n]= 0
-            elif rand<0.8:
+            elif rand<0.6:
                 self.actionTypes[n] = 1
             else:
                 self.actionTypes[n] = -1
@@ -218,11 +228,20 @@ class Agent:
         self.knownGraph.add_node(newObjectID,attr)
         self.knownGraph.add_edge(fromObject,newObjectID)
         self.nodesToChange.remove(fromObject)
-        self.controlledNodes.remove()
-        
+        clustNum = self.getClusterForNode(fromObject)
+        self.controlledNodes[clustNum].append(nextID)
+    
+    def getClusterForNode(self,nodeId):    
+        for i in range (len(self.controlledNodes)):
+            if nodeId in self.controlledNodes[i]:
+                return i
+        return -1
+    
     def removeObject(self, objectToRemove):
         self.knownGraph.remove_node(objectToRemove)
         self.nodesToChange.remove(objectToRemove)
+        clust = self.getClusterForNode(objectToRemove)
+        self.controlledNodes[clust].remove(objectToRemove)
          
     
     def chooseNodesByDistributionOld(self):
@@ -286,7 +305,11 @@ class Agent:
                     
         #return chosen solution
         return bestSolution['actionSet'];
-        
+    
+    def getObjectActionFromSet(self,actionSet, objID):
+        for objAct in actionSet:
+            if objAct[0]==objID:
+                return objAct[1]
     #chooses the color changes made by the agent.
     #limit is the maximum number of nodes that the agent is allowed to change in one round
     def chooseActions(self, revision, minActions = 0, nextID = 0):
@@ -304,13 +327,27 @@ class Agent:
         initialBestSolution['unknown'] = 0
         initialBestSolution['notConflicts'] = 0        
         
+        actionSet = {}
+        
         if len(self.nodesToChange)>0: #need to choose colors for *given* nodes
-            if len(self.actionTypes>0):
-                for obj,act in self.actionTypes:
+            if len(self.actionTypes)>0:
+                if isinstance(self.actionTypes,int):
+                    print 'here'
+                print self.actionTypes
+                for obj,act in self.actionTypes.iteritems():
+                    print 'obj = '+str(obj)
+                    print 'act = '+str(act)
                     if act==-1:
                         self.removeObject(obj)
+                        actionSet[obj]=(obj,-2)
                     elif act==1:
+                        'in agent, adding node '+str(nextID)
                         self.addObject(obj, nextID)
+                        actionSet[obj]=(nextID,-3)
+                        nextID = nextID+1
+#                        actionSet.append((nextID,-3))
+
+                        
             bestSolution = self.chooseActionsRecurNodeSetGiven(initialSolution,0,initialBestSolution, minActions)
         else: #choose best actions given knowledge
             bestSolution = self.chooseActionsRecur(initialSolution,0,initialBestSolution, minActions)
@@ -318,15 +355,11 @@ class Agent:
             #update belief (agent just changed the node so it knows its color
         self.updateBelief(bestSolution['actionSet'])
         
-        actionSet = []
-        for o,a in self.actionTypes:
-            if act==-1:
-                actionSet.append((o,-2))
-            elif act==1:
-                actionSet.append((o,-3))
+        
+
 
         for objAct in bestSolution['actionSet']:
-            actionSet.append(objAct)
+            actionSet[objAct[0]]=objAct
         #return chosen solution
         return actionSet;
     

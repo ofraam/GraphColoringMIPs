@@ -49,7 +49,6 @@ class Simulation:
         self.probPrimay = probPrimary
         self.fromScratch = fromScratch
         self.lastChangedBy = {} #last changed by
-        self.nextNodeID = 0
         #generate graph structure
         
         #assign random colors
@@ -70,7 +69,8 @@ class Simulation:
 #        agentAssignments[0] = [0,4,5,6,8]
 #        agentAssignments[1] = [7,8,9]
 #        agentAssignments[2] = [1,2,3,4,9]
-        print agentAssignments
+#        print agentAssignments
+        print self.clusters
         self.agentAssignments = agentAssignments
         self.outputFile = outputFile
 
@@ -162,10 +162,11 @@ class Simulation:
         self.nextNodeID =  totalNodeCount               
         return g
 
-    def objExists(self,nodeID): #TODO: implement
-        nodeCluster = self.nodeToClusterIndex[nodeID]
-        if nodeID in self.clusters[nodeCluster]:
-            return True
+    def objExists(self,nodeID): 
+        if nodeID in self.nodeToClusterIndex.keys():
+            nodeCluster = self.nodeToClusterIndex[nodeID]
+            if nodeID in self.clusters[nodeCluster]:
+                return True
         return False
     
     def connectNewNode(self,nodeID):
@@ -349,13 +350,13 @@ class Simulation:
             self.agents = [] #reset agents
             
             for agent,nodes in self.agentAssignments.iteritems():
-                newAgent = Agent(agent,self.clusters,copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed, pPrimary = self.probPrimay)
+                newAgent = Agent(agent,copy.deepcopy(self.clusters),copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed, pPrimary = self.probPrimay)
                 self.agents.append(newAgent)            
             print 'starting to run algorithm: '+str(system)
             while self.numIterations<self.maxIterations: 
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
 
-                    nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
+                    nodesToChange = copy.deepcopy(agent.chooseNodesByDistributionDynamic()) #agent chooses the nodes to change TODO: later possibly inform system of this choice
                     actionTypes = agent.chooseActionTypes() #agent chooses whether to modify/add/remove for each object
                     
                    
@@ -372,12 +373,11 @@ class Simulation:
                         else:    
                             nodesToShare = system.query(agent.id, self.queryLimit, startRev = agent.lastRevision+1, node = None)
                     
-                    
                     #compute metrics
                     relevance = self.relevanceMetric(nodesToChange, nodesToShare)
                     relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
                     relevanceRecall = self.relevanceRecall(nodesToChange, nodesToShare)
-                    recallChange = self.relevanceRecallChanged(nodesToChange, nodesToShare, agent)
+                    recallChange = self.relevanceRecallChanged(nodesToChange, nodesToShare, agent,focusObj = nodesToChange[0])
                     precision = self.relevancePrecision(nodesToChange, nodesToShare)
                     
                     
@@ -396,7 +396,7 @@ class Simulation:
                         print 'problem'
 
                     precisionChangedByOther = self.precisionChangedByOtherAgent(nodesToChange, nodesToShare, agent)
-                    actions = agent.chooseActions(self.numIterations,minActions = 0, lastID = self.nextNodeID) #query agent for actions
+                    actions = agent.chooseActions(self.numIterations,minActions = 0, nextID = self.nextNodeID) #query agent for actions
                     
                     
                     stateWithout = self.instance.getGraphState() #TODO: if not forcing agent to choose specific nodes, can't do this!
@@ -404,29 +404,43 @@ class Simulation:
                     #send update to system; update problem instance and clusters
                     actionObjs = []
                     index = 0
-                    for node,col in actions:
+                    print 'nodesToChange'+str(nodesToChange)
+                    print 'actions '+str(actions)
+#                    for node,col in actions:
+                    for index in range(len(nodesToChange)):
+                        objAct = actions[nodesToChange[index]]
+                        node = objAct[0]
+                        col = objAct[1]
                         if col == -2: #removing existing obj
+                            print 'in sim: removing node '+str(node)
                             #new action object to send to systems
-                            actionObj = Action(agent.id, node, 'remove', col, self.weightIncOfAction, 1.0)
+                            actionObj = Action(agent.id, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
                             actionObjs.append(actionObj)
                             #remove object from graph
                             self.instance.graph.remove_node(node)
                             #remove object from clusters
                             clusterNum = self.nodeToClusterIndex[node]
+                            print 'clusterNum ='+str(clusterNum)
+                            print 'cluster: '+ str(self.clusters[clusterNum])
                             self.clusters[clusterNum].remove(node)
                             #TODO: think about whether to also remove from index [probably NOT]
                             for a in self.agents:
                                 a.removeNodeFromCluster(node,clusterNum)                            
                         elif col == -3: #adding new obj
                             #new action object to send to systems
-                            actionObj = Action(agent.id, node, 'add', col, self.weightIncOfAction, 1.0)
+                            actionObj = Action(agent.id, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
                             actionObjs.append(actionObj) 
                             #add object to graph
                             attr = {}
                             attr['color']=-1
+                            print 'in sim: addding node '+str(node)
                             self.instance.graph.add_node(node,attr)
                             self.nextNodeID= self.nextNodeID+1
+                            
+                            print 'index = '+str(index)
+                            
                             self.instance.graph.add_edge(node,nodesToChange[index]) #adding the edge between the object to which the new object was connected
+
                             newNodeCluster = self.nodeToClusterIndex[nodesToChange[index]]
                             self.clusters[newNodeCluster].append(node) #adding the new node to the cluster
                             self.nodeToClusterIndex[node]=newNodeCluster #adding the new node to index of clusters by nodes
@@ -437,7 +451,11 @@ class Simulation:
                             actionObj = Action(agent.id, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
                             actionObjs.append(actionObj)     
                             #send real update to GraphProblem
-                            self.instance.updateGraph({node,col})                                                                                  
+                            print 'node = '+str(node)
+                            print 'col = '+str(col)
+                            change = {}
+                            change[node]=col
+                            self.instance.updateGraph(change)                                                                                  
                             
                         index  = index+1
                     session = Session(agent.id, actionObjs, self.numIterations, nodesToShare)
@@ -619,15 +637,15 @@ class Simulation:
                                 break
                             
                     #check constraints with and without sharing the info
-                    self.instance.updateGraph(actionsWithoutKnowledge)
-                    stateWithout = self.instance.getGraphState() #TODO: if not forcing agent to choose specific nodes, can't do this!
+#                    self.instance.updateGraph(actionsWithoutKnowledge)
+#                    stateWithout = self.instance.getGraphState() #TODO: if not forcing agent to choose specific nodes, can't do this!
                     
                     #send real update to GraphProblem
                     self.instance.updateGraph(actions)
                     
                     state = self.instance.getGraphState()
                     
-                    confDiff =  state['conflicts']-stateWithout['conflicts'] #positive is good!
+#                    confDiff =  state['conflicts']-stateWithout['conflicts'] #positive is good!
                         
                     res['relevance'] = relevance
                     res['relevanceBinary'] = relevanceBinary 
@@ -641,7 +659,7 @@ class Simulation:
                     res['notConflicts'] = state['notConflicts']
 
                     res['effect']=  diff                 
-                    res['confDiff']=confDiff
+#                    res['confDiff']=confDiff
                     
                     res['percentColored'] = self.instance.getPercentColored() #only relevant if we start from nothing colored
                     res['run'] = run
@@ -667,7 +685,7 @@ class Simulation:
             
         #save results to file
         with open(self.outputFile, 'ab') as csvfile:
-            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
+            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','percentColored','run']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             for res in results:
@@ -821,13 +839,77 @@ def frange(start,stop, step=1.0):
         start +=step    
     
 if __name__ == '__main__':
-    simType = "PR"
+    simType = "dynamic"
     
     nodesPerCluster = 8
     pWithin = 0.3
     pBetween = 0.08
     graphName = 'clustered_'+str(nodesPerCluster)+"_"+str(pWithin)+"_"+str(pBetween)
     
+    if simType == "dynamic":
+        maxIterations = 100
+        for numAgents in (3,5):
+            for actionLimit in (3,5):
+                outputFile =   '../results/0820/0820_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged.csv'
+    
+                    #write header row in file:
+                with open(outputFile, 'ab') as csvfile:
+                    fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
+                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                    writer.writeheader()         
+            
+                for queryLimit in (1,3,5):
+                    nodesP = [3]
+                    for nodesPerCluster in (nodesP):
+                        pw = [0.3,0.4]
+                        for pWithin in pw:
+                            for pBetween in (0.05,0.15):
+                                systems = []
+                                randSys = RandomSystem()
+                                mostChanged = MostChangedInIntervalSystem(500) #essentially all revisions...
+                                mostChangeInt = MostChangedInIntervalSystem(5)
+                                latestSys = LatestChangedSystem()
+                                
+                                mipAlpha= Mip(alpha = 1.0, beta1 = 0.0, beta2 = 0.0, gamma = 0.0, decay = 0.0)
+                                mipBeta1= Mip(alpha = 0.0, beta1 = 1.0, beta2 = 0.0, gamma = 0.0, decay = 0.0)
+                                mipBeta2= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 1.0, gamma = 0.0, decay = 0.0)
+                                mipGamma= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 0.0, gamma = 1.0, decay = 0.0)
+        #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
+                                mip1 = Mip(alpha = 0.2, beta1 = 0.3, beta2 = 0.3, gamma = 0.2, decay = 0.0)
+                                mip2 = Mip(alpha = 0.1, beta1 = 0.4, beta2 = 0.4, gamma = 0.1, decay = 0.0)
+                                mip3 = Mip(alpha = 0.1, beta1 = 0.5, beta2 = 0.3, gamma = 0.1, decay = 0.0)
+                                mip4 = Mip(alpha = 0.0, beta1 = 0.5, beta2 = 0.4, gamma = 0.1, decay = 0.0)
+    #                            mipAlphaND= Mip(alpha = 1.0, beta = 0.0, gamma = 0.0, decay = 0.0)
+    #                            mipBetaND= Mip(alpha = 0.0, beta = 1.0, gamma = 0.0, decay = 0.0)
+    #                            mipGammaND= Mip(alpha = 0.0, beta = 0.0, gamma = 1.0, decay = 0.0)
+    #    #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
+    #                            mip2ND = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2, decay = 0.0)
+                                systems.append(randSys)
+#                                systems.append(mostChanged)
+#    #                            
+#    #                            
+#    #  #                          systems.append(mostChangeInt)
+#                                systems.append(latestSys)  
+#    #                              
+#                                systems.append(mipAlpha) 
+#                                systems.append(mipBeta1) 
+#                                systems.append(mipBeta2) 
+#                                systems.append(mipGamma)
+#    #                            systems.append(mip2)
+#                                
+#                                systems.append(mip1) 
+#                                systems.append(mip2) 
+#                                systems.append(mip3) 
+#                                systems.append(mip4)
+    #                            systems.append(mip2ND)                            
+                                 
+                                sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
+                                systemsBeforeRun = copy.deepcopy(systems)
+                    #            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
+                                for i in range(5):  
+                                    systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
+                                    sim.runSimulationDynamic(graphName, run = i, learnTime = 0)
+                                    sim.resetSystems(systemsBeforeRun)          
     if simType=='PR':
         maxIterations = 50
         numAgents=5
