@@ -60,7 +60,7 @@ class Agent:
     
     #the function updates the agents' knowledge about the graph
     #nodesColorsList is a dict of node_id and current color
-    def updateBelief(self, nodesColorsList, problemInstance = None):
+    def updateBelief(self, nodesColorsList, problemInstance = None, clustersReal = None):
         changedBelief = []
         
         #reset old stuff
@@ -103,11 +103,22 @@ class Agent:
                     neighbors = nx.neighbors(problemInstance, node)
                     for ne in neighbors:
                         if ne in self.knownGraph.nodes():
-                            self.knownGraph.add_edge(node,ne)         
-            
+                            self.knownGraph.add_edge(node,ne)   
+                    clustToAddTo = self.findNodeCluster(clustersReal, node)  
+                    if clustToAddTo!=-1: #otherwise we have a situation where a node was added and removed before the agent saw it!   
+                        self.controlledNodes[clustToAddTo].append(node)
+                        print 'added to controlled nodes: '+str(self.controlledNodes)
         self.countNumConflicts() #update conflict counts
 
         return changedBelief
+    
+    def findNodeCluster(self,clusters, node):
+        print 'clusters: '+str(clusters)
+        print 'node = '+str(node)
+        for clust in clusters.keys():
+            if node in clusters[clust]:
+                return clust
+        return -1
     
     def checkRep(self):
         for i in range(self.nodesToChange):
@@ -134,12 +145,17 @@ class Agent:
         rand = random.random()
         cumProb = 0.0
         currIndex = 0
-        clustNum = -1
-        if rand<self.probPrimary: #choose object from primary cluster
+        clustNum = self.id
+        if ((rand<self.probPrimary) & (len(self.controlledNodes[self.id])>0)): #choose object from primary cluster
             clustNum = self.id
         else:
-            while clustNum!=self.id: #choose object from a different cluster
+            tries = 0
+            while ((clustNum==self.id) | (len(self.controlledNodes[clustNum])==0)): #choose object from a different cluster
                 clustNum = random.randint(0,len(self.controlledNodes)-1)
+                if tries>100:
+                    clustNum = self.id
+                    break
+                tries= tries+1
         
         objIndex = random.randint(0,len(self.controlledNodes[clustNum])-1)
         chosenNode = copy.deepcopy(self.controlledNodes[clustNum][objIndex])
@@ -220,14 +236,14 @@ class Agent:
     '''
     choose what to do with each object (add neighbor, remove object, modify color)
     '''
-    def chooseActionTypes(self):
+    def chooseActionTypes(self, pModify, pAdd, pRemove):
         self.actionTypes = {} #remove = -1, add = 1, modify = 0
         for n in self.nodesToChange:
             rand = random.random()
             print 'rand = '+str(rand)
-            if rand<0.8:
+            if rand<pModify:
                 self.actionTypes[n]= 0
-            elif rand<0.9:
+            elif rand<pAdd:
                 self.actionTypes[n] = 1
             else:
                 self.actionTypes[n] = -1
