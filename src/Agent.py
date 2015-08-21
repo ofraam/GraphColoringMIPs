@@ -17,6 +17,7 @@ class Agent:
         self.actionLimit = actionLimit #number of change color actions allowed per round
         self.colors = colors #possible colors
         self.lastRevision = -1 
+        self.actionTypes = {}
         random.seed(seed)
         #the graph sent by simulation has the colors, need to remove them for each agent
         for node, data in self.knownGraph.nodes(data = True):
@@ -82,8 +83,8 @@ class Agent:
                 self.knownGraph.node[node]['uptoDate'] = True
         else: #change of belief based on information from system [dict]
             for node,color in nodesColorsList.iteritems():
-                print 'node = '+str(node)
-                print 'color ='+str(color)
+#                print 'node = '+str(node)
+#                print 'color ='+str(color)
                 changed = 0
                 if node in self.knownGraph.nodes():
                     if self.knownGraph.node[node]['color'] != color:
@@ -99,7 +100,7 @@ class Agent:
                     attr = {}
                     attr['color']=color
                     self.knownGraph.add_node(node,attr)
-                    print 'color of node: '+str(self.knownGraph.node[node]['color'])
+#                    print 'color of node: '+str(self.knownGraph.node[node]['color'])
                     neighbors = nx.neighbors(problemInstance, node)
                     for ne in neighbors:
                         if ne in self.knownGraph.nodes():
@@ -107,14 +108,14 @@ class Agent:
                     clustToAddTo = self.findNodeCluster(clustersReal, node)  
                     if clustToAddTo!=-1: #otherwise we have a situation where a node was added and removed before the agent saw it!   
                         self.controlledNodes[clustToAddTo].append(node)
-                        print 'added to controlled nodes: '+str(self.controlledNodes)
+#                        print 'added to controlled nodes: '+str(self.controlledNodes)
         self.countNumConflicts() #update conflict counts
 
         return changedBelief
     
     def findNodeCluster(self,clusters, node):
-        print 'clusters: '+str(clusters)
-        print 'node = '+str(node)
+#        print 'clusters: '+str(clusters)
+#        print 'node = '+str(node)
         for clust in clusters.keys():
             if node in clusters[clust]:
                 return clust
@@ -141,7 +142,7 @@ class Agent:
 #        try:
         self.nodesToChange = [] #reset from previous turns 
         #choose first node based on distribution
-        print 'controlled Nodes: '+str(self.controlledNodes)
+#        print 'controlled Nodes: '+str(self.controlledNodes)
         rand = random.random()
         cumProb = 0.0
         currIndex = 0
@@ -228,7 +229,7 @@ class Agent:
     def removeNodeFromCluster(self, node,cluster):
         if node in self.controlledNodes[cluster]:
             self.controlledNodes[cluster].remove(node)
-            print 'removed'
+#            print 'removed'
         else:
             'did not know about'
         
@@ -240,7 +241,7 @@ class Agent:
         self.actionTypes = {} #remove = -1, add = 1, modify = 0
         for n in self.nodesToChange:
             rand = random.random()
-            print 'rand = '+str(rand)
+#            print 'rand = '+str(rand)
             if rand<pModify:
                 self.actionTypes[n]= 0
             elif rand<pAdd:
@@ -360,35 +361,39 @@ class Agent:
         
         if len(self.nodesToChange)>0: #need to choose colors for *given* nodes
             if len(self.actionTypes)>0:
-                if isinstance(self.actionTypes,int):
-                    print 'here'
-                print self.actionTypes
+#                print self.actionTypes
                 for obj,act in self.actionTypes.iteritems():
-                    print 'obj = '+str(obj)
-                    print 'act = '+str(act)
+#                    print 'obj = '+str(obj)
+#                    print 'act = '+str(act)
                     if act==-1:
                         self.removeObject(obj)
                         actionSet[obj]=(obj,-2)
                     elif act==1:
-                        'in agent, adding node '+str(nextID)
+#                        'in agent, adding node '+str(nextID)
                         self.addObject(obj, nextID)
                         actionSet[obj]=(nextID,-3)
                         nextID = nextID+1
 #                        actionSet.append((nextID,-3))
 
                         
-            bestSolution = self.chooseActionsRecurNodeSetGiven(initialSolution,0,initialBestSolution, minActions)
-        else: #choose best actions given knowledge
-            bestSolution = self.chooseActionsRecur(initialSolution,0,initialBestSolution, minActions)
-            
-            #update belief (agent just changed the node so it knows its color
-        self.updateBelief(bestSolution['actionSet'])
+                bestSolution = self.chooseActionsRecurNodeSetGiven(initialSolution,0,initialBestSolution, minActions)
+                self.updateBelief(bestSolution['actionSet'])
+                for objAct in bestSolution['actionSet']:
+                    actionSet[objAct[0]]=objAct
+                #return chosen solution
+                return actionSet;        
+            else: #choose best actions given knowledge
+                bestSolution = self.chooseActionsRecurNodeSetGiven(initialSolution,0,initialBestSolution, minActions)
+#                print 'in else'
+                #update belief (agent just changed the node so it knows its color
+                self.updateBelief(bestSolution['actionSet'])
+                return bestSolution['actionSet']
         
         
 
 
-        for objAct in bestSolution['actionSet']:
-            actionSet[objAct[0]]=objAct
+#        for objAct in bestSolution['actionSet']:
+#            actionSet[objAct[0]]=objAct
         #return chosen solution
         return actionSet;
     
@@ -452,6 +457,7 @@ class Agent:
             #call function with all possible options for next node (not change, change to each of the colors that differ from the current color)
             for color in self.colors: #change current node and recall function with each option
 #                print 'node counter = '+str(nodeCounter)+" color = "+str(color)
+                print 'controlled nodes = '+str(self.controlledNodes)
                 if color != self.knownGraph.node[self.controlledNodes[nodeCounter]]['color']: #don't try the same color, that is equivalent to no action so should not "waste" real action on that
                     newActionSet = copy.deepcopy(currSolution['actionSet'])
                     newActionSet.append((self.controlledNodes[nodeCounter],color))

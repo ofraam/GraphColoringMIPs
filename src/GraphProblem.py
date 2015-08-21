@@ -25,9 +25,12 @@ class GraphProblem:
                 data['color'] = -1
         
     def updateGraph(self, changes):
-        for node,col in changes.iteritems():
-            self.changeColor(node, col)
-    
+        if isinstance(changes, dict):
+            for node,col in changes.iteritems():
+                self.changeColor(node, col)
+        else:
+            for change in changes:
+                self.changeColor(change[0], change[1])
     def getColor(self, node):
         return self.graph.node[node]['color']
     

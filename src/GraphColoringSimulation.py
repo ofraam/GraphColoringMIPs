@@ -354,12 +354,12 @@ class Simulation:
                 newAgent = Agent(agent,copy.deepcopy(self.clusters),copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed, pPrimary = self.probPrimay)
                 self.agents.append(newAgent)            
             print 'starting to run algorithm: '+str(system)
-            pModify = 0.3
+            pModify = 1.1
             pAdd = 0.9
             pRemove = 1.0
             while self.numIterations<self.maxIterations: 
                 if math.floor(float(self.numIterations)/self.numAgents)>20:
-                    pModify = 0.9
+                    pModify = 1.1
                     pAdd = 0.93
                     pRemove = 1.0                    
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
@@ -590,7 +590,7 @@ class Simulation:
                     relevance = self.relevanceMetric(nodesToChange, nodesToShare)
                     relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
                     relevanceRecall = self.relevanceRecall(nodesToChange, nodesToShare)
-                    recallChange = self.relevanceRecallChanged(nodesToChange, nodesToShare, agent)
+                    recallChange = self.relevanceRecallChanged(nodesToChange, nodesToShare, agent, focusObj = nodesToChange[0])
                     precision = self.relevancePrecision(nodesToChange, nodesToShare)
                     
                     
@@ -849,7 +849,7 @@ def frange(start,stop, step=1.0):
         start +=step    
     
 if __name__ == '__main__':
-    simType = "dynamic"
+    simType = "reg"
     
     nodesPerCluster = 8
     pWithin = 0.3
@@ -860,7 +860,7 @@ if __name__ == '__main__':
         maxIterations = 200
         for numAgents in (3,5):
             for actionLimit in (3,5):
-                outputFile =   '../results/0821/0821_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_dynamic.csv'
+                outputFile =   '../results/0820/0821_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_backwardComptability.csv'
     
                     #write header row in file:
                 with open(outputFile, 'ab') as csvfile:
@@ -887,9 +887,9 @@ if __name__ == '__main__':
                                 mipGamma= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 0.0, gamma = 1.0, decay = 0.0)
         #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
                                 mip1 = Mip(alpha = 0.2, beta1 = 0.3, beta2 = 0.3, gamma = 0.2, decay = 0.0)
-                                mip2 = Mip(alpha = 0.1, beta1 = 0.4, beta2 = 0.4, gamma = 0.1, decay = 0.2)
+                                mip222 = Mip(alpha = 0.1, beta1 = 0.4, beta2 = 0.4, gamma = 0.1, decay = 0.2)
                                 mip22 = Mip(alpha = 0.1, beta1 = 0.4, beta2 = 0.4, gamma = 0.1, decay = 0.1)
-                                mip222 = Mip(alpha = 0.1, beta1 = 0.4, beta2 = 0.4, gamma = 0.1, decay = 0.0)
+                                mip2 = Mip(alpha = 0.1, beta1 = 0.4, beta2 = 0.4, gamma = 0.1, decay = 0.0)
                                 mip3 = Mip(alpha = 0.1, beta1 = 0.5, beta2 = 0.3, gamma = 0.1, decay = 0.0)
                                 mip4 = Mip(alpha = 0.0, beta1 = 0.5, beta2 = 0.4, gamma = 0.1, decay = 0.0)
     #                            mipAlphaND= Mip(alpha = 1.0, beta = 0.0, gamma = 0.0, decay = 0.0)
@@ -984,7 +984,7 @@ if __name__ == '__main__':
         maxIterations = 100
         for numAgents in (3,5):
             for actionLimit in (3,5):
-                outputFile =   '../results/0811/0811_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged.csv'
+                outputFile =   '../results/0820/0811_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChangedBackwardCompatability.csv'
     
                     #write header row in file:
                 with open(outputFile, 'ab') as csvfile:
