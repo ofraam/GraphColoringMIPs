@@ -117,6 +117,12 @@ class Agent:
         return 1
 
 
+    def objExists(self,nodeID): 
+        for clust in self.controlledNodes.keys():
+            if nodeID in self.controlledNodes[clust]:
+                return True
+        return False
+    
     '''
     chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more nodes that are on a path (without repeating any node)
     '''
@@ -124,7 +130,7 @@ class Agent:
 #        try:
         self.nodesToChange = [] #reset from previous turns 
         #choose first node based on distribution
-        
+        print 'controlled Nodes: '+str(self.controlledNodes)
         rand = random.random()
         cumProb = 0.0
         currIndex = 0
@@ -142,14 +148,15 @@ class Agent:
         self.nodesToChange.append(chosenNode)
         #get remaining nodes from neighbors
         neighbors = nx.neighbors(self.knownGraph, currNode)
-        additionalNodes = random.sample(neighbors,min(self.actionLimit-1,len(neighbors)))
+        validNeighbors = [x for x in neighbors if self.objExists(x)==True]
+        additionalNodes = random.sample(validNeighbors,min(self.actionLimit-1,len(validNeighbors)))
         self.nodesToChange.extend(additionalNodes)
         
         if len(self.nodesToChange)<self.actionLimit: #need to get more nodes
             neighborsNeighbors = []
             for i in range(1,len(self.nodesToChange)):
                 neighborsNeighbors.extend(nx.neighbors(self.knownGraph, self.nodesToChange[i]))
-            extensionList = [x for x in neighborsNeighbors if x not in self.nodesToChange]
+            extensionList = [x for x in neighborsNeighbors if ((x not in self.nodesToChange) & (self.objExists(x)==True))]
             moreNodes = random.sample(extensionList,min(self.actionLimit-len(self.nodesToChange),len(extensionList)))
             self.nodesToChange.extend(moreNodes)
         
@@ -218,9 +225,9 @@ class Agent:
         for n in self.nodesToChange:
             rand = random.random()
             print 'rand = '+str(rand)
-            if rand<0.2:
+            if rand<0.8:
                 self.actionTypes[n]= 0
-            elif rand<0.6:
+            elif rand<0.9:
                 self.actionTypes[n] = 1
             else:
                 self.actionTypes[n] = -1

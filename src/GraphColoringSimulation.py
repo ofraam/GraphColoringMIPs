@@ -860,7 +860,7 @@ if __name__ == '__main__':
                     writer.writeheader()         
             
                 for queryLimit in (1,3,5):
-                    nodesP = [3]
+                    nodesP = [12]
                     for nodesPerCluster in (nodesP):
                         pw = [0.3,0.4]
                         for pWithin in pw:
