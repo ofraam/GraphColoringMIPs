@@ -7,7 +7,7 @@ import networkx as nx
 import math
 
 class Mip:
-    def __init__(self, alpha = 0.2, beta1 = 0.6, beta2 = 0, gamma = 0.2, similarityMetric = "simple", decay = 0.1):
+    def __init__(self, alpha = 0.2, beta1 = 0.6, beta2 = 0, gamma = 0.2, similarityMetric = "edge", decay = 0.1):
         self.mip = nx.Graph()
         self.users = {}
         self.objects  = {}
@@ -207,10 +207,11 @@ class Mip:
             userNodeID = self.users[user]
             if self.similarityMetric == "adamic":
                 proximity = self.adamicAdarProximity(userNodeID,obj) #Adamic/Adar proximity
-            else:
+            elif self.similarityMetric == "simple":
 #                proximity = self.CFEC(userNodeID,obj) #cfec proximity
                 proximity = self.simpleProximity(userNodeID,obj)
-        
+            else:
+                proximity = self.edgeBasedProximity(userNodeID, obj)
         changeExtent = 0.0
         if self.gamma > 0:#need to consider how frequently the object has been changed since user last known about it: user is userId (might not be in MIP), obj is object Node id
             changeExtent = self.changeExtent(user, obj)
@@ -223,7 +224,10 @@ class Mip:
         api_obj = self.centrality[obj]
         
         try:
-            focus_proximity = self.simpleProximity(obj,focus_obj)  #node centrality (apriori component)
+            if self.similarityMetric=='simple':
+                focus_proximity = self.simpleProximity(focus_obj,obj)  #node centrality (apriori component)
+            else:
+                focus_proximity = self.edgeBasedProximity(focus_obj,obj)            
         except:
             print 'here'
        
@@ -233,10 +237,11 @@ class Mip:
             userNodeID = self.users[user]
             if self.similarityMetric == "adamic":
                 proximity = self.adamicAdarProximity(userNodeID,obj) #Adamic/Adar proximity
-            else:
+            elif self.similarityMetric=='simple':
 #                proximity = self.CFEC(userNodeID,obj) #cfec proximity
                 proximity = self.simpleProximity(userNodeID,obj)
-        
+            else:
+                proximity = self.edgeBasedProximity(userNodeID,obj)
         changeExtent = 0.0
         if self.gamma > 0:#need to consider how frequently the object has been changed since user last known about it: user is userId (might not be in MIP), obj is object Node id
             changeExtent = self.changeExtent(user, obj)
@@ -270,7 +275,16 @@ class Mip:
             sharedWeight = sharedWeight + self.mip[s][node]['weight'] + self.mip[t][node]['weight'] #the weight of the path connecting s and t through the current node
         proximity = sharedWeight/(self.mip.degree(s, weight = 'weight')+self.mip.degree(t, weight = 'weight')+0.000000000001)
         return proximity  
-        
+    
+    
+    def edgeBasedProximity(self,s,t, edgeWeight=0.7):
+#        print 'correct function'
+        simpleProximity = self.simpleProximity(s, t)
+        edgeProximity=0.0
+        if self.mip.has_edge(s, t):
+            edgeProximity = self.mip[s][t]['weight']/self.mip.degree(s, weight = 'weight')
+#            print 'there is an edge'
+        return edgeWeight*edgeProximity+(1-edgeWeight)*simpleProximity 
     '''
     computes Cycle-Free-Edge-Conductance from Koren et al. 2007
     for each simple path, we compute the path probability (based on weights) 
