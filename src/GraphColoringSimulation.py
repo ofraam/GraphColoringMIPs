@@ -571,7 +571,7 @@ class Simulation:
         for system in self.systems:
             initialProblem = copy.deepcopy(self.instance)
             self.agents = [] #reset agents
-            self.lastChangedBy = []
+            self.lastChangedBy = {}
             for agent,nodes in self.agentAssignments.iteritems():
                 newAgent = Agent(agent,nodes,copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed)
                 self.agents.append(newAgent)            
