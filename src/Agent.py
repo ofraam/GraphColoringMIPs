@@ -7,6 +7,7 @@ import networkx as nx
 import math
 import copy
 import random
+import numpy
 from random import shuffle
 
 class Agent:
@@ -94,6 +95,9 @@ class Agent:
                         self.knownGraph.node[node]['color'] = color 
                     elif color==-2: #add new vertex
                         self.knownGraph.remove_node(node) 
+                        clust = self.getClusterForNode(node)
+                        if clust>-1:
+                            self.controlledNodes[clust].remove(node)
   
 #                    self.knownGraph.node[node]['uptoDate'] = True   
                 else: #learned about a new node, need to add it to the graph as well as all the edges
@@ -184,6 +188,8 @@ class Agent:
         list(set(self.nodesToChange))     #in case we somehow have duplicates              
        
         return self.nodesToChange
+
+
         
     '''
     chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more nodes that are on a path (without repeating any node)
@@ -225,7 +231,64 @@ class Agent:
         list(set(self.nodesToChange))     #in case we somehow have duplicates              
        
         return self.nodesToChange
-    
+
+
+    '''
+    chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more with proportion to distance from focus object
+    '''
+    def chooseNodesByDistance(self, shortestPaths = None):
+#        try:
+        self.nodesToChange = [] #reset from previous turns 
+        #choose first node based on distribution
+        
+        rand = random.random()
+        cumProb = 0.0
+        currIndex = 0
+        currNode = self.controlledNodes[currIndex]
+        cumProb = cumProb+currNode[1]
+        while rand>cumProb:
+            currIndex = currIndex+1
+            currNode = self.controlledNodes[currIndex]
+            cumProb = cumProb+currNode[1]
+        chosenNode = copy.deepcopy(currNode[0])
+        self.nodesToChange.append(chosenNode)
+        
+        distanceBuckets = {} 
+        shortestPathFocus = shortestPaths[chosenNode]
+        for v,path in shortestPathFocus.iteritems():
+            if v!=chosenNode:
+                dist = len(path)-1
+                if dist in distanceBuckets.keys():
+                    distanceBuckets[dist].append(v)
+                else:
+                    distanceBuckets[dist] = []
+                    distanceBuckets[dist].append(v)
+        
+        for i in range (self.actionLimit-1):
+            bucket =-1
+            tries = 0
+            found = True
+            while bucket not in distanceBuckets.keys():
+                bucket = math.floor(numpy.random.exponential(1))+1
+                tries=tries+1
+                if tries>100:
+                    found = False
+                    break
+#            print 'bucket = '+str(bucket)
+            if found:
+                nodeToAdd = random.sample(distanceBuckets[bucket],1)[0]
+                self.nodesToChange.append(nodeToAdd)
+    #            print distanceBuckets[bucket]
+    #            print nodeToAdd
+                distanceBuckets[bucket].remove(nodeToAdd)
+                if len(distanceBuckets[bucket])==0:
+                    distanceBuckets.pop(bucket)
+            
+               
+        list(set(self.nodesToChange))     #in case we somehow have duplicates              
+       
+        return self.nodesToChange
+        
     def removeNodeFromCluster(self, node,cluster):
         if node in self.controlledNodes[cluster]:
             self.controlledNodes[cluster].remove(node)
@@ -237,17 +300,21 @@ class Agent:
     '''
     choose what to do with each object (add neighbor, remove object, modify color)
     '''
-    def chooseActionTypes(self, pModify, pAdd, pRemove):
+    def chooseActionTypes(self, pModify, pAdd, pRemove, problemInstance = None):
         self.actionTypes = {} #remove = -1, add = 1, modify = 0
         for n in self.nodesToChange:
-            rand = random.random()
-#            print 'rand = '+str(rand)
-            if rand<pModify:
-                self.actionTypes[n]= 0
-            elif rand<pAdd:
-                self.actionTypes[n] = 1
-            else:
-                self.actionTypes[n] = -1
+            col = problemInstance.node[n]['color']
+            if col!=-2:
+                rand = random.random()
+    #            print 'rand = '+str(rand)
+                if rand<pModify:
+                    self.actionTypes[n]= 0
+                elif rand<pAdd:
+                    self.actionTypes[n] = 1
+                else:
+                    self.actionTypes[n] = -1
+            else: #wasted action
+                self.actionTypes[n]=-4
                 
         return self.actionTypes
                 
@@ -374,6 +441,9 @@ class Agent:
                         actionSet[obj]=(nextID,-3)
                         nextID = nextID+1
 #                        actionSet.append((nextID,-3))
+                    elif act ==-4: #wasted action, nothing to do
+                        self.nodesToChange.remove(obj)
+                        actionSet[obj]=(obj,-4)
 
                         
                 bestSolution = self.chooseActionsRecurNodeSetGiven(initialSolution,0,initialBestSolution, minActions)
@@ -560,11 +630,31 @@ def createKnownGraph(graph, knownNodes):
     return knownGraph
 '-----------------test util functions end--------------------'
 if __name__ == '__main__':
+    d = {}
+    d[1]= 'a'
+    d[2] = 'b'
+    print d
+    d.pop(1)
+    print d
     
-    t = ['a','b','c']
-    for tt in t:
-        print tt
-        shuffle(t)
+    G=nx.Graph()
+    G.add_node(1)
+    G.add_node(2)
+    G.add_node(3)
+    G.add_node(4)
+    G.add_edge(1,2)
+    G.add_edge(1,3)
+#    G.add_edge(1,4)
+    
+    paths = nx.all_pairs_shortest_path(G)
+    print paths
+    
+    
+    
+#    t = ['a','b','c']
+#    for tt in t:
+#        print tt
+#        shuffle(t)
         
     a = 1/0
     

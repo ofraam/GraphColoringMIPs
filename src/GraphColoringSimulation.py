@@ -49,6 +49,7 @@ class Simulation:
         self.probPrimay = probPrimary
         self.fromScratch = fromScratch
         self.lastChangedBy = {} #last changed by
+        self.shortestPaths = {}
         #generate graph structure
         
         #assign random colors
@@ -338,7 +339,7 @@ class Simulation:
         return sum(changedBelief/float(self.queryLimit))
     
 
-    def runSimulationDynamic(self, graphName, run = 0, learnTime = -1):
+    def runSimulationDynamic(self, graphName, run = 0, learnTime = -1, removeObjectsForAgents = True):
 
         #store results
         results = []
@@ -354,18 +355,18 @@ class Simulation:
                 newAgent = Agent(agent,copy.deepcopy(self.clusters),copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed, pPrimary = self.probPrimay)
                 self.agents.append(newAgent)            
             print 'starting to run algorithm: '+str(system)
-            pModify = 1.1
-            pAdd = 0.9
+            pModify = 0.6
+            pAdd = 0.97
             pRemove = 1.0
             while self.numIterations<self.maxIterations: 
                 if math.floor(float(self.numIterations)/self.numAgents)>20:
-                    pModify = 1.1
-                    pAdd = 0.93
+                    pModify = 0.8
+                    pAdd = 0.9
                     pRemove = 1.0                    
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
 #                    print '----------agent = '+str(agent.id)+'-----------------'
                     nodesToChange = copy.deepcopy(agent.chooseNodesByDistributionDynamic()) #agent chooses the nodes to change TODO: later possibly inform system of this choice
-                    actionTypes = agent.chooseActionTypes(pModify,pAdd,pRemove) #agent chooses whether to modify/add/remove for each object
+                    actionTypes = agent.chooseActionTypes(pModify,pAdd,pRemove, problemInstance = self.instance.graph) #agent chooses whether to modify/add/remove for each object
                     
                    
                     #query system
@@ -413,6 +414,7 @@ class Simulation:
                     
                     #send update to system; update problem instance and clusters
                     actionObjs = []
+                    wastedActions = 0.0
                     index = 0
 #                    print 'nodesToChange'+str(nodesToChange)
 #                    print 'actions '+str(actions)
@@ -425,17 +427,17 @@ class Simulation:
 #                            print 'in sim: removing node '+str(node)
                             #new action object to send to systems
                             actionObj = Action(agent.id, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
-                            actionObjs.append(actionObj)
+                            actionObjs.append(actionObj)                                
                             #remove object from graph
                             self.instance.graph.node[node]['color']=-2 #mark as removed, but don't actually remove
                             #remove object from clusters
                             clusterNum = self.nodeToClusterIndex[node]
-#                            print 'clusterNum ='+str(clusterNum)
-#                            print 'cluster: '+ str(self.clusters[clusterNum])
-                            self.clusters[clusterNum].remove(node)
-                            #TODO: think about whether to also remove from index [probably NOT]
-                            for a in self.agents:
-                                a.removeNodeFromCluster(node,clusterNum)                            
+                            self.clusters[clusterNum].remove(node)    
+                            
+                            if removeObjectsForAgents:
+                                for a in self.agents:
+                                    a.removeNodeFromCluster(node,clusterNum)                                                             
+                           
                         elif col == -3: #adding new obj
                             #new action object to send to systems
                             actionObj = Action(agent.id, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
@@ -457,6 +459,8 @@ class Simulation:
                             #add new edges based on distributions
                             self.connectNewNode(node) 
                             
+                        elif col == -4:
+                            wastedActions = wastedActions + 1
                         else:
                             actionObj = Action(agent.id, node, 'sigEdit', col, self.weightIncOfAction, 1.0)
                             actionObjs.append(actionObj)     
@@ -507,7 +511,7 @@ class Simulation:
                     res['precision'] =  precision        
                     res['precisionChanged']=precisionChangedByOther  
                     res['AverageDistance'] = distFromFocus 
-                    
+                    res['wasted']=wastedActions
                     res['conflicts'] = state['conflicts']
                     res['unknown'] = state['unknown']
                     res['notConflicts'] = state['notConflicts']
@@ -525,7 +529,7 @@ class Simulation:
                     
                     #increment num of iterations
                     self.numIterations = self.numIterations + 1
-                    print 'graph nodes :'+str(self.instance.graph.nodes())
+#                    print 'graph nodes :'+str(self.instance.graph.nodes())
             
             #save results
 #            res = Result(system, self.numIterations, self.instance.getGraphState(), self.instance.getPercentColored())
@@ -539,7 +543,7 @@ class Simulation:
             
         #save results to file
         with open(self.outputFile, 'ab') as csvfile:
-            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','confDiff','percentColored','run']
+            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','wasted','conflicts','unknown','notConflicts','confDiff','percentColored','run']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             for res in results:
@@ -548,7 +552,7 @@ class Simulation:
         
         
     def runSimulation(self, graphName, run = 0, learnTime = -1):
-
+        self.shortestPaths = nx.all_pairs_shortest_path(self.instance.graph)
         #store results
         results = []
         #save initial state to revert for each system
@@ -566,8 +570,8 @@ class Simulation:
             while ((self.solved == False) & (self.numIterations<self.maxIterations)): 
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
 
-                    nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
-
+#                    nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
+                    nodesToChange = agent.chooseNodesByDistance(self.shortestPaths)
                     
                     #check what agent would have done without new info
                     actionsWithoutKnowledge = agent.chooseActionsDonotApply(self.numIterations,minActions = 0)
@@ -860,16 +864,16 @@ if __name__ == '__main__':
         maxIterations = 200
         for numAgents in (3,5):
             for actionLimit in (3,5):
-                outputFile =   '../results/0820/0821_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_backwardComptability.csv'
+                outputFile =   '../results/0823/0823_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_wastedActions.csv'
     
                     #write header row in file:
                 with open(outputFile, 'ab') as csvfile:
-                    fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
+                    fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','wasted','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()         
             
                 for queryLimit in (3,5):
-                    nodesP = [3,5]
+                    nodesP = [3]
                     for nodesPerCluster in (nodesP):
                         pw = [0.3]
                         for pWithin in pw:
@@ -921,9 +925,9 @@ if __name__ == '__main__':
                                 sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
                                 systemsBeforeRun = copy.deepcopy(systems)
                     #            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
-                                for i in range(5):  
+                                for i in range(3):  
                                     systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
-                                    sim.runSimulationDynamic(graphName, run = i, learnTime = 0)
+                                    sim.runSimulationDynamic(graphName, run = i, learnTime = 0, removeObjectsForAgents = False)
                                     sim.resetSystems(systemsBeforeRun)          
     if simType=='PR':
         maxIterations = 50
