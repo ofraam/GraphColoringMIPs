@@ -322,14 +322,17 @@ class Agent:
     '''
     choose what to do with each object (add neighbor, remove object, modify color) based on gamma distributions (sort of)
     '''
-    def chooseActionTypesGamma(self, pAddAlpha = 1.0 ,pAddBeta = 3.5,pRemoveAlpha = 10,pRemoveBeta=2.5, problemInstance = None, objAges = None, round = None):
+    def chooseActionTypesGamma(self, pAddAlpha = 1.0 ,pAddBeta = 3.5,pRemoveAlpha = 10,pRemoveBeta=2.5, problemInstance = None, objStarts = None, round = None):
         self.actionTypes = {} #remove = -1, add = 1, modify = 0
+        objAges = [round-x+1 for x in objStarts]
         for n in self.nodesToChange:
             col = problemInstance.node[n]['color']
             if col!=-2:
                 distAdd = stats.gamma(pAddAlpha, scale = pAddBeta)
-                addThreshold = distAdd.pdf(round)*2
-                distRemove = stats.gamma(pAddBeta, scale = pRemoveAlpha)
+                addThreshold = distAdd.pdf(round+1)*2
+                distRemove = stats.gamma(pRemoveAlpha, scale = pRemoveBeta)
+                print objAges
+                print n
                 removeThreshold = (distRemove.pdf(objAges[n])*2) + addThreshold    
                 rand = random.random()         
     #            print 'rand = '+str(rand)

@@ -50,6 +50,7 @@ class Simulation:
         self.fromScratch = fromScratch
         self.lastChangedBy = {} #last changed by
         self.shortestPaths = {}
+#        self.objectStart = []
         #generate graph structure
         
         #assign random colors
@@ -139,13 +140,14 @@ class Simulation:
     def generateClusteredGraph(self,numClusters,nodesPerCluster,pEdgeIn,pEdgeBet):
         g = nx.Graph()
         totalNodeCount = 0
-
+        self.objectStart=[]
         for clust in range(numClusters):
             numNodesInClust = max(np.random.poisson(nodesPerCluster),2)
 #            numNodesInClust =nodesPerCluster
             clusterNodes = [] #TODO: verify doesn't mess up other lists
             for node in range(numNodesInClust):
                 g.add_node(totalNodeCount)
+                self.objectStart.append(0)
                 clusterNodes.append(totalNodeCount)
                 self.nodeToClusterIndex[totalNodeCount]=clust
                 totalNodeCount=totalNodeCount+1
@@ -349,8 +351,10 @@ class Simulation:
         for system in self.systems:
             initialProblem = copy.deepcopy(self.instance)
             initialClusters= copy.deepcopy(self.clusters)
+            objStarts = copy.deepcopy(self.objectStart)
             self.agents = [] #reset agents
-            
+            nextNodeID = copy.deepcopy(self.nextNodeID)
+            self.lastChangedBy = {}
             for agent,nodes in self.agentAssignments.iteritems():
                 newAgent = Agent(agent,copy.deepcopy(self.clusters),copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed, pPrimary = self.probPrimay)
                 self.agents.append(newAgent)            
@@ -359,15 +363,20 @@ class Simulation:
             pAdd = 0.97
             pRemove = 1.0
             while self.numIterations<self.maxIterations: 
-                if math.floor(float(self.numIterations)/self.numAgents)>20:
+                round = math.floor(float(self.numIterations)/self.numAgents)
+                if round>20:
                     pModify = 0.8
                     pAdd = 0.9
                     pRemove = 1.0                    
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
 #                    print '----------agent = '+str(agent.id)+'-----------------'
                     nodesToChange = copy.deepcopy(agent.chooseNodesByDistributionDynamic()) #agent chooses the nodes to change TODO: later possibly inform system of this choice
-                    actionTypes = agent.chooseActionTypes(pModify,pAdd,pRemove, problemInstance = self.instance.graph) #agent chooses whether to modify/add/remove for each object
-                    
+#                    actionTypes = agent.chooseActionTypes(pModify,pAdd,pRemove, problemInstance = self.instance.graph) #agent chooses whether to modify/add/remove for each object
+                    if (len(objStarts)!=len(self.instance.graph.nodes())):
+                        print 'problem'
+#                    print 'objS len = '+str(len(objStarts))
+#                    print 'graph size = '+str(self.instance.graph.nodes())
+                    actionTypes = agent.chooseActionTypesGamma(problemInstance = self.instance.graph, objStarts = objStarts, round = round)
                    
                     #query system
                     if self.setting == "all":
@@ -407,7 +416,7 @@ class Simulation:
                         print 'problem'
 
                     precisionChangedByOther = self.precisionChangedByOtherAgent(nodesToChange, nodesToShare, agent)
-                    actions = agent.chooseActions(self.numIterations,minActions = 0, nextID = self.nextNodeID) #query agent for actions
+                    actions = agent.chooseActions(self.numIterations,minActions = 0, nextID = nextNodeID) #query agent for actions
                     
                     
                     stateWithout = self.instance.getGraphState() #TODO: if not forcing agent to choose specific nodes, can't do this!
@@ -447,8 +456,8 @@ class Simulation:
                             attr['color']=-1
 #                            print 'in sim: addding node '+str(node)
                             self.instance.graph.add_node(node,attr)
-                            self.nextNodeID= self.nextNodeID+1
-                            
+                            nextNodeID= nextNodeID+1
+                            objStarts.append(round)
 #                            print 'index = '+str(index)
                             
                             self.instance.graph.add_edge(node,nodesToChange[index]) #adding the edge between the object to which the new object was connected
@@ -562,7 +571,7 @@ class Simulation:
         for system in self.systems:
             initialProblem = copy.deepcopy(self.instance)
             self.agents = [] #reset agents
-            
+            self.lastChangedBy = []
             for agent,nodes in self.agentAssignments.iteritems():
                 newAgent = Agent(agent,nodes,copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed)
                 self.agents.append(newAgent)            
@@ -853,7 +862,7 @@ def frange(start,stop, step=1.0):
         start +=step    
     
 if __name__ == '__main__':
-    simType = "reg"
+    simType = "dynamic"
     
     nodesPerCluster = 8
     pWithin = 0.3
@@ -864,7 +873,7 @@ if __name__ == '__main__':
         maxIterations = 200
         for numAgents in (3,5):
             for actionLimit in (3,5):
-                outputFile =   '../results/0823/0823_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_wastedActions.csv'
+                outputFile =   '../results/0824/0824_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_Dists.csv'
     
                     #write header row in file:
                 with open(outputFile, 'ab') as csvfile:
