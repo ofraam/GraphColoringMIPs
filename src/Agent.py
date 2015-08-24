@@ -9,6 +9,7 @@ import copy
 import random
 import numpy
 from random import shuffle
+from scipy import stats
 
 class Agent:
     def __init__(self, id, clusters, knownGraph, colors, actionLimit, reset, seed = 10, pPrimary = 0.8):
@@ -317,6 +318,31 @@ class Agent:
                 self.actionTypes[n]=-4
                 
         return self.actionTypes
+    
+    '''
+    choose what to do with each object (add neighbor, remove object, modify color) based on gamma distributions (sort of)
+    '''
+    def chooseActionTypesGamma(self, pAddAlpha = 1.0 ,pAddBeta = 3.5,pRemoveAlpha = 10,pRemoveBeta=2.5, problemInstance = None, objAges = None, round = None):
+        self.actionTypes = {} #remove = -1, add = 1, modify = 0
+        for n in self.nodesToChange:
+            col = problemInstance.node[n]['color']
+            if col!=-2:
+                distAdd = stats.gamma(pAddAlpha, scale = pAddBeta)
+                addThreshold = distAdd.pdf(round)*2
+                distRemove = stats.gamma(pAddBeta, scale = pRemoveAlpha)
+                removeThreshold = (distRemove.pdf(objAges[n])*2) + addThreshold    
+                rand = random.random()         
+    #            print 'rand = '+str(rand)
+                if rand<addThreshold:
+                    self.actionTypes[n]= 1
+                elif rand<removeThreshold:
+                    self.actionTypes[n] = -1
+                else:
+                    self.actionTypes[n] = 0
+            else: #wasted action
+                self.actionTypes[n]=-4
+                
+        return self.actionTypes    
                 
     def addObject(self, fromObject, nextID):
         newObjectID = nextID
@@ -630,6 +656,8 @@ def createKnownGraph(graph, knownNodes):
     return knownGraph
 '-----------------test util functions end--------------------'
 if __name__ == '__main__':
+    
+
     d = {}
     d[1]= 'a'
     d[2] = 'b'
