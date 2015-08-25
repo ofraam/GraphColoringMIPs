@@ -190,6 +190,70 @@ class Agent:
        
         return self.nodesToChange
 
+    '''
+    chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more nodes that are on a path (without repeating any node)
+    '''
+    def chooseNodesByDistanceDynamic(self):
+        shortestPaths = nx.all_pairs_shortest_path(self.knownGraph)
+#        try:
+        self.nodesToChange = [] #reset from previous turns 
+        #choose first node based on distribution
+#        print 'controlled Nodes: '+str(self.controlledNodes)
+        rand = random.random()
+        cumProb = 0.0
+        currIndex = 0
+        clustNum = self.id
+        if ((rand<self.probPrimary) & (len(self.controlledNodes[self.id])>0)): #choose object from primary cluster
+            clustNum = self.id
+        else:
+            tries = 0
+            while ((clustNum==self.id) | (len(self.controlledNodes[clustNum])==0)): #choose object from a different cluster
+                clustNum = random.randint(0,len(self.controlledNodes)-1)
+                if tries>100:
+                    clustNum = self.id
+                    break
+                tries= tries+1
+        
+        objIndex = random.randint(0,len(self.controlledNodes[clustNum])-1)
+        chosenNode = copy.deepcopy(self.controlledNodes[clustNum][objIndex])
+        self.nodesToChange.append(chosenNode)
+        
+        distanceBuckets = {} 
+        shortestPathFocus = shortestPaths[chosenNode]
+        for v,path in shortestPathFocus.iteritems():
+            if v!=chosenNode:
+                dist = len(path)-1
+                if dist in distanceBuckets.keys():
+                    distanceBuckets[dist].append(v)
+                else:
+                    distanceBuckets[dist] = []
+                    distanceBuckets[dist].append(v)
+        
+        for i in range (self.actionLimit-1):
+            bucket =-1
+            tries = 0
+            found = True
+            while bucket not in distanceBuckets.keys():
+                bucket = math.floor(numpy.random.exponential(1))+1
+                tries=tries+1
+                if tries>100:
+                    found = False
+                    break
+#            print 'bucket = '+str(bucket)
+            if found:
+                nodeToAdd = random.sample(distanceBuckets[bucket],1)[0]
+                self.nodesToChange.append(nodeToAdd)
+    #            print distanceBuckets[bucket]
+    #            print nodeToAdd
+                distanceBuckets[bucket].remove(nodeToAdd)
+                if len(distanceBuckets[bucket])==0:
+                    distanceBuckets.pop(bucket)
+            
+               
+        list(set(self.nodesToChange))     #in case we somehow have duplicates              
+       
+        return self.nodesToChange
+
 
         
     '''
@@ -322,18 +386,18 @@ class Agent:
     '''
     choose what to do with each object (add neighbor, remove object, modify color) based on gamma distributions (sort of)
     '''
-    def chooseActionTypesGamma(self, pAddAlpha = 1.0 ,pAddBeta = 3.5,pRemoveAlpha = 10,pRemoveBeta=2.5, problemInstance = None, objStarts = None, round = None):
+    def chooseActionTypesGamma(self, pAddAlpha = 1.0 ,pAddBeta = 8.0,pRemoveAlpha = 10,pRemoveBeta=2.5, problemInstance = None, objStarts = None, round = None):
         self.actionTypes = {} #remove = -1, add = 1, modify = 0
         objAges = [round-x+1 for x in objStarts]
         for n in self.nodesToChange:
             col = problemInstance.node[n]['color']
             if col!=-2:
                 distAdd = stats.gamma(pAddAlpha, scale = pAddBeta)
-                addThreshold = distAdd.pdf(round+1)*2
+                addThreshold = distAdd.pdf(round+1)*3
                 distRemove = stats.gamma(pRemoveAlpha, scale = pRemoveBeta)
-                print objAges
-                print n
-                removeThreshold = (distRemove.pdf(objAges[n])*2) + addThreshold    
+#                print objAges
+#                print n
+                removeThreshold = (distRemove.pdf(objAges[n])) + addThreshold    
                 rand = random.random()         
     #            print 'rand = '+str(rand)
                 if rand<addThreshold:

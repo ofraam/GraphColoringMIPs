@@ -342,7 +342,7 @@ class Simulation:
     
 
     def runSimulationDynamic(self, graphName, run = 0, learnTime = -1, removeObjectsForAgents = True):
-
+        self.shortestPaths = nx.all_pairs_shortest_path(self.instance.graph)
         #store results
         results = []
         #save initial state to revert for each system
@@ -370,7 +370,8 @@ class Simulation:
                     pRemove = 1.0                    
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
 #                    print '----------agent = '+str(agent.id)+'-----------------'
-                    nodesToChange = copy.deepcopy(agent.chooseNodesByDistributionDynamic()) #agent chooses the nodes to change TODO: later possibly inform system of this choice
+#                    nodesToChange = copy.deepcopy(agent.chooseNodesByDistributionDynamic()) #agent chooses the nodes to change TODO: later possibly inform system of this choice
+                    nodesToChange = copy.deepcopy(agent.chooseNodesByDistanceDynamic())
 #                    actionTypes = agent.chooseActionTypes(pModify,pAdd,pRemove, problemInstance = self.instance.graph) #agent chooses whether to modify/add/remove for each object
                     if (len(objStarts)!=len(self.instance.graph.nodes())):
                         print 'problem'
@@ -538,6 +539,7 @@ class Simulation:
                     
                     #increment num of iterations
                     self.numIterations = self.numIterations + 1
+                    self.shortestPaths = nx.all_pairs_shortest_path(self.instance.graph)
 #                    print 'graph nodes :'+str(self.instance.graph.nodes())
             
             #save results
@@ -871,9 +873,9 @@ if __name__ == '__main__':
     
     if simType == "dynamic":
         maxIterations = 200
-        for numAgents in (3,5):
+        for numAgents in (5,3):
             for actionLimit in (3,5):
-                outputFile =   '../results/0824/0824_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_Dists.csv'
+                outputFile =   '../results/0824/0824_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_Dists6_add1_8_3.csv'
     
                     #write header row in file:
                 with open(outputFile, 'ab') as csvfile:
@@ -881,7 +883,7 @@ if __name__ == '__main__':
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()         
             
-                for queryLimit in (3,5):
+                for queryLimit in (1,3):
                     nodesP = [3]
                     for nodesPerCluster in (nodesP):
                         pw = [0.3]
@@ -917,10 +919,10 @@ if __name__ == '__main__':
 #    #  #                          systems.append(mostChangeInt)
                                 systems.append(latestSys)  
 #    #                              
-                                systems.append(mipAlpha) 
+#                                systems.append(mipAlpha) 
                                 systems.append(mipBeta1) 
                                 systems.append(mipBeta2) 
-                                systems.append(mipGamma)
+#                                systems.append(mipGamma)
     #                            systems.append(mip2)
 #                                
 #                                systems.append(mip1) 
@@ -934,7 +936,7 @@ if __name__ == '__main__':
                                 sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
                                 systemsBeforeRun = copy.deepcopy(systems)
                     #            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
-                                for i in range(3):  
+                                for i in range(10):  
                                     systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
                                     sim.runSimulationDynamic(graphName, run = i, learnTime = 0, removeObjectsForAgents = False)
                                     sim.resetSystems(systemsBeforeRun)          
