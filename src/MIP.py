@@ -222,7 +222,7 @@ class Mip:
     def DegreeOfInterestMIPsFocus(self, user, obj, focus_obj):
         
         api_obj = self.centrality[obj]
-        
+        focus_proximity = 0.0
         try:
             if self.similarityMetric=='simple':
                 focus_proximity = self.simpleProximity(focus_obj,obj)  #node centrality (apriori component)

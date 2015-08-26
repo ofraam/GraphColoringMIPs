@@ -721,7 +721,7 @@ class Simulation:
     Run simulation with just precision-recall computation
     '''
     def runPRSimulation(self, graphName, run = 0, learnTime = -1):
-
+        self.shortestPaths = nx.all_pairs_shortest_path(self.instance.graph)
         #store results
         results = []
         #save initial state to revert for each system
@@ -731,6 +731,7 @@ class Simulation:
         for system in self.systems:
             initialProblem = copy.deepcopy(self.instance)
             self.agents = [] #reset agents
+            self.lastChangedBy = {}
             
             for agent,nodes in self.agentAssignments.iteritems():
                 newAgent = Agent(agent,nodes,copy.deepcopy(self.graph), self.colors,self.actionLimit, reset = False, seed = seed)
@@ -739,8 +740,8 @@ class Simulation:
             while ((self.solved == False) & (self.numIterations<self.maxIterations)): 
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
 
-                    nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
-
+#                    nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
+                    nodesToChange = agent.chooseNodesByDistance(self.shortestPaths)
 
                     if self.focus:
                         nodesToShare = system.queryList(agent.id, self.queryLimit, startRev=0, node = nodesToChange[0]) #get nodes info to share with agent. nodesToShare is list of nodes
@@ -875,15 +876,15 @@ if __name__ == '__main__':
         maxIterations = 200
         for numAgents in (5,3):
             for actionLimit in (3,5):
-                outputFile =   '../results/0824/0824_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_Dists6_add1_8_3.csv'
+                outputFile =   '../results/0824/0825_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_noFocus_onlyChanged_Dists6_add1_8_3_all.csv'
     
                     #write header row in file:
                 with open(outputFile, 'ab') as csvfile:
                     fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','wasted','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()         
-            
-                for queryLimit in (1,3):
+                ql=[3]
+                for queryLimit in ql:
                     nodesP = [3]
                     for nodesPerCluster in (nodesP):
                         pw = [0.3]
@@ -899,6 +900,8 @@ if __name__ == '__main__':
                                 mipAlpha= Mip(alpha = 1.0, beta1 = 0.0, beta2 = 0.0, gamma = 0.0, decay = 0.0)
                                 mipBeta1= Mip(alpha = 0.0, beta1 = 1.0, beta2 = 0.0, gamma = 0.0, decay = 0.0)
                                 mipBeta2= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 1.0, gamma = 0.0, decay = 0.0)
+                                mipBetaDecay1= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 1.0, gamma = 0.0, decay = 0.1)
+                                mipBetaDecay2= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 1.0, gamma = 0.0, decay = 0.2)
                                 mipGamma= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 0.0, gamma = 1.0, decay = 0.0)
         #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
                                 mip1 = Mip(alpha = 0.2, beta1 = 0.3, beta2 = 0.3, gamma = 0.2, decay = 0.0)
@@ -919,7 +922,7 @@ if __name__ == '__main__':
 #    #  #                          systems.append(mostChangeInt)
                                 systems.append(latestSys)  
 #    #                              
-#                                systems.append(mipAlpha) 
+                                systems.append(mipAlpha) 
                                 systems.append(mipBeta1) 
                                 systems.append(mipBeta2) 
 #                                systems.append(mipGamma)
@@ -927,16 +930,16 @@ if __name__ == '__main__':
 #                                
 #                                systems.append(mip1) 
                                 systems.append(mip2) 
-#                                systems.append(mip22)
-#                                systems.append(mip222)
+#                                systems.append(mipBetaDecay1)
+#                                systems.append(mipBetaDecay2)
 #                                systems.append(mip3) 
 #                                systems.append(mip4)
     #                            systems.append(mip2ND)                            
                                  
-                                sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
+                                sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = False, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
                                 systemsBeforeRun = copy.deepcopy(systems)
                     #            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
-                                for i in range(10):  
+                                for i in range(5):  
                                     systemsBeforeRun = copy.deepcopy(systemsBeforeRun)               
                                     sim.runSimulationDynamic(graphName, run = i, learnTime = 0, removeObjectsForAgents = False)
                                     sim.resetSystems(systemsBeforeRun)          
