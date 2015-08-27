@@ -621,8 +621,8 @@ class Simulation:
                 for agent in self.agents: #agents iterate in round robin. #TODO: in future, consider non-uniform session
 
 #                    nodesToChange = agent.chooseNodesByDistribution() #agent chooses the nodes to change TODO: later possibly inform system of this choice
-#                    nodesToChange = agent.chooseNodesByDistance(self.shortestPaths)
-                    nodesToChange = agent.chooseNodesByDistanceAndCluster(self.shortestPaths)
+                    nodesToChange = agent.chooseNodesByDistance(self.shortestPaths)
+#                    nodesToChange = agent.chooseNodesByDistanceAndCluster(self.shortestPaths)
                     
                     #check what agent would have done without new info
                     actionsWithoutKnowledge = agent.chooseActionsDonotApply(self.numIterations,minActions = 0)
@@ -1041,10 +1041,10 @@ if __name__ == '__main__':
                     sim.runPRSimulation(graphName, run = i, learnTime = 0)
                     sim.resetSystems(systemsBeforeRun)          
     else:
-        maxIterations = 200
+        maxIterations = 150
         for numAgents in (5,3):
             for actionLimit in (3,5):
-                outputFile =   '../results/0827/0827_200_distnaceAndCluster_newDistance_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChangedBackwardCompatability.csv'
+                outputFile =   '../results/0827/DecayTest2_onlyDistance_002_0827_distnaceAndCluster_newDistance_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChangedBackwardCompatability.csv'
     
                     #write header row in file:
                 with open(outputFile, 'ab') as csvfile:
@@ -1068,6 +1068,8 @@ if __name__ == '__main__':
                                 mipAlpha= Mip(alpha = 1.0, beta1 = 0.0, beta2 = 0.0, gamma = 0.0, decay = 0.0)
                                 mipBeta1= Mip(alpha = 0.0, beta1 = 1.0, beta2 = 0.0, gamma = 0.0, decay = 0.0)
                                 mipBeta2= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 1.0, gamma = 0.0, decay = 0.0)
+                                mipBeta2d1= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 1.0, gamma = 0.0, decay = 0.2)
+                                mipBeta2d2= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 1.0, gamma = 0.0, decay = 0.4)
                                 mipGamma= Mip(alpha = 0.0, beta1 = 0.0, beta2 = 0.0, gamma = 1.0, decay = 0.0)
         #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
                                 mip1 = Mip(alpha = 0.2, beta1 = 0.3, beta2 = 0.3, gamma = 0.2, decay = 0.0)
@@ -1080,20 +1082,22 @@ if __name__ == '__main__':
     #    #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
     #                            mip2ND = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2, decay = 0.0)
                                 systems.append(randSys)
-                                systems.append(mostChanged)
+#                                systems.append(mostChanged)
 #    #                            
 #    #                            
 #    #  #                          systems.append(mostChangeInt)
-                                systems.append(latestSys)  
+#                                systems.append(latestSys)  
 #    #                              
-                                systems.append(mipAlpha) 
-                                systems.append(mipBeta1) 
+#                                systems.append(mipAlpha) 
+#                                systems.append(mipBeta1) 
                                 systems.append(mipBeta2) 
+                                systems.append(mipBeta2d1) 
+                                systems.append(mipBeta2d2) 
 #                                systems.append(mipGamma)
 #    #                            systems.append(mip2)
 #                                
 #                                systems.append(mip1) 
-                                systems.append(mip2) 
+#                                systems.append(mip2) 
 #                                systems.append(mip3) 
 #                                systems.append(mip4)
     #                            systems.append(mip2ND)                            

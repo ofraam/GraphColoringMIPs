@@ -89,6 +89,7 @@ class Mip:
             self.addUser(user)
         user_node = self.users[user]
         #update MIP based on all actions
+        changedAOs=[]
         for act in session.actions:
             ao = act.ao
             if (ao not in self.objects):
@@ -100,6 +101,7 @@ class Mip:
             else:
                 print 'interesting'
             self.updateEdge(user_node, ao_node, 'u-ao', act.weightInc)
+            changedAOs.append(ao_node)
             #label deleted objects as deleted
             if act.actType == 'delete':
                 self.mip.node[self.objects[act.ao]]['deleted'] = 1
@@ -123,7 +125,8 @@ class Mip:
             for edge in self.mip.edges_iter(data=True):
                 if edge[2]['updated']==0:
                     if edge[2]['edge_type']=='ao-ao':
-                        edge[2]['weight'] = max(edge[2]['weight']-self.decay,0)
+                        if ((edge[0] in changedAOs) | (edge[1] in changedAOs)):
+                            edge[2]['weight'] = max(edge[2]['weight']-self.decay,0)
                     elif edge[2]['edge_type']=='u-ao':
                         if ((edge[0]==user_node) | (edge[1]==user_node)):
                             edge[2]['weight'] = max(edge[2]['weight']-self.decay,0)
