@@ -356,7 +356,7 @@ class Agent:
 
 
     '''
-    chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more with proportion to distance from focus object
+    chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more with proportion to distance from focus object, but give priority to objs from primary cluster
     '''
     def chooseNodesByDistanceAndCluster(self, shortestPaths = None):
 #        try:
@@ -375,22 +375,28 @@ class Agent:
         chosenNode = copy.deepcopy(currNode[0])
         self.nodesToChange.append(chosenNode)
         
+        primaryCluster = self.id
         distanceBuckets = {} 
         shortestPathFocus = shortestPaths[chosenNode]
         for v,path in shortestPathFocus.iteritems():
+            vCluster = self.getClusterForNode(v)
             if v!=chosenNode:
-                dist = len(path)-1
-                if dist in distanceBuckets.keys():
-                    distanceBuckets[dist].append(v)
+                if vCluster==primaryCluster:
+                    inPrimary = 1
                 else:
-                    distanceBuckets[dist] = []
-                    distanceBuckets[dist].append(v)
+                    inPrimary = 0
+                dist = len(path)-1
+                if (dist,inPrimary) not in distanceBuckets.keys():
+                    distanceBuckets[(dist,inPrimary)] = []
+                
+                distanceBuckets[(dist,inPrimary)].append(v) #in primary cluster
+
         
         for i in range (self.actionLimit-1):
             bucket =-1
             tries = 0
             found = True
-            while bucket not in distanceBuckets.keys():
+            while (((bucket,1) not in distanceBuckets.keys()) & ((bucket,0) not in distanceBuckets.keys())):
                 bucket = math.floor(numpy.random.exponential(1))+1
                 tries=tries+1
                 if tries>100:
@@ -398,13 +404,23 @@ class Agent:
                     break
 #            print 'bucket = '+str(bucket)
             if found:
-                nodeToAdd = random.sample(distanceBuckets[bucket],1)[0]
+                randPrimary = random.random()
+                tookFromPrimary = -1
+                if ((randPrimary<self.probPrimary) & ((bucket,1) in distanceBuckets.keys())):
+                    nodeToAdd = random.sample(distanceBuckets[(bucket,1)],1)[0]
+                    tookFromPrimary = 1
+                elif (bucket,0) in distanceBuckets.keys():
+                    nodeToAdd = random.sample(distanceBuckets[(bucket,0)],1)[0]
+                    tookFromPrimary = 0
+                else:
+                    nodeToAdd = random.sample(distanceBuckets[(bucket,1)],1)[0]
+                    tookFromPrimary = 1
                 self.nodesToChange.append(nodeToAdd)
     #            print distanceBuckets[bucket]
     #            print nodeToAdd
-                distanceBuckets[bucket].remove(nodeToAdd)
-                if len(distanceBuckets[bucket])==0:
-                    distanceBuckets.pop(bucket)
+                distanceBuckets[bucket,tookFromPrimary].remove(nodeToAdd)
+                if len(distanceBuckets[(bucket,tookFromPrimary)])==0:
+                    distanceBuckets.pop((bucket,tookFromPrimary))
             
                
         list(set(self.nodesToChange))     #in case we somehow have duplicates              
