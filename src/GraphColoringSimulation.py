@@ -236,6 +236,8 @@ class Simulation:
         recall = shared/len(relevantNodes)
         return recall
 
+
+
     '''
     checks what proportion of all relevant nodes were retrieved (shared)
     '''         
@@ -260,6 +262,33 @@ class Simulation:
         recall = shared/len(relevantNodes)
         return recall    
 
+
+    '''
+    checks what proportion of all relevant, out of cluster nodes, were retrieved (shared)
+    '''         
+    def relevanceRecallChangedNovel(self, actionNodes, sharedNodes, agent, focusObj, clusters):
+        relevantNodes = []
+        for actNode in actionNodes:
+            for neighbor in nx.neighbors(self.instance.graph, actNode):
+                if neighbor not in relevantNodes:
+#                if neighbor not in actionNodes: #not sure this is correct
+                    if neighbor in self.lastChangedBy.keys():
+                        if self.lastChangedBy[neighbor]!=agent:
+                            if neighbor!=focusObj:
+                                if neighbor not in clusters[agent.id]:
+                                    relevantNodes.append(neighbor)
+        if len(relevantNodes)==0:
+            return 'NaN'                
+                    
+        shared = 0.0
+        for sharedNode in sharedNodes:
+            if sharedNode in relevantNodes:
+                shared = shared+1
+        if len(relevantNodes)==0:
+            return 1
+        recall = shared/len(relevantNodes)
+        return recall 
+    
     '''
     checks how many of the nodes that were shared were relevant 
     '''    
@@ -505,10 +534,6 @@ class Simulation:
                     res['pBetween']=self.pBetween
                     res['probPrimaryCluster']= self.probPrimay
                     
-                    
-
-                    
-                    
 
                     
                     state = self.instance.getGraphState()
@@ -527,6 +552,20 @@ class Simulation:
                     res['notConflicts'] = state['notConflicts']
 
                     res['confDiff']=confDiff
+                    
+                    removed = 0
+                    added = 0
+                    modified = 0
+                    for n,a in actionTypes.iteritems():
+                        if a == -1:
+                            removed = removed+1
+                        if a == 0:
+                            modified = modified+1
+                        if a ==1:
+                            added = added+1
+                    res['removed']=removed
+                    res['added']=added
+                    res['modified']=modified       
                     
                     res['percentColored'] = self.instance.getPercentColored() #only relevant if we start from nothing colored
                     res['run'] = run
@@ -554,7 +593,7 @@ class Simulation:
             
         #save results to file
         with open(self.outputFile, 'ab') as csvfile:
-            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','wasted','conflicts','unknown','notConflicts','confDiff','percentColored','run']
+            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','wasted','conflicts','unknown','notConflicts','confDiff','removed','added','modified','percentColored','run']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             for res in results:
@@ -606,6 +645,7 @@ class Simulation:
                     relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
                     relevanceRecall = self.relevanceRecall(nodesToChange, nodesToShare)
                     recallChange = self.relevanceRecallChanged(nodesToChange, nodesToShare, agent, focusObj = nodesToChange[0])
+                    recallNovel = self.relevanceRecallChangedNovel(nodesToChange, nodesToShare, agent, focusObj = nodesToChange[0], clusters=self.clusters)
                     precision = self.relevancePrecision(nodesToChange, nodesToShare)
                     
                     
@@ -674,7 +714,8 @@ class Simulation:
                         
                     res['relevance'] = relevance
                     res['relevanceBinary'] = relevanceBinary 
-                    res['recall'] = recallChange      
+                    res['recall'] = recallChange   
+                    res['recallNovel'] = recallNovel   
                     res['precision'] =  precision        
                     res['precisionChanged']=precisionChangedByOther  
                     res['AverageDistance'] = distFromFocus 
@@ -710,7 +751,7 @@ class Simulation:
             
         #save results to file
         with open(self.outputFile, 'ab') as csvfile:
-            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','percentColored','run']
+            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'recallNovel','precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','percentColored','run']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             for res in results:
@@ -865,7 +906,7 @@ def frange(start,stop, step=1.0):
         start +=step    
     
 if __name__ == '__main__':
-    simType = "dynamic"
+    simType = "reg"
     
     nodesPerCluster = 8
     pWithin = 0.3
@@ -873,19 +914,19 @@ if __name__ == '__main__':
     graphName = 'clustered_'+str(nodesPerCluster)+"_"+str(pWithin)+"_"+str(pBetween)
     
     if simType == "dynamic":
-        maxIterations = 200
+        maxIterations = 250
         for numAgents in (5,3):
             for actionLimit in (3,5):
-                outputFile =   '../results/0824/0825_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_noFocus_onlyChanged_Dists6_add1_8_3_all.csv'
+                outputFile =   '../results/0824/testAlpha_0825_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChanged_Dists6_add1_8_3_all.csv'
     
                     #write header row in file:
                 with open(outputFile, 'ab') as csvfile:
-                    fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','wasted','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
+                    fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','wasted','conflicts','unknown','notConflicts','confDiff','removed','added','modified','percentColored','run']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()         
-                ql=[3]
+                ql=[1,3]
                 for queryLimit in ql:
-                    nodesP = [3]
+                    nodesP = [5]
                     for nodesPerCluster in (nodesP):
                         pw = [0.3]
                         for pWithin in pw:
@@ -908,35 +949,35 @@ if __name__ == '__main__':
                                 mip222 = Mip(alpha = 0.1, beta1 = 0.4, beta2 = 0.4, gamma = 0.1, decay = 0.2)
                                 mip22 = Mip(alpha = 0.1, beta1 = 0.4, beta2 = 0.4, gamma = 0.1, decay = 0.1)
                                 mip2 = Mip(alpha = 0.1, beta1 = 0.4, beta2 = 0.4, gamma = 0.1, decay = 0.0)
-                                mip3 = Mip(alpha = 0.1, beta1 = 0.5, beta2 = 0.3, gamma = 0.1, decay = 0.0)
-                                mip4 = Mip(alpha = 0.0, beta1 = 0.5, beta2 = 0.4, gamma = 0.1, decay = 0.0)
+                                mip3 = Mip(alpha = 0.3, beta1 = 0.0, beta2 = 0.7, gamma = 0.0, decay = 0.0)
+                                mip4 = Mip(alpha = 0.5, beta1 = 0.1, beta2 = 0.4, gamma = 0.0, decay = 0.0)
     #                            mipAlphaND= Mip(alpha = 1.0, beta = 0.0, gamma = 0.0, decay = 0.0)
     #                            mipBetaND= Mip(alpha = 0.0, beta = 1.0, gamma = 0.0, decay = 0.0)
     #                            mipGammaND= Mip(alpha = 0.0, beta = 0.0, gamma = 1.0, decay = 0.0)
     #    #                        mip = Mip(alpha = 0.4, beta = 0.4, gamma = 0.2)
     #                            mip2ND = Mip(alpha = 0.5, beta = 0.3, gamma = 0.2, decay = 0.0)
                                 systems.append(randSys)
-                                systems.append(mostChanged)
-#    #                            
-#    #                            
-#    #  #                          systems.append(mostChangeInt)
-                                systems.append(latestSys)  
-#    #                              
-                                systems.append(mipAlpha) 
-                                systems.append(mipBeta1) 
+#                                systems.append(mostChanged)
+##    #                            
+##    #                            
+##    #  #                          systems.append(mostChangeInt)
+#                                systems.append(latestSys)  
+##    #                              
+#                                systems.append(mipAlpha) 
+#                                systems.append(mipBeta1) 
                                 systems.append(mipBeta2) 
-#                                systems.append(mipGamma)
-    #                            systems.append(mip2)
-#                                
-#                                systems.append(mip1) 
-                                systems.append(mip2) 
+##                                systems.append(mipGamma)
+#    #                            systems.append(mip2)
+##                                
+##                                systems.append(mip1) 
+#                                systems.append(mip2) 
 #                                systems.append(mipBetaDecay1)
 #                                systems.append(mipBetaDecay2)
-#                                systems.append(mip3) 
-#                                systems.append(mip4)
+                                systems.append(mip3) 
+                                systems.append(mip4)
     #                            systems.append(mip2ND)                            
                                  
-                                sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = False, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
+                                sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
                                 systemsBeforeRun = copy.deepcopy(systems)
                     #            filename= '../results/0730/test_focus_colored_'+graphName+"_iterations"+str(maxIterations)+"_queryLimit"+str(queryLimit)+"_actionLimit"+str(actionLimit)+"_agents"+str(numAgents)+".csv"
                                 for i in range(5):  
@@ -1000,17 +1041,17 @@ if __name__ == '__main__':
                     sim.resetSystems(systemsBeforeRun)          
     else:
         maxIterations = 100
-        for numAgents in (3,5):
+        for numAgents in (5,3):
             for actionLimit in (3,5):
-                outputFile =   '../results/0820/0821_newDistance_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChangedBackwardCompatability.csv'
+                outputFile =   '../results/0824/0826_recallNovel_newDistance_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChangedBackwardCompatability.csv'
     
                     #write header row in file:
                 with open(outputFile, 'ab') as csvfile:
-                    fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','confDiff','percentColored','run']
+                    fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'recallNovel','precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','percentColored','run']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()         
             
-                for queryLimit in (3,5):
+                for queryLimit in (1,3,5):
                     nodesP = [8]
                     for nodesPerCluster in (nodesP):
                         pw = [0.3]
@@ -1046,7 +1087,7 @@ if __name__ == '__main__':
 #    #                              
 #                                systems.append(mipAlpha) 
 #                                systems.append(mipBeta1) 
-#                                systems.append(mipBeta2) 
+                                systems.append(mipBeta2) 
 #                                systems.append(mipGamma)
 #    #                            systems.append(mip2)
 #                                

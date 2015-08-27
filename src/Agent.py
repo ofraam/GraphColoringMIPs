@@ -353,6 +353,63 @@ class Agent:
         list(set(self.nodesToChange))     #in case we somehow have duplicates              
        
         return self.nodesToChange
+
+
+    '''
+    chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more with proportion to distance from focus object
+    '''
+    def chooseNodesByDistanceAndCluster(self, shortestPaths = None):
+#        try:
+        self.nodesToChange = [] #reset from previous turns 
+        #choose first node based on distribution
+        
+        rand = random.random()
+        cumProb = 0.0
+        currIndex = 0
+        currNode = self.controlledNodes[currIndex]
+        cumProb = cumProb+currNode[1]
+        while rand>cumProb:
+            currIndex = currIndex+1
+            currNode = self.controlledNodes[currIndex]
+            cumProb = cumProb+currNode[1]
+        chosenNode = copy.deepcopy(currNode[0])
+        self.nodesToChange.append(chosenNode)
+        
+        distanceBuckets = {} 
+        shortestPathFocus = shortestPaths[chosenNode]
+        for v,path in shortestPathFocus.iteritems():
+            if v!=chosenNode:
+                dist = len(path)-1
+                if dist in distanceBuckets.keys():
+                    distanceBuckets[dist].append(v)
+                else:
+                    distanceBuckets[dist] = []
+                    distanceBuckets[dist].append(v)
+        
+        for i in range (self.actionLimit-1):
+            bucket =-1
+            tries = 0
+            found = True
+            while bucket not in distanceBuckets.keys():
+                bucket = math.floor(numpy.random.exponential(1))+1
+                tries=tries+1
+                if tries>100:
+                    found = False
+                    break
+#            print 'bucket = '+str(bucket)
+            if found:
+                nodeToAdd = random.sample(distanceBuckets[bucket],1)[0]
+                self.nodesToChange.append(nodeToAdd)
+    #            print distanceBuckets[bucket]
+    #            print nodeToAdd
+                distanceBuckets[bucket].remove(nodeToAdd)
+                if len(distanceBuckets[bucket])==0:
+                    distanceBuckets.pop(bucket)
+            
+               
+        list(set(self.nodesToChange))     #in case we somehow have duplicates              
+       
+        return self.nodesToChange
         
     def removeNodeFromCluster(self, node,cluster):
         if node in self.controlledNodes[cluster]:
