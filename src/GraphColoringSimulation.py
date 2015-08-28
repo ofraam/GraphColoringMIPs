@@ -51,6 +51,7 @@ class Simulation:
         self.fromScratch = fromScratch
         self.lastChangedBy = {} #last changed by
         self.shortestPaths = {}
+        self.numNodesPerCluster = numNodesPerCluster
 #        self.objectStart = []
         #generate graph structure
         
@@ -659,15 +660,8 @@ class Simulation:
                     
                     
                     #compute metrics
-                    relevance = self.relevanceMetric(nodesToChange, nodesToShare)
-                    relevanceBinary = self.relevanceMetricBinaryNodes(nodesToChange, nodesToShare)
-                    relevanceRecall = self.relevanceRecall(nodesToChange, nodesToShare)
                     recallChange = self.relevanceRecallChanged(nodesToChange, nodesToShare, agent, focusObj = nodesToChange[0])
-                    recallNovel = self.relevanceRecallChangedNovel(nodesToChange, nodesToShare, agent, focusObj = nodesToChange[0], clusters=self.clusters)
-                    precision = self.relevancePrecision(nodesToChange, nodesToShare)
-                    
-                    
-                    
+                    recallNovel = self.relevanceRecallChangedNovel(nodesToChange, nodesToShare, agent, focusObj = nodesToChange[0], clusters=self.clusters)                 
                     distFromFocus = self.distanceFromFocusMetric(nodesToChange[0], nodesToShare)
                     
                     info = {} #dict holding nodes and their colors (to share with agent)
@@ -677,8 +671,9 @@ class Simulation:
                     changedBelief = agent.updateBelief(info) #update agents knowledge
                     if len(changedBelief)!=len(nodesToShare):
                         print 'problem'
-                    precisionChangedNodes = self.relevancePrecisionChanged(nodesToChange, nodesToShare, changedBelief)
+
                     precisionChangedByOther = self.precisionChangedByOtherAgent(nodesToChange, nodesToShare, agent)
+                    sharedNovel = self.sharedNovel(nodesToShare, agent, self.clusters)
                     actions = agent.chooseActions(self.numIterations,minActions = 0) #query agent for actions
  
                     
@@ -705,8 +700,7 @@ class Simulation:
                     res['queryLimit']=self.queryLimit
                     res['actionLimit']=self.actionLimit
                     res['numAgents']=self.numAgents
-                    res['numNodes']=nx.number_of_nodes(self.graph)
-                    res['numEdges']=nx.number_of_edges(self.graph)
+                    res['numNodesInCluster']=self.numNodesPerCluster
                     res['pWithin']=self.pWithin
                     res['pBetween']=self.pBetween
                     res['probPrimaryCluster']= self.probPrimay
@@ -730,11 +724,10 @@ class Simulation:
                     
 #                    confDiff =  state['conflicts']-stateWithout['conflicts'] #positive is good!
                         
-                    res['relevance'] = relevance
-                    res['relevanceBinary'] = relevanceBinary 
+
                     res['recall'] = recallChange   
                     res['recallNovel'] = recallNovel   
-                    res['precision'] =  precision        
+                    res['sharedNovel'] = sharedNovel
                     res['precisionChanged']=precisionChangedByOther  
                     res['AverageDistance'] = distFromFocus 
                     
@@ -769,7 +762,7 @@ class Simulation:
             
         #save results to file
         with open(self.outputFile, 'ab') as csvfile:
-            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'recallNovel','precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','percentColored','run']
+            fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodesInCluster','pWithin','pBetween','probPrimaryCluster','recall', 'recallNovel','sharedNovel','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','percentColored','run']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             for res in results:
@@ -924,7 +917,7 @@ def frange(start,stop, step=1.0):
         start +=step    
     
 if __name__ == '__main__':
-    simType = "dynamic"
+    simType = "reg"
     
     nodesPerCluster = 8
     pWithin = 0.3
@@ -1063,11 +1056,11 @@ if __name__ == '__main__':
         maxIterations = 150
         for numAgents in (5,3):
             for actionLimit in (3,5):
-                outputFile =   '../results/0827/distAndClusterAndNewAlpha_0827_distnaceAndCluster_newDistance_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChangedBackwardCompatability.csv'
+                outputFile =   '../results/0827/cleaned_0827_distnaceAndCluster_newDistance_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus_onlyChangedBackwardCompatability.csv'
     
                     #write header row in file:
                 with open(outputFile, 'ab') as csvfile:
-                    fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','numNodes','numEdges','pWithin','pBetween','probPrimaryCluster','relevance','relevanceBinary','recall', 'recallNovel','precision','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','percentColored','run']
+                    fieldnames = ['graphName','fromScratch', 'algorithm', 'iteration', 'round','focus','queryLimit','actionLimit','numAgents','nodesPerCluster','pWithin','pBetween','probPrimaryCluster','recall', 'recallNovel','sharedNovel','precisionChanged','AverageDistance','conflicts','unknown','notConflicts','effect','percentColored','run']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()         
             
@@ -1107,18 +1100,18 @@ if __name__ == '__main__':
 #    #  #                          systems.append(mostChangeInt)
 #                                systems.append(latestSys)  
 #    #                              
-                                systems.append(mipAlpha) 
-                                systems.append(mipBeta1) 
-                                systems.append(mipBeta2) 
+#                                systems.append(mipAlpha) 
+#                                systems.append(mipBeta1) 
+#                                systems.append(mipBeta2) 
 #                                systems.append(mipBeta2d1) 
 #                                systems.append(mipBeta2d2) 
 #                                systems.append(mipGamma)
 #    #                            systems.append(mip2)
 #                                
-                                systems.append(mip1) 
-#                                systems.append(mip2) 
-                                systems.append(mip3) 
-                                systems.append(mip4)
+#                                systems.append(mip1) 
+##                                systems.append(mip2) 
+#                                systems.append(mip3) 
+#                                systems.append(mip4)
     #                            systems.append(mip2ND)                            
                                  
                                 sim = Simulation(numAgents, 3, systems, numNodesPerCluster=nodesPerCluster,pWithin=pWithin, pBetween=pBetween, outputFile =outputFile,fromScratch = True, focus = True, probPrimary = 0.8, overlap = 2, maxIterations = maxIterations, actionLimit = actionLimit, queryLimit = queryLimit, weightInc = 1.0, setting = "all")
