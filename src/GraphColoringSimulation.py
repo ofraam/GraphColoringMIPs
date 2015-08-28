@@ -291,12 +291,14 @@ class Simulation:
         return recall 
 
     def sharedNovel(self,sharedNodes, agent, clusters):
-        sharedNovel = 0
+        sharedNovel = 0.0
         for n in sharedNodes:
             if n not in clusters[agent.id]:
-                sharedNovel=sharedNovel+1
+                sharedNovel=sharedNovel+1.0
                 
-        return sharedNovel
+        if len(sharedNodes)==0:
+            return 0
+        return sharedNovel/len(sharedNodes)
     
     '''
     checks how many of the nodes that were shared were relevant 
