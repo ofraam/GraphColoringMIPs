@@ -133,12 +133,15 @@ class Mip:
         self.currentSession=session
 #        print'updating'
 
-        self.centrality = nx.degree_centrality(self.mip) #TODO: apriori importance for now is simply degree, consider reverting to more complex option
+#        self.centrality = nx.degree_centrality(self.mip) #TODO: apriori importance for now is simply degree, consider reverting to more complex option
         self.iteration = self.iteration+1
-#        try:
-#            self.centrality = nx.current_flow_betweenness_centrality(self.mip,True, weight = 'weight')
-#        except:
-#            self.centrality = nx.degree_centrality(self.mip)
+        if self.alpha>0:
+            try:
+                self.centrality = nx.current_flow_betweenness_centrality(self.mip,True, weight = 'weight')
+            except:
+                self.centrality = nx.degree_centrality(self.mip)
+        else:
+            self.centrality = nx.degree_centrality(self.mip)
         
     def addUser(self,user_name):
         if (user_name in self.users):

@@ -8,8 +8,60 @@ import numpy as np
 import operator 
 from Utils import Session
 from Utils import Action
+import networkx as nx
+from matplotlib.cbook import Sorter
 
+class OmniscientSystem:
+    def __init__(self, setting = "changes", graph = None):
+        self.lastChangedBy = {}
+        self.setting = setting
+        self.shortestPaths = nx.all_pairs_shortest_path(graph)
+        self.nodes = graph.nodes()
+    
+    def update(self, session):
+        for act in session.actions:
+            self.lastChangedBy[act.ao]=session.user        
 
+    def query(self, agent, infoLimit, startRev = 0, node = None, onlyChanged = True):
+        nodesToShare= self.queryList(agent, infoLimit, startRev, node, onlyChanged)
+        return nodesToShare[:infoLimit]
+    
+    def queryList(self, agent, infoLimit, startRev = 0, node = None, onlyChanged = True):
+        nodesToShare = []
+
+        relevantNodes = []
+        relevantNodesDists= {}
+        for i in range(startRev,len(self.nodes)):
+            for n in self.nodes:
+                if n not in relevantNodes:
+                    if n in self.lastChangedBy.keys():
+                        if self.lastChangedBy[n]!=agent:
+                            relevantNodes.append(n)
+       
+        if len(self.nodes)==0:
+            return relevantNodes
+        
+        shortestPathFocus = self.shortestPaths[node]
+          
+        if node is not None:
+            if node in nodesToShare:
+                nodesToShare.remove(node)
+            for relNode in relevantNodes:
+                if relNode in shortestPathFocus.keys():
+                    path = shortestPathFocus[relNode]
+                    dist = len(path)-1
+                    relevantNodesDists[relNode]=dist
+                else:
+                    relevantNodesDists[relNode]=1000 #fake long distance
+        
+        
+        sorted_rel = sorted(relevantNodesDists.items(), key=operator.itemgetter(1))
+        nodesToShare = [x[0] for x in sorted_rel]
+        return nodesToShare    
+       
+    def __str__(self):
+        return "Omniscient"    
+           
 class RandomSystem:
     def __init__(self, setting = "changes"):
         self.nodes = []
@@ -69,6 +121,8 @@ class RandomSystem:
         if node is not None:
             if node in nodesToShare:
                 nodesToShare.remove(node)
+                
+        random.shuffle(nodesToShare)
         return list(nodesToShare)
     
     def __str__(self):

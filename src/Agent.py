@@ -193,8 +193,9 @@ class Agent:
     '''
     chooses k actions in the following way: pick first node based on distribution. Then, pick k-1 more nodes that are on a path (without repeating any node)
     '''
-    def chooseNodesByDistanceDynamic(self):
-        shortestPaths = nx.all_pairs_shortest_path(self.knownGraph)
+    def chooseNodesByDistanceDynamic(self, shortestPaths = None):
+        if shortestPaths == None:
+            shortestPaths = nx.all_pairs_shortest_path(self.knownGraph)
 #        try:
         self.nodesToChange = [] #reset from previous turns 
         #choose first node based on distribution
@@ -492,6 +493,8 @@ class Agent:
         self.knownGraph.add_edge(fromObject,newObjectID)
         self.nodesToChange.remove(fromObject)
         clustNum = self.getClusterForNode(fromObject)
+        if clustNum == -1:
+            print 'oh oh'
         self.controlledNodes[clustNum].append(nextID)
     
     def getClusterForNode(self,nodeId):    
