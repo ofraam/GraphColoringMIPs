@@ -223,12 +223,14 @@ class Agent:
         shortestPathFocus = shortestPaths[chosenNode]
         for v,path in shortestPathFocus.iteritems():
             if v!=chosenNode:
-                dist = len(path)-1
-                if dist in distanceBuckets.keys():
-                    distanceBuckets[dist].append(v)
-                else:
-                    distanceBuckets[dist] = []
-                    distanceBuckets[dist].append(v)
+                vClust = self.getClusterForNode(v)
+                if vClust!=-1:
+                    dist = len(path)-1
+                    if dist in distanceBuckets.keys():
+                        distanceBuckets[dist].append(v)
+                    else:
+                        distanceBuckets[dist] = []
+                        distanceBuckets[dist].append(v)
         
         for i in range (self.actionLimit-1):
             bucket =-1
