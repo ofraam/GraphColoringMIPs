@@ -7,7 +7,7 @@ import networkx as nx
 import math
 
 class Mip:
-    def __init__(self, alpha = 0.2, beta1 = 0.6, beta2 = 0, gamma = 0.2, similarityMetric = "edge", decay = 0.1):
+    def __init__(self, alpha = 0.2, beta1 = 0.6, beta2 = 0, gamma = 0.2, similarityMetric = "edge", decay = 0.1, centrality = "simple"):
         self.mip = nx.Graph()
         self.users = {}
         self.objects  = {}
@@ -24,6 +24,7 @@ class Mip:
         self.similarityMetric = similarityMetric
         self.nodeIDsToObjectsIds = {}
         self.nodeIDsToUsersIds = {}
+        self.centralityComp = centrality
     
     def update(self, session): #to fit System API
         self.updateMIP(session)
@@ -135,7 +136,7 @@ class Mip:
 
 #        self.centrality = nx.degree_centrality(self.mip) #TODO: apriori importance for now is simply degree, consider reverting to more complex option
         self.iteration = self.iteration+1
-        if self.alpha>0:
+        if ((self.alpha>0) & (self.centralityComp=='complex')):
             try:
                 self.centrality = nx.current_flow_betweenness_centrality(self.mip,True, weight = 'weight')
             except:
@@ -551,7 +552,7 @@ class Mip:
     -----------------------------------------------------------------------------
     '''
     def __str__(self):
-        return "MIP_"+str(self.alpha)+"_"+str(self.beta1)+"_"+str(self.beta2)+"_"+str(self.gamma)+"_"+str(self.decay)+"_"+self.similarityMetric
+        return "MIP_"+str(self.alpha)+"_"+str(self.beta1)+"_"+str(self.beta2)+"_"+str(self.gamma)+"_"+str(self.decay)+"_"+self.similarityMetric+"_"+self.centralityComp
         
     def createNodeLabels(self, nodeTypes = 'both'):
         labels = {}

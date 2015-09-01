@@ -106,10 +106,11 @@ class Agent:
                     attr['color']=color
                     self.knownGraph.add_node(node,attr)
 #                    print 'color of node: '+str(self.knownGraph.node[node]['color'])
-                    neighbors = nx.neighbors(problemInstance, node)
-                    for ne in neighbors:
-                        if ne in self.knownGraph.nodes():
-                            self.knownGraph.add_edge(node,ne)   
+                    #TODO: removed for true distance calculations
+#                    neighbors = nx.neighbors(problemInstance, node)
+#                    for ne in neighbors:
+#                        if ne in self.knownGraph.nodes():
+#                            self.knownGraph.add_edge(node,ne)   
                     clustToAddTo = self.findNodeCluster(clustersReal, node)  
                     if clustToAddTo!=-1: #otherwise we have a situation where a node was added and removed before the agent saw it!   
                         self.controlledNodes[clustToAddTo].append(node)
