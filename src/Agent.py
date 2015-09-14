@@ -470,7 +470,7 @@ class Agent:
             col = problemInstance.node[n]['color']
             if col!=-2:
                 distAdd = stats.gamma(pAddAlpha, scale = pAddBeta)
-                addThreshold = distAdd.pdf(round+1)*3
+                addThreshold = distAdd.pdf(round+1)*4
                 distRemove = stats.gamma(pRemoveAlpha, scale = pRemoveBeta)
 #                print objAges
 #                print n

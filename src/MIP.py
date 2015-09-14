@@ -320,12 +320,20 @@ class Mip:
     will be a component taken into account in degree of interest 
     '''
     def changeExtent(self, userId, aoNode):
-        fromRevision = 0 #in case user does not exist yet or has never known about this object, start from revision 0
+        fromRevision = -1 #in case user does not exist yet or has never known about this object, start from revision 0
+        
+        
         if userId in self.users.keys():
             userNode = self.users[userId]
             if self.mip.has_edge(userNode, aoNode):
                 fromRevision = self.mip[userNode][aoNode]['lastKnown'] #get the last time the user knew what the value of the object was
+        
         revs = self.mip.node[aoNode]['revisions']
+        
+        if revs[len(revs)-1]>fromRevision:
+            return 1
+        else:
+            return 0
         i = 0
         while revs[i]<fromRevision:
             i = i+1
@@ -338,6 +346,9 @@ class Mip:
             if fromRevision==revs[len(revs)-1]:
                 print 'hold on'
             return res
+        elif i==len(revs)-1:
+            if revs[i]>fromRevision:
+                return 1
         else:
             return 0
     '''
