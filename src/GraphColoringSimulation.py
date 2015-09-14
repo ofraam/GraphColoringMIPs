@@ -1175,7 +1175,7 @@ if __name__ == '__main__':
                 sim.runPRSimulationNew(graphName, run = 0, learnTime = 0)
                 sim.resetSystems(systemsBeforeRun)          
     else:
-        maxIterations = 150
+        maxIterations = 100
         for numAgents in [5]:
             for actionLimit in [3]:
                 outputFile =   '../results/0914/0914_distnaceAndCluster_agents_'+str(numAgents)+'actionLimit_'+str(actionLimit)+'primaryProg0.8_Focus.csv'
@@ -1186,14 +1186,14 @@ if __name__ == '__main__':
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()         
             
-                for queryLimit in (1,3):
+                for queryLimit in (3):
                     nodesP = [10]
                     for nodesPerCluster in (nodesP):
                         pw = [0.3]
                         for pWithin in pw:
                             pb = [0.05]
                             for pBetween in pb:
-                                for i in range(1):
+                                for i in range(4):
                                     systems = []
                                     randSys = RandomSystem()
                                     mostChanged = MostChangedInIntervalSystem(500) #essentially all revisions...
