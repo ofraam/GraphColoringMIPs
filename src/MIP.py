@@ -8,26 +8,36 @@ import math
 
 class Mip:
     def __init__(self, alpha = 0.2, beta1 = 0.6, beta2 = 0, gamma = 0.2, similarityMetric = "edge", decay = 0.1):
-        self.mip = nx.Graph()
-        self.users = {}
-        self.objects  = {}
+        self.mip = nx.Graph() #the representation of the MIP-Net network
+        self.users = {} #user ids
+        self.objects  = {} #object ids
         self.iteration = 0
         self.lastID = -1
-        self.decay = decay
-        self.objectsInc = 1.0
+        self.decay = decay #determines how much to decay weights when there is not interaction between two nodes over time
+        self.objectsInc = 1.0 #weight increment
         self.centrality = None #centrality values of all nodes
         self.log = [] #log holds all the session data 
-        self.alpha = alpha
-        self.beta1 = beta1
-        self.beta2 = beta2
-        self.gamma = gamma
-        self.similarityMetric = similarityMetric
-        self.nodeIDsToObjectsIds = {}
-        self.nodeIDsToUsersIds = {}
+        self.alpha = alpha #weight given to the global importance (centrality) of the object
+        self.beta1 = beta1 #weight given to the proximity between the user and the object
+        self.beta2 = beta2 #weight given to the proximity between the focus object and the object
+        self.gamma = gamma #weight given to the extent of change
+        self.similarityMetric = similarityMetric #how to measure proximity/similarity in the newtork
+        self.nodeIDsToObjectsIds = {} #dictionary mapping between ids of nodes and object ids
+        self.nodeIDsToUsersIds = {} #dictionary mapping between ids of nodes and user ids
     
     def update(self, session): #to fit System API
         self.updateMIP(session)
-        
+
+
+    '''
+    querying the mip net for the top ranked objects
+    @user: the id of the user
+    @infoLimit: communication budget (how many objects to share)
+    @startRev: which revision to start from, 0 by default
+    @node: the focus object (if given)
+    @onlyChanged: whether to consider sharing only objects that were changed or also objects that might be relevant but
+     haven't changed since the user last interacted with the system
+    '''
     def query(self, user, infoLimit, startRev = 0, node = None, onlyChanged = True): #to fit System API
         if node is None:
 #            rankedObjects = self.rankChangesForUser(user, startRev)
@@ -77,7 +87,9 @@ class Mip:
 #            self.updateEdge(self.users[user], self.objects[node], 'u-ao', 0) #update the latest revision when the user was informed about the object
         
         return nodes
-                    
+    '''
+    MIP-update procedure, runs after each user session, updates weights between edges
+    '''
     def updateMIP(self, session):
         #initialize 'updated' attribute of all edges to false
         for edge in self.mip.edges_iter(data=True):
@@ -98,12 +110,12 @@ class Mip:
             ao_node = self.objects[ao]
             if self.iteration not in self.mip.node[ao_node]['revisions']:
                 self.mip.node[ao_node]['revisions'].append(self.iteration) #add revision
-            else:
-                print 'interesting'
+            # else:
+            #     print 'interesting' DEBUG
             self.updateEdge(user_node, ao_node, 'u-ao', act.weightInc)
             changedAOs.append(ao_node)
-            #label deleted objects as deleted
-            if act.actType == 'delete':
+
+            if act.actType == 'delete': #label deleted objects as deleted
                 self.mip.node[self.objects[act.ao]]['deleted'] = 1
         
         for i in range(len(session.actions)-1):
@@ -566,7 +578,7 @@ class Mip:
                     labels[node] = label
         return labels
     
-    def createEdgeLabels(self, nbunch = None):
+    def createEdgeLabels(self, nbunch = None): #for network vidsualization
         labels = {}
         if nbunch is None:
             nbunch = self.mip.nodes()

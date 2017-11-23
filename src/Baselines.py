@@ -9,7 +9,8 @@ import operator
 from Utils import Session
 from Utils import Action
 import networkx as nx
-from matplotlib.cbook import Sorter
+
+# from matplotlib.cbook import Sorter
 
 class OmniscientSystem:
     def __init__(self, setting = "changes", graph = None):
